@@ -49,13 +49,16 @@ signUp::signUp(QWidget *parent)
             this, &signUp::enableOkButton);
     connect(cancel, &QAbstractButton::clicked, this, &QWidget::close);
     connect(ok,SIGNAL(clicked()),this,SLOT(connectToServer()));
-
+    connect(tcpSocket,&QTcpSocket::readyRead,this,&signUp::read);
 }
+
+
 
 void signUp::connectToServer()
 {
     tcpSocket->connectToHost(QHostAddress::LocalHost,8080);
     QJsonObject o;
+    o["kind"] = "SignUp";
     o["name"]=name->text();
     o["lastname"]=lastName->text();
     o["username"]=userName->text();
@@ -85,7 +88,38 @@ void signUp::read()
 {
     tcpSocket->waitForReadyRead(3000);
     QString readMess=tcpSocket->readAll();
+    QJsonObject obj;
 
-    ////////
+    QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
+
+    obj = doc.object();
+    proccessMessage(&obj);
+    if(obj["kind"] == "SignUp"){
+        if(obj["success"].toBool())
+        {
+            // initialize player
+        }
+
+        else{
+            // show o["errorMessage"] in sign up menu
+        }
+    }
+}
+
+
+
+
+
+
+}
+
+Player *signUp::getPlayer() const
+{
+    return player;
+}
+
+void signUp::setPlayer(Player *newPlayer)
+{
+    player = newPlayer;
 }
 
