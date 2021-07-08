@@ -1,53 +1,38 @@
-//
-// Created by apadana on ۰۵/۰۷/۲۰۲۱.
-//
+#ifndef SIGNUP_H
+#define SIGNUP_H
 
-#ifndef PLAYERS_SIGNUP_H
-#define PLAYERS_SIGNUP_H
-
-#include "Player/player.h"
-#include "RequestAndResopnse/ReqARes.h"
-
-QT_BEGIN_NAMESPACE
-class QComboBox;
-class QLabel;
-class QLineEdit;
-class QPushButton;
-class QTcpSocket;
-QT_END_NAMESPACE
-#include <QList>
-#include <QFile>
-#include<QJsonDocument>
-#include<QJsonObject>
-#include<QFile>
+#include <QDialog>
+#include <QTcpSocket>
 #include<QByteArray>
 #include<QJsonArray>
 #include<QJsonObject>
-#include<QDialog>
-#include"Player/player.h"
-class SignUp :public QDialog{
-Q_OBJECT
+#include<QLineEdit>
+#include <QDataStream>
+#include<QHostAddress>
+#include<QMessageBox>
+#include<QLabel>
+#include<QGridLayout>
+#include<QPushButton>
+#include<QDialogButtonBox>
+#include<QGuiApplication>
+#include<QJsonDocument>
+
+
+class signUp :public QDialog
+{
+    Q_OBJECT
 
 public:
-    explicit SignUp(QWidget *parent = nullptr);
+    signUp(QWidget *parent = nullptr);
 
 private slots:
     void connectToServer();
-    void read();
-    void displayError(QAbstractSocket::SocketError socketError);
+    void enableOkButton();
 
 private:
-
-
     QTcpSocket *tcpSocket = nullptr;
-    QDataStream in;
-    QString currentFortune;
-    QJsonObject message;
-
-
-
+    QLineEdit* name,*lastName,*password,*userName;
+    QPushButton*ok,*cancel;
+    void read();
 };
-
-
-
-#endif //PLAYERS_SIGNUP_H
+#endif // SIGNUP_H
