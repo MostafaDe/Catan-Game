@@ -49,13 +49,36 @@ public:
 
     void setId(int id);
 
+    bool getLogedIn() const;
+
+    void setLogedIn(bool newLogedIn);
+
+    bool getPlaying() const;
+
+    void setPlaying(bool newPlaying);
+
+    const QString &getUsername() const;
+    void setUsername(const QString &newUsername);
+
+    const QString &getName() const;
+    void setName(const QString &newName);
+
+    const QString &getLastName() const;
+    void setLastName(const QString &newLastName);
+
 private:
+    QString username;
+    QString name;
+    QString lastName;
     QList<Card*> cards;
     unsigned int score;
     Color color;
     QList<Competitor*> competitors;
     bool isTurn;
     QString password;
+    bool logedIn;
+    bool playing;
+
 
 
 

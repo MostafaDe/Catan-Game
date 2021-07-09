@@ -9,6 +9,56 @@ void Player::setId(int id) {
     Player::id = id;
 }
 
+bool Player::getLogedIn() const
+{
+    return logedIn;
+}
+
+void Player::setLogedIn(bool newLogedIn)
+{
+    logedIn = newLogedIn;
+}
+
+bool Player::getPlaying() const
+{
+    return playing;
+}
+
+void Player::setPlaying(bool newPlaying)
+{
+    playing = newPlaying;
+}
+
+const QString &Player::getUsername() const
+{
+    return username;
+}
+
+void Player::setUsername(const QString &newUsername)
+{
+    username = newUsername;
+}
+
+const QString &Player::getName() const
+{
+    return name;
+}
+
+void Player::setName(const QString &newName)
+{
+    name = newName;
+}
+
+const QString &Player::getLastName() const
+{
+    return lastName;
+}
+
+void Player::setLastName(const QString &newLastName)
+{
+    lastName = newLastName;
+}
+
 QTcpSocket *Player::getSocket() const {
     return socket;
 }
