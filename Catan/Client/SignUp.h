@@ -31,7 +31,7 @@ public:
     void setPlayer(Player *newPlayer);
 
 private slots:
-    void connectToServer();
+    void sendMessage();
     void enableOkButton();
     void read();
 

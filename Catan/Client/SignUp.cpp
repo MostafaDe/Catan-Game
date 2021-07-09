@@ -10,6 +10,7 @@ signUp::signUp(QWidget *parent)
 ,userName(new QLineEdit)
 
 {
+    tcpSocket->connectToHost(QHostAddress::LocalHost,8080);
 
     QLabel* name_label=new QLabel(tr("name :"));
     QLabel* lastName_label=new QLabel(tr("lastname :"));
@@ -48,15 +49,15 @@ signUp::signUp(QWidget *parent)
     connect(password, &QLineEdit::textChanged,
             this, &signUp::enableOkButton);
     connect(cancel, &QAbstractButton::clicked, this, &QWidget::close);
-    connect(ok,SIGNAL(clicked()),this,SLOT(connectToServer()));
+    connect(ok,SIGNAL(clicked()),this,SLOT(sendMessage()));
     connect(tcpSocket,&QTcpSocket::readyRead,this,&signUp::read);
 }
 
 
 
-void signUp::connectToServer()
+void signUp::sendMessage()
 {
-    tcpSocket->connectToHost(QHostAddress::LocalHost,8080);
+
     QJsonObject o;
     o["kind"] = "SignUp";
     o["name"]=name->text();
@@ -65,16 +66,8 @@ void signUp::connectToServer()
     o["password"]=password->text();
     QJsonDocument d(o);
     QString jsString = QString::fromLatin1(d.toJson());
-    if(tcpSocket->waitForConnected(3000))
-    {
-        this->tcpSocket->write(jsString.toLatin1());
-        tcpSocket->waitForBytesWritten(3000);
-        read();
-    }
-    else
-    {
-         QMessageBox::information(this,tr("connecting error"),tr("I can not find the server!\nPlease try again."));
-    }
+     this->tcpSocket->write(jsString.toLatin1());
+    tcpSocket->waitForBytesWritten(1000);
 
 }
 
@@ -86,18 +79,18 @@ void signUp::enableOkButton()
 
 void signUp::read()
 {
-    tcpSocket->waitForReadyRead(3000);
+    tcpSocket->waitForReadyRead(1000);
     QString readMess=tcpSocket->readAll();
     QJsonObject obj;
 
     QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
 
     obj = doc.object();
-    proccessMessage(&obj);
+
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
-            // initialize player
+            // do something
         }
 
         else{
@@ -111,7 +104,6 @@ void signUp::read()
 
 
 
-}
 
 Player *signUp::getPlayer() const
 {
