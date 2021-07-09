@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>GameData/playersData.json</file>
+    </qresource>
+</RCC>
