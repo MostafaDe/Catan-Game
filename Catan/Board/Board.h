@@ -4,7 +4,7 @@
 
 #ifndef SETTINGUPGOOGLETEST_BOARD_H
 #define SETTINGUPGOOGLETEST_BOARD_H
-
+#include"makeRandLand.h"
 #include <vector>
 #include <map>
 using namespace std;
@@ -25,13 +25,15 @@ public:
     virtual bool BuildTown(int postion) = 0;
     virtual bool BuildBridge(int postion) = 0;
     virtual vector<map<Color,int>> calculateScore(int SumOfDices) = 0;
-
+    virtual vector<vector<int>> mede_neiberhod_and_get()=0;//vectori of array 2d 
 
 
 protected:
    vector<UnitOfBoard*>  units;
    map<int,Land> randomNumbersToLands;
-   bool graphOfUnits[SIZE][SIZE];
+   //bool graphOfUnits[SIZE][SIZE];
+   map<int, string >deta_resurse;
+   map<int, int> date_dice;
 
 
 };
