@@ -66,9 +66,9 @@ void signUp::sendMessage()
     o["password"]=password->text();
     QJsonDocument d(o);
     QString jsString = QString::fromLatin1(d.toJson());
-     this->tcpSocket->write(jsString.toLatin1());
+    this->tcpSocket->write(jsString.toLatin1());
     tcpSocket->waitForBytesWritten(1000);
-
+    tcpSocket->waitForReadyRead(1000);
 }
 
 void signUp::enableOkButton()
@@ -79,7 +79,6 @@ void signUp::enableOkButton()
 
 void signUp::read()
 {
-    tcpSocket->waitForReadyRead(1000);
     QString readMess=tcpSocket->readAll();
     QJsonObject obj;
 
@@ -90,12 +89,21 @@ void signUp::read()
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
-            // do something
+            player=new Player();
+
+            /*player->setName(name->text());
+            player->setLastName(lastName->text());
+            player->setUsername(userName->text());
+            player->setPassword(password->text());
+            player->setSocket(tcpSocket);*/
+
+            this->close();
         }
 
         else{
-            // show o["errorMessage"] in sign up menu
-        }
+            QMessageBox err(this);
+            err.setText(obj["errorMessage"].toString());
+            }
     }
 }
 
