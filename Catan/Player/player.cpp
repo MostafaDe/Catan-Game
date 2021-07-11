@@ -1,13 +1,7 @@
 #include "player.h"
 
 
-int Player::getId() const {
-    return id;
-}
 
-void Player::setId(int id) {
-    Player::id = id;
-}
 
 bool Player::getLogedIn() const
 {
@@ -39,15 +33,29 @@ void Player::setUsername(const QString &newUsername)
     username = newUsername;
 }
 
-
-
-QTcpSocket *Player::getSocket() const {
-    return socket;
+int Player::getSocketDescriptor() const
+{
+    return socketDescriptor;
 }
 
-void Player::setSocket(QTcpSocket *socket) {
-    Player::socket = socket;
+void Player::setSocketDescriptor(int newSocketDescriptor)
+{
+    socketDescriptor = newSocketDescriptor;
 }
+
+const QVector<Competitor> &Player::getCompetitors() const
+{
+    return competitors;
+}
+
+void Player::setCompetitors(const QVector<Competitor> &newCompetitors)
+{
+    competitors = newCompetitors;
+}
+
+
+
+
 
 const QList<Card *> &Player::getCards() const {
     return cards;
@@ -73,13 +81,7 @@ void Player::setColor(Color color) {
     Player::color = color;
 }
 
-const QList<Competitor *> &Player::getCompetitors() const {
-    return competitors;
-}
 
-void Player::setCompetitors(const QList<Competitor *> &competitors) {
-    Player::competitors = competitors;
-}
 
 bool Player::getIsTurn() const {
     return isTurn;

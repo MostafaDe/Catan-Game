@@ -4,7 +4,7 @@
 #include<QString>
 #include<QTcpSocket>
 #include"Card/card.h"
-#include"Board/Color.h"
+#include"Color/Color.h"
 #include"competitor.h"
 
 #include <QList>
@@ -13,10 +13,10 @@ class Player
 public:
     Player() = default;
 private:
-    int id;
-    QTcpSocket* socket;
+
+
 public:
-    QTcpSocket *getSocket() const;
+
 
     bool getIsTurn() const;
 
@@ -26,9 +26,8 @@ public:
 
     void setIsTurn(bool isTurn);
 
-    const QList<Competitor *> &getCompetitors() const;
 
-    void setCompetitors(const QList<Competitor *> &competitors);
+
 
     Color getColor() const;
 
@@ -42,12 +41,9 @@ public:
 
     void setCards(const QList<Card *> &cards);
 
-    void setSocket(QTcpSocket *socket);
 
 public:
-    int getId() const;
 
-    void setId(int id);
 
     bool getLogedIn() const;
 
@@ -61,13 +57,20 @@ public:
     void setUsername(const QString &newUsername);
 
 
+
+    int getSocketDescriptor() const;
+    void setSocketDescriptor(int newSocketDescriptor);
+
+    const QVector<Competitor> &getCompetitors() const;
+    void setCompetitors(const QVector<Competitor> &newCompetitors);
+
 private:
     QString username;
 
     QList<Card*> cards;
     unsigned int score;
     Color color;
-    QList<Competitor*> competitors;
+    QVector<Competitor> competitors;
     bool isTurn;
     QString password;
     bool logedIn;

@@ -2,7 +2,7 @@
 #define COMPETITOR_H
 
 #include<QString>
-#include"Board/Color.h"
+#include"Color/Color.h"
 class Competitor
 {
 public:
@@ -10,24 +10,31 @@ public:
 
 private:
 public:
-    const QString &getName() const;
+
 
     int getScore() const;
 
     void setScore(int score);
 
-    void setName(const QString &name);
+
 
 private:
-    QString name;
-    int score;
+    QString username;
+    int score = 0;
 public:
     Color getColor() const;
 
     void setColor(Color color);
 
+    int getSocketDescriptor() const;
+    void setSocketDescriptor(int newSocketDescriptor);
+
+    const QString &getUsername() const;
+    void setUsername(const QString &newUsername);
+
 private:
     Color color;
+    int socketDescriptor;
 
 
 };
