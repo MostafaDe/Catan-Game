@@ -16,7 +16,7 @@
 #include<QDialogButtonBox>
 #include<QGuiApplication>
 #include<QJsonDocument>
-#include"player/player.h"
+#include"Player/player.h"
 
 class LogIn : public QDialog
 {

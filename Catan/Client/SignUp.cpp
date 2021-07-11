@@ -86,7 +86,7 @@ void signUp::read()
     QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
 
     obj = doc.object();
-
+qDebug() << obj;
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
@@ -96,5 +96,3 @@ void signUp::read()
         else{
             error_label->setText(obj["errorMessage"].toString());
         }
-    }
-}

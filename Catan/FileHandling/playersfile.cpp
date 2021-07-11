@@ -32,10 +32,11 @@ PlayersFile::PlayersFile()
 bool PlayersFile::addPlayer(QJsonObject *_jsObject)
 {
 
-
+if(usernameExist((*_jsObject)["username"].toString()))
+    throw 0;
     if(!(*file).open(QIODevice::WriteOnly)){
         qDebug() << "not opened";
-        return false;
+        throw 1;
 
 }
     QJsonDocument jsDoc ;

@@ -60,16 +60,10 @@ public:
     const QString &getUsername() const;
     void setUsername(const QString &newUsername);
 
-    const QString &getName() const;
-    void setName(const QString &newName);
-
-    const QString &getLastName() const;
-    void setLastName(const QString &newLastName);
 
 private:
     QString username;
-    QString name;
-    QString lastName;
+
     QList<Card*> cards;
     unsigned int score;
     Color color;
@@ -78,6 +72,7 @@ private:
     QString password;
     bool logedIn;
     bool playing;
+    int socketDescriptor;
 
 
 

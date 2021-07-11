@@ -10,7 +10,7 @@
 #include<QJsonDocument>
 #include<QJsonObject>
 
-
+#include"FileHandling/playersfile.h"
 #include<QTcpSocket>
 #include <QThread>
 #include<QMap>
@@ -26,18 +26,20 @@ public:
 
 
 
+
 public slots:
 
+  void signUp(QJsonObject message,int socketDescriptor);
+  void logIn(QString username , QString password,int socketDescriptor);
 
-
-
+signals:
+  void  sendMessage(QJsonObject message,int socketDescriptor);
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
 
 private:
 
-    QMap<QTcpSocket*,Player*> socketToPlayers;
-
+       PlayersFile file;
 
 
 };
