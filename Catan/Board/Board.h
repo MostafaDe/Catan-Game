@@ -26,7 +26,8 @@ public:
     virtual bool BuildBridge(int postion) = 0;
     virtual vector<map<Color,int>> calculateScore(int SumOfDices) = 0;
     virtual vector<vector<int>> mede_neiberhod_and_get()=0;//vectori of array 2d 
-
+    virtual map<int,string> get_data_source()=0;
+    virtual map<int,int> get_data_dice()=0;
 
 protected:
    vector<UnitOfBoard*>  units;
