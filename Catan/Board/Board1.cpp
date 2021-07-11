@@ -237,11 +237,3 @@ vector<vector<int>> Board1::mede_neiberhod_and_get() {
 
 
 }
- map<int,string> Board1:: get_data_source(){
-  return deta_resurse;   
- }
-   map<int,int> Board1:: get_data_dice(){
-       
-       return date_dice;
-   }
-
