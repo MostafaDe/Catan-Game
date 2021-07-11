@@ -16,7 +16,6 @@
 #include<QDialogButtonBox>
 #include<QGuiApplication>
 #include<QJsonDocument>
-#include"player/player.h"
 
 class signUp :public QDialog
 {
@@ -24,10 +23,6 @@ class signUp :public QDialog
 
 public:
     signUp(QWidget *parent = nullptr);
-
-
-    Player *getPlayer() const;
-    void setPlayer(Player *newPlayer);
 
 private slots:
     void sendMessage();
@@ -38,7 +33,6 @@ private:
     QTcpSocket *tcpSocket = nullptr;
     QLineEdit* name,*lastName,*password,*userName;
     QPushButton*ok,*cancel;
-    Player* player;
-
+    QLabel* error_label;
 };
 #endif // SIGNUP_H

@@ -2,7 +2,7 @@
 #define COMPETITOR_H
 
 #include<QString>
-#include"Color/Color.h"
+#include"Board/Color.h"
 class Competitor
 {
 public:

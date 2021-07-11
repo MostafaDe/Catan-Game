@@ -5,6 +5,7 @@ LogIn::LogIn(QWidget *parent)
 , tcpSocket(new QTcpSocket(this))
 ,password(new QLineEdit)
 ,userName(new QLineEdit)
+,error_label(new QLabel(tr(" ")))
 
 {
     tcpSocket->connectToHost(QHostAddress::LocalHost,8080);
@@ -23,9 +24,10 @@ LogIn::LogIn(QWidget *parent)
     mainLayout->addWidget(userName,0,1);
     mainLayout->addWidget(password_label,1,0);
     mainLayout->addWidget(password,1,1);
-    mainLayout->addWidget(buttonBox, 2, 0, 1, 2);
+    mainLayout->addWidget(error_label,2, 0, 1, 2);
+    mainLayout->addWidget(buttonBox, 3, 0, 1, 2);
 
-    setWindowTitle(QGuiApplication::applicationDisplayName());
+    setWindowTitle("log in");
     userName->setFocus();
     password->setEchoMode(QLineEdit::Password);
     ok->setDefault(true);
@@ -77,13 +79,18 @@ void LogIn::read()
 
             player->setUsername(userName->text());
             player->setPassword(password->text());
+            player->setName(obj["name"].toString());
+            player->setLastName(obj["last name"].toString());
+            player->setSocket(tcpSocket);
+
+            ////inja nemidoonam chia ro dige baiad meghdar dehi konam////
+
             this->close();
         }
 
         else{
-            QMessageBox err(this);
-            err.setText(obj["errorMessage"].toString());
-            }
+            error_label->setText(obj["errorMessage"].toString());
+        }
     }
 }
 

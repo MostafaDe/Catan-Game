@@ -4,7 +4,7 @@
 #include<QString>
 #include<QTcpSocket>
 #include"Card/card.h"
-#include"Color/Color.h"
+#include"Board/Color.h"
 #include"competitor.h"
 
 #include <QList>

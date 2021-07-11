@@ -8,6 +8,7 @@ signUp::signUp(QWidget *parent)
 ,lastName(new QLineEdit)
 ,password(new QLineEdit)
 ,userName(new QLineEdit)
+,error_label(new QLabel(tr(" ")))
 
 {
     tcpSocket->connectToHost(QHostAddress::LocalHost,8080);
@@ -34,7 +35,7 @@ signUp::signUp(QWidget *parent)
     mainLayout->addWidget(password,3,1);
     mainLayout->addWidget(buttonBox, 4, 0, 1, 2);
 
-    setWindowTitle(QGuiApplication::applicationDisplayName());
+    setWindowTitle("sign up");
     name->setFocus();
     password->setEchoMode(QLineEdit::Password);
     ok->setDefault(true);
@@ -89,37 +90,11 @@ void signUp::read()
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
-            player=new Player();
-
-            /*player->setName(name->text());
-            player->setLastName(lastName->text());
-            player->setUsername(userName->text());
-            player->setPassword(password->text());
-            player->setSocket(tcpSocket);*/
-
             this->close();
         }
 
         else{
-            QMessageBox err(this);
-            err.setText(obj["errorMessage"].toString());
-            }
+            error_label->setText(obj["errorMessage"].toString());
+        }
     }
 }
-
-
-
-
-
-
-
-Player *signUp::getPlayer() const
-{
-    return player;
-}
-
-void signUp::setPlayer(Player *newPlayer)
-{
-    player = newPlayer;
-}
-
