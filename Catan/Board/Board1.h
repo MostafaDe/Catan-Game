@@ -16,6 +16,8 @@ public:
      bool BuildBridge(int postion,Color color);
      virtual vector<vector<int>> mede_neiberhod_and_get();
     vector<map<Color,int>> calculateScore(int SumOfDices) ;
+      map<int,string> get_data_source();
+     map<int,int> get_data_dice();
 
 };
 
