@@ -33,7 +33,8 @@ signUp::signUp(QWidget *parent)
     mainLayout->addWidget(userName,2,1);
     mainLayout->addWidget(password_label,3,0);
     mainLayout->addWidget(password,3,1);
-    mainLayout->addWidget(buttonBox, 4, 0, 1, 2);
+    mainLayout->addWidget(error_label, 4, 0, 1, 2);
+    mainLayout->addWidget(buttonBox, 5, 0, 1, 2);
 
     setWindowTitle("sign up");
     name->setFocus();
@@ -86,7 +87,7 @@ void signUp::read()
     QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
 
     obj = doc.object();
-qDebug() << obj;
+
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
@@ -96,3 +97,5 @@ qDebug() << obj;
         else{
             error_label->setText(obj["errorMessage"].toString());
         }
+    }
+}
