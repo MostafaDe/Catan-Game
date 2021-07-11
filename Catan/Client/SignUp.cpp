@@ -85,11 +85,11 @@ void signUp::read()
     QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
 
     obj = doc.object();
-
+qDebug() << obj;
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
-            player=new Player();
+
 
             /*player->setName(name->text());
             player->setLastName(lastName->text());
@@ -103,6 +103,7 @@ void signUp::read()
         else{
             QMessageBox err(this);
             err.setText(obj["errorMessage"].toString());
+            err.show();
             }
     }
 }
