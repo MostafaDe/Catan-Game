@@ -10,8 +10,7 @@ class PlayersFile
 {
 public:
 //    static PlayersFile* createObject();
-     PlayersFile();
-
+    PlayersFile();
     bool addPlayer(QJsonObject* jsObject); // if adding was succesful return true else return false
     bool usernameExist(QString username);
     bool deletePlayer(QString username);// if deleting was succesful return true else return false
