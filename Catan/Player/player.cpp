@@ -39,25 +39,7 @@ void Player::setUsername(const QString &newUsername)
     username = newUsername;
 }
 
-const QString &Player::getName() const
-{
-    return name;
-}
 
-void Player::setName(const QString &newName)
-{
-    name = newName;
-}
-
-const QString &Player::getLastName() const
-{
-    return lastName;
-}
-
-void Player::setLastName(const QString &newLastName)
-{
-    lastName = newLastName;
-}
 
 QTcpSocket *Player::getSocket() const {
     return socket;
