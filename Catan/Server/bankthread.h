@@ -6,6 +6,7 @@
 #include<QJsonObject>
 #include"FileHandling/playersfile.h"
 #include"Player/player.h"
+
 class BankThread
 
 :public QThread {
@@ -17,20 +18,31 @@ public:
 
     void respone(QJsonObject message);
     void run() override;
-    void signUp(QJsonObject message);
-    void logIn(QJsonObject message);
+
+
     void  sendJson(QJsonObject message);
+signals:
+    void readyPlay();
+    void signUp(QJsonObject message,int socketDecriptor);
+    void logIn(QString username,QString Password,int socketDescriptor);
+    void cancelReadyPlay();
 public slots:
     void readyRead();
     void disconnected();
+    void startGame();
+    void setMessage(QJsonObject message,int _socketDescriptor);
+
+
 signals:
     void error(QTcpSocket::SocketError socketError);
+
 
 private:
     int socketDescriptor;
     QString text;
     QTcpSocket* tcpSocket;
     Player* player;
+    QJsonObject message;
 
 };
 

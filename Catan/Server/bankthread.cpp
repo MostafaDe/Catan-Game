@@ -1,18 +1,17 @@
 #include "bankthread.h"
 #include <QtNetwork>
-
+#include"banksource.h"
 BankThread::BankThread(Player* _player,int socketDescriptor, QObject *parent)
 
     :QThread(parent), socketDescriptor(socketDescriptor)
 {
     player = _player;
 
-
 }
 
 BankThread::~BankThread()
 {
-    delete tcpSocket;
+
     delete player;
 }
 
@@ -21,13 +20,20 @@ BankThread::~BankThread()
 void BankThread::respone(QJsonObject message )
 {
     if(message["kind"] == "SignUp"){
-        signUp(message);
+        emit signUp(message,socketDescriptor);
+
+
         return ;
     }
     if(message["kind"] == "LogIn"){
-        logIn(message);
+        emit logIn(message["username"].toString(),message["password"].toString(),socketDescriptor);
+
+
         return ;
     }
+
+
+
 
 }
 
@@ -51,36 +57,17 @@ void BankThread::run()
 
 }
 
-void BankThread::signUp(QJsonObject message)
-{
-    PlayersFile pf;
-    QJsonObject jsObj;
-   if( pf.addPlayer(&message))
-   {
-       jsObj["kind"] = "SignUp";
-       jsObj["success"] = true;
-       sendJson(message);
-       return;
-   }
-       jsObj["kind"] = "SignUp";
-       jsObj["success"] = false;
-       jsObj["errorMessage"] = "invalid request";
-       sendJson(message);
 
 
 
-}
-
-void BankThread::logIn(QJsonObject message)
-{
-
-}
 
 void BankThread::sendJson(QJsonObject message)
 {
+
     QJsonDocument jsDoc;
     jsDoc.setObject(message);
     tcpSocket->write(jsDoc.toJson());
+
 }
 
 void BankThread::readyRead()
@@ -93,6 +80,8 @@ void BankThread::readyRead()
 
     QJsonDocument doc = QJsonDocument::fromJson(message.toUtf8());
     respone(doc.object());
+    sleep(1);
+    sendJson(this->message);
 
 }
 
@@ -102,3 +91,19 @@ void BankThread::disconnected()
     tcpSocket->deleteLater();
     exit(0);
 }
+
+void BankThread::startGame()
+{
+
+}
+
+void BankThread::setMessage(QJsonObject _message,int _socketDescriptor)
+{
+    if(socketDescriptor == _socketDescriptor){
+    qDebug() << _message;
+    message = _message;
+}
+    return;
+}
+
+

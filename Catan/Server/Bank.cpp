@@ -17,7 +17,6 @@ Bank::Bank(QObject *parent)
 //    jo["hassan"] = "45645";
 //    QJsonDocument jsDoc(jo);
 //    QString jsString = QString::fromLatin1(jsDoc.toJson());
-
 //    fortunes << jsString;
 
 
@@ -33,17 +32,76 @@ void Bank::startServer()
 }
 
 
+void Bank::signUp(QJsonObject message,int socketDescriptor)
+{
+    QJsonObject jsObj;
+
+
+jsObj["kind"] = "SignUp";
+try{
+        file.addPlayer(&message);
+
+
+           jsObj["success"] = true;
+           emit sendMessage(jsObj,socketDescriptor);
+           return;
+
+
+
+}catch(int errorType){
+    jsObj["success"] = false;
+    if(errorType == 0){
+        jsObj["errorMessage"] = "usename exists please try another one";
+        emit sendMessage(jsObj,socketDescriptor);
+        return;
+    }
+    if(errorType == 1){
+         jsObj["errorMessage"] = "error while signing you up please try again";
+         emit sendMessage(jsObj,socketDescriptor);
+    }
+}
+
+}
+
+void Bank::logIn(QString username, QString password, int socketDescriptor)
+{
+     QJsonObject jsObj;
+     jsObj["kind"] = "LogIn";
+    if( file.logIn(username,password))
+    {
+
+        jsObj["success"] = true;
+        emit sendMessage(jsObj,socketDescriptor);
+        return;
+    }
+        jsObj["errorMessage"] = "Wrong Username or Password";
+        jsObj["success"] = false;
+        emit sendMessage(jsObj,socketDescriptor);
+        return ;
+
+        ;
+}
+
+
 void Bank::incomingConnection(qintptr socketDescriptor)
 {
     QTcpSocket *socket = new QTcpSocket;
 
     socket->setSocketDescriptor(socketDescriptor);
     Player* player = new Player;
-    socketToPlayers[socket] = player;
     qDebug() << "new connection";
     BankThread * bankTh = new BankThread(player,socketDescriptor,this);
+
     connect(bankTh,&QThread::finished,bankTh,&QThread::deleteLater);
+    connect(bankTh,&BankThread::signUp,this,&Bank::signUp);
+
+
+    connect(this,&Bank::sendMessage,bankTh,&BankThread::setMessage);
+     connect(bankTh,&BankThread::logIn,this,&Bank::logIn);
+
+
     bankTh->start();
+
 
 //static int i =0;
 //i++;
@@ -74,9 +132,6 @@ void Bank::incomingConnection(qintptr socketDescriptor)
 //           return;
 //          }
 //    }
-
-
-
 
 }
 
