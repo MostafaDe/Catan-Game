@@ -15,7 +15,9 @@ public:
     bool BuildTown(int postion,Color color);
      bool BuildBridge(int postion,Color color);
      virtual vector<vector<int>> mede_neiberhod_and_get();
-    vector<map<Color,int>> calculateScore(int SumOfDices) ;
+   // vector<map<Color,int>> calculateScore(int SumOfDices) ;
+     QJsonObject get_board_information();
+
 
 };
 

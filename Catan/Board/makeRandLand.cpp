@@ -49,7 +49,7 @@ makeRandLand::makeRandLand(int number, int ir, int sh, int ro, int wh, int tr,in
 			g = "rock";
 			string m;
 			m = g;
-			result_resurce[y + 1] = "r";
+            result_resurce[y + 1] = "rock";
 
 		}
 	}

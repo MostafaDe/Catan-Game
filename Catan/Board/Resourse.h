@@ -8,9 +8,9 @@
 #include "Land.h"
 class Resourse : protected Land{
 public:
-    virtual int  Resourse ::getPostion() const = 0;
+    //virtual int  Resourse ::getPostion() const = 0;
 
-    virtual void  Resourse ::setPostion(int postion) = 0;
+   // virtual void  Resourse ::setPostion(int postion) = 0;
 };
 
 

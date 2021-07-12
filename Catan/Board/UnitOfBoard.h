@@ -10,9 +10,9 @@ class UnitOfBoard {
 protected:
     int postion;
 public:
-    virtual int UnitOfBoard::getPostion() const = 0;
+    //virtual int UnitOfBoard::getPostion() const = 0;
 
-    virtual void UnitOfBoard::setPostion(int postion) = 0;
+    //virtual void UnitOfBoard::setPostion(int postion) = 0;
 };
 
 

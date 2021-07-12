@@ -8,9 +8,9 @@
 #include "Resourse.h"
 class Iron : private Resourse{
 public:
-    int  Iron::getPostion() const ;
+   // int  Iron::getPostion() const ;
 
-    void  Iron::setPostion(int postion) ;
+  //  void  Iron::setPostion(int postion) ;
 };
 
 

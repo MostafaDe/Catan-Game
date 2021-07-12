@@ -11,9 +11,9 @@ class Building :UnitOfBoard {
 protected:
     Color color;
 public:
-    virtual int  Building::getPostion() const = 0;
+    //virtual int  Building::getPostion() const = 0;
 
-    virtual void  Building::setPostion(int postion) = 0;
+    //virtual void  Building::setPostion(int postion) = 0;
 
 };
 

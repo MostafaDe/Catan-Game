@@ -8,9 +8,9 @@
 #include "Building.h"
 class Land : protected Building{
 public:
-    virtual int Land ::getPostion() const = 0;
+    //virtual int Land ::getPostion() const = 0;
 
-    virtual void Land ::setPostion(int postion) = 0;
+    //virtual void Land ::setPostion(int postion) = 0;
 };
 
 

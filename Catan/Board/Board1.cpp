@@ -237,3 +237,34 @@ vector<vector<int>> Board1::mede_neiberhod_and_get() {
 
 
 }
+
+QJsonObject Board1::get_board_information()
+{
+
+    QJsonObject jo,j1,j2;
+    for(int i=1;i<=28;i++){
+QString m;
+m=QString::number(i);
+        j1[m]=QString::fromStdString( deta_resurse[i]);
+
+
+    }
+    for(int i=1;i<=28;i++){
+QString m;
+m=QString::number(i);
+        j2[m]= date_dice[i];
+
+
+    }
+jo["data_source"]=j1;
+jo["data_dice"]=j2;
+
+
+return jo;
+
+}
+
+
+
+
+
