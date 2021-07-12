@@ -17,13 +17,14 @@ public:
 //    QJsonValue & operator[](QString username);/* implement latter */
     bool logIn(QString username,QString password);// if logIn was succesful return true else return false
 //    void logOut(QString username,QString password);/* implement latter */
-
+    void logOut(QString username);
     bool EditPlayer(QString username);
     ~PlayersFile();
 
 private:
     QJsonObject* jsObject;
     QFile* file;
+    QList<QString> logInUsernames;
 
 
 

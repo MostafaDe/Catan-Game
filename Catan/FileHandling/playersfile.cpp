@@ -80,10 +80,28 @@ bool PlayersFile::deletePlayer(QString username)
 bool PlayersFile::logIn(QString username, QString password)
 {
     if(!usernameExist(username))
-        return false;
-     if((*jsObject)[username].toObject()["password"] == password)
-         return true;
-     return false;
+        throw 0;
+    for(int i = 0; i < logInUsernames.size();i++){
+        if(logInUsernames.at(i) == username)
+            throw  1;
+    }
+     if((*jsObject)[username].toObject()["password"] == password){
+         logInUsernames.append(username);
+          return true;
+
+     }
+
+     return true;
+}
+
+void PlayersFile::logOut(QString username)
+{
+    for(int i = 0;i<logInUsernames.size();i++){
+        if(username == logInUsernames.at(i)){
+            logInUsernames.removeAt(i);
+            break;
+        }
+    }
 }
 
 
