@@ -1,18 +1,18 @@
 #include "bankthread.h"
 #include <QtNetwork>
 #include"banksource.h"
-BankThread::BankThread(Player* _player,int socketDescriptor, QObject *parent)
+BankThread::BankThread(int socketDescriptor, QObject *parent)
 
     :QThread(parent), socketDescriptor(socketDescriptor)
 {
-    player = _player;
+
 
 }
 
 BankThread::~BankThread()
 {
 
-    delete player;
+
 }
 
 
@@ -28,8 +28,18 @@ void BankThread::respone(QJsonObject message )
     if(message["kind"] == "LogIn"){
         emit logIn(message["username"].toString(),message["password"].toString(),socketDescriptor);
 
-
+        username =message["username"].toString();
         return ;
+    }
+    if(message["kind"] == "ReadyToPlay"){
+        readyToPlaying = true;
+        emit readyPlay(socketDescriptor,username);
+        return;
+    }
+    if(message["kind"] == "Gaming"){
+        readyToPlaying = true;
+        emit gaming(message,socketDescriptor);
+        return;
     }
 
 
@@ -68,6 +78,7 @@ void BankThread::sendJson(QJsonObject message)
     jsDoc.setObject(message);
     tcpSocket->write(jsDoc.toJson());
 
+
 }
 
 void BankThread::readyRead()
@@ -80,14 +91,21 @@ void BankThread::readyRead()
 
     QJsonDocument doc = QJsonDocument::fromJson(message.toUtf8());
     respone(doc.object());
-    sleep(1);
+    sleep(2);
+    while(preMessage == this->message)
+        sleep(1);
     sendJson(this->message);
+    preMessage = this->message;
 
 }
 
 void BankThread::disconnected()
 {
     qDebug() << "disconnected";
+    if(readyToPlaying)
+        emit notReadyPlay(socketDescriptor);
+//    if(logedin)
+        emit logOut(username);
     tcpSocket->deleteLater();
     exit(0);
 }
@@ -99,6 +117,9 @@ void BankThread::startGame()
 
 void BankThread::setMessage(QJsonObject _message,int _socketDescriptor)
 {
+    static int numberOfMessage = 0;
+    numberOfMessage++;
+    _message["numberOfMessage"] = numberOfMessage;
     if(socketDescriptor == _socketDescriptor){
     qDebug() << _message;
     message = _message;

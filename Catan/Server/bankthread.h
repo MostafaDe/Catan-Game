@@ -13,7 +13,7 @@ class BankThread
     Q_OBJECT
 
 public:
-    BankThread(Player *player,int socketDescriptor, QObject *parent);
+    BankThread(int socketDescriptor, QObject *parent);
   ~BankThread();
 
     void respone(QJsonObject message);
@@ -22,10 +22,13 @@ public:
 
     void  sendJson(QJsonObject message);
 signals:
-    void readyPlay();
+    void readyPlay(int socketDescriptor,QString username);
+    void notReadyPlay(int socketDescriptor);
     void signUp(QJsonObject message,int socketDecriptor);
     void logIn(QString username,QString Password,int socketDescriptor);
     void cancelReadyPlay();
+    void logOut(QString username);
+    void gaming(QJsonObject message,int socketDescriptor);
 public slots:
     void readyRead();
     void disconnected();
@@ -35,14 +38,19 @@ public slots:
 
 signals:
     void error(QTcpSocket::SocketError socketError);
+    void readyToPlay();
 
 
 private:
     int socketDescriptor;
     QString text;
     QTcpSocket* tcpSocket;
-    Player* player;
+    QString username;
     QJsonObject message;
+    QJsonObject preMessage;
+    bool readyToPlaying = false;
+    bool logedin = false;
+
 
 };
 
