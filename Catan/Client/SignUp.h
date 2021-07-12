@@ -16,6 +16,7 @@
 #include<QDialogButtonBox>
 #include<QGuiApplication>
 #include<QJsonDocument>
+#include"FirstPage.h"
 
 class signUp :public QDialog
 {

@@ -16,7 +16,7 @@
 #include<QDialogButtonBox>
 #include<QGuiApplication>
 #include<QJsonDocument>
-#include"Player/player.h"
+#include"Client/readyToStart.h"
 
 class LogIn : public QDialog
 {
@@ -25,8 +25,6 @@ class LogIn : public QDialog
 public:
     LogIn(QWidget *parent = nullptr);
 
-    Player *getPlayer() const;
-    void setPlayer(Player *newPlayer);
 private slots:
     void sendMessage();
     void enableOkButton();
@@ -36,8 +34,6 @@ private:
     QTcpSocket *tcpSocket = nullptr;
     QLineEdit*password,*userName;
     QPushButton*ok,*cancel;
-    Player* player;
     QLabel* error_label;
-
 };
 #endif // LOGIN_H

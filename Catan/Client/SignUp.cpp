@@ -91,6 +91,9 @@ void signUp::read()
     if(obj["kind"] == "SignUp"){
         if(obj["success"].toBool())
         {
+            FirstPage *f=new FirstPage();
+            f->show();
+
             this->close();
         }
 

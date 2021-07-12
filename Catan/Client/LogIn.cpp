@@ -2,7 +2,7 @@
 
 LogIn::LogIn(QWidget *parent)
     : QDialog(parent)
-, tcpSocket(new QTcpSocket(this))
+, tcpSocket(new QTcpSocket)
 ,password(new QLineEdit)
 ,userName(new QLineEdit)
 ,error_label(new QLabel(tr(" ")))
@@ -75,16 +75,8 @@ void LogIn::read()
     if(obj["kind"] == "LogIn"){
         if(obj["success"].toBool())
         {
-            player=new Player();
-
-            player->setUsername(userName->text());
-            player->setPassword(password->text());
-            player->setName(obj["name"].toString());
-            player->setLastName(obj["last name"].toString());
-            player->setSocket(tcpSocket);
-
-            ////inja nemidoonam chia ro dige baiad meghdar dehi konam////
-
+            readyToStart*r=new readyToStart(tcpSocket);
+            r->show();
             this->close();
         }
 
@@ -94,15 +86,3 @@ void LogIn::read()
     }
 }
 
-
-
-
-Player *LogIn::getPlayer() const
-{
-    return player;
-}
-
-void LogIn::setPlayer(Player *newPlayer)
-{
-    player = newPlayer;
-}

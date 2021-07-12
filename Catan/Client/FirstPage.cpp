@@ -19,13 +19,17 @@ FirstPage::FirstPage(QWidget *parent)
 
 void FirstPage::clicked_signUp()
 {
-    signUp* page1=new signUp(this);
+    signUp* page1=new signUp();
     page1->show();
+    this->close();
+
 }
 
 void FirstPage::clicked_logIn()
 {
-    LogIn* page2=new LogIn(this);
+    LogIn* page2=new LogIn();
     page2->show();
+    this->close();
 }
+
 
