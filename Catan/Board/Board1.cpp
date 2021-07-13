@@ -228,6 +228,518 @@ vector<vector<int>> Board1::mede_neiberhod_and_get() {
     y[n].push_back(3);
     x.push_back(y[n]);
 
+    n++;
+    y[n].push_back(1);
+    y[n].push_back(-4);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(1);
+    y[n].push_back(-3);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(1);
+    y[n].push_back(-30);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(1);
+    y[n].push_back(-29);
+    y[n].push_back(3);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(1);
+    y[n].push_back(-28);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(2);
+    y[n].push_back(-4);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(2);
+    y[n].push_back(-28);
+    y[n].push_back(3);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(2);
+    y[n].push_back(-27);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(2);
+    y[n].push_back(-26);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(2);
+    y[n].push_back(-5);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+
+
+    for (int i = 0; i < 4; i++) {
+
+        n++;
+        y[n].push_back(28);
+        y[n].push_back(-26 + i);
+        y[n].push_back(2 + i);
+        x.push_back(y[n]);
+
+
+
+
+    }
+
+
+    n++;
+    y[n].push_back(28);
+    y[n].push_back(-6);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+
+
+
+
+    n++;
+    y[n].push_back(26);
+    y[n].push_back(-6);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(26);
+    y[n].push_back(-7);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(26);
+    y[n].push_back(-23);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+
+
+
+    n++;
+    y[n].push_back(25);
+    y[n].push_back(-7);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(25);
+    y[n].push_back(-8);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(25);
+    y[n].push_back(-20);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+
+
+
+
+    n++;
+    y[n].push_back(24);
+    y[n].push_back(-8);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(24);
+    y[n].push_back(-9);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(24);
+    y[n].push_back(-17);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(24);
+    y[n].push_back(-19);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(24);
+    y[n].push_back(-20);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+
+
+
+
+
+    for (int i = 0; i < 4; i++) {
+
+        n++;
+        y[n].push_back(28);
+        y[n].push_back(-23 + i);
+        y[n].push_back(3 + i);
+        x.push_back(y[n]);
+
+
+
+
+    }
+
+
+
+
+
+
+    n++;
+    y[n].push_back(23);
+    y[n].push_back(-10);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(23);
+    y[n].push_back(-9);
+    y[n].push_back(3);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(23);
+    y[n].push_back(-17);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(23);
+    y[n].push_back(-16);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(23);
+    y[n].push_back(-15);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+
+
+
+
+
+
+    n++;
+    y[n].push_back(22);
+    y[n].push_back(-13);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(22);
+    y[n].push_back(-10);
+    y[n].push_back(3);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(22);
+    y[n].push_back(-11);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(22);
+    y[n].push_back(-15);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(22);
+    y[n].push_back(-14);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+    for (int i = 0; i < 3; i++) {
+
+        n++;
+        y[n].push_back(3 + i);
+        y[n].push_back(-3 - i);
+        y[n].push_back(3);
+        x.push_back(y[n]);
+
+    }
+
+    for (int i = 0; i < 3; i++) {
+
+        n++;
+        y[n].push_back(3 + i);
+        y[n].push_back(-4 - i);
+        y[n].push_back(4);
+        x.push_back(y[n]);
+
+    }
+
+
+
+    n++;
+    y[n].push_back(3);
+    y[n].push_back(-2);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+
+
+
+    n++;
+    y[n].push_back(6);
+    y[n].push_back(-2);
+    y[n].push_back(3);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(6);
+    y[n].push_back(-1);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+
+    n++;
+    y[n].push_back(10);
+    y[n].push_back(-1);
+    y[n].push_back(3);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(10);
+    y[n].push_back(-31);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(10);
+    y[n].push_back(-32);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(15);
+    y[n].push_back(-32);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(15);
+    y[n].push_back(-33);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+
+
+
+
+    n++;
+    y[n].push_back(19);
+    y[n].push_back(-33);
+    y[n].push_back(2);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(19);
+    y[n].push_back(-34);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(19);
+    y[n].push_back(-35);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(20);
+    y[n].push_back(-36);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(20);
+    y[n].push_back(-35);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+
+
+
+
+
+
+
+    n++;
+    y[n].push_back(21);
+    y[n].push_back(-11);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(21);
+    y[n].push_back(-36);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(21);
+    y[n].push_back(-12);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+
+
+
+
+
+
+    n++;
+    y[n].push_back(18);
+    y[n].push_back(-11);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(18);
+    y[n].push_back(-10);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+
+
+
+
+    n++;
+    y[n].push_back(14);
+    y[n].push_back(-10);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(14);
+    y[n].push_back(-9);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(14);
+    y[n].push_back(-8);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(9);
+    y[n].push_back(-8);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(9);
+    y[n].push_back(-7);
+    y[n].push_back(4);
+    x.push_back(y[n]);
+
+
+
+    n++;
+    y[n].push_back(5);
+    y[n].push_back(-7);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+    for (int i = 0; i < 8; i++) {
+
+
+        n++;
+        y[n].push_back(-4 - i);
+        y[n].push_back(-3 - i);
+        y[n].push_back(2);
+        x.push_back(y[n]);
+
+
+
+    }
+
+    for (int i = 0; i < 4; i++) {
+
+
+        n++;
+        y[n].push_back(-13 - i);
+        y[n].push_back(-14 - i);
+        y[n].push_back(4);
+        x.push_back(y[n]);
+
+
+    }
+
+    n++;
+    y[n].push_back(-26);
+    y[n].push_back(-5);
+    y[n].push_back(1);
+    x.push_back(y[n]);
+
+    n++;
+    y[n].push_back(-26);
+    y[n].push_back(-6);
+    y[n].push_back(6);
+    x.push_back(y[n]);
+
+
+
+
+
+    n++;
+    y[n].push_back(-9);
+    y[n].push_back(-17);
+    y[n].push_back(5);
+    x.push_back(y[n]);
+
+
+
+
 
 
 
