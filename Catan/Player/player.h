@@ -3,28 +3,27 @@
 
 #include<QString>
 #include<QTcpSocket>
-#include"Card/card.h"
+
 #include"Color/Color.h"
 #include"competitor.h"
 
 #include <QList>
 class Player
 {
+
+
+
+
 public:
+
+
+
     Player() = default;
-private:
-
-
-public:
-
-
-    bool getIsTurn() const;
-
     const QString &getPassword() const;
 
     void setPassword(const QString &password);
 
-    void setIsTurn(bool isTurn);
+
 
 
 
@@ -37,17 +36,11 @@ public:
 
     void setScore(unsigned int score);
 
-    const QList<Card *> &getCards() const;
-
-    void setCards(const QList<Card *> &cards);
 
 
-public:
 
 
-    bool getLogedIn() const;
 
-    void setLogedIn(bool newLogedIn);
 
     bool getPlaying() const;
 
@@ -64,20 +57,61 @@ public:
     const QVector<Competitor> &getCompetitors() const;
     void setCompetitors(const QVector<Competitor> &newCompetitors);
 
+    int getCountOfShowaleyeCards() const;
+    void setCountOfShowaleyeCards(int newCountOfShowaleyeCards);
+
+    int getCountOfPointCards() const;
+    void setCountOfPointCards(int newCountOfPointCards);
+
+    int getCountOfWheatCards() const;
+    void setCountOfWheatCards(int newCountOfWheatCards);
+
+    int getCountOfSheepCards() const;
+    void setCountOfSheepCards(int newCountOfSheepCards);
+
+    int getCountOfRockCards() const;
+    void setCountOfRockCards(int newCountOfRockCards);
+
+    int getCountOfWoodCards() const;
+    void setCountOfWoodCards(int newCountOfWoodCards);
+
+    int getCountOfBrickCards() const;
+    void setCountOfBrickCards(int newCountOfBrickCards);
+
+    int getCountOfRoadBuildingCards() const;
+    void setCountOfRoadBuildingCards(int newCountOfRoadBuildingCards);
+
+    int getCountOfYearOfPlentyCards() const;
+    void setCountOfYearOfPlentyCards(int newCountOfYearOfPlentyCards);
+
+    int getCountOfMonopolyCards() const;
+    void setCountOfMonopolyCards(int newCountOfMonopolyCards);
+
+    bool getIsTurn() const;
+    void setIsTurn(bool newIsTurn);
+
 private:
     QString username;
 
-    QList<Card*> cards;
-    unsigned int score;
+
+    unsigned int score = 0;
     Color color;
     QVector<Competitor> competitors;
-    bool isTurn;
+    bool isTurn = false;
     QString password;
-    bool logedIn;
-    bool playing;
+
     int socketDescriptor;
 
-
+    int countOfShowaleyeCards = 0;
+    int countOfPointCards = 0 ;
+    int countOfWheatCards = 0;
+    int countOfSheepCards  = 0;
+    int countOfRockCards  = 0 ;
+    int countOfWoodCards  = 0;
+    int countOfBrickCards  = 0;
+    int countOfRoadBuildingCards = 0;
+    int countOfYearOfPlentyCards = 0 ;
+    int countOfMonopolyCards  = 0;
 
 
 

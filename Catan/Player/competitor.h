@@ -6,10 +6,16 @@
 class Competitor
 {
 public:
-    Competitor() = default;
+    Color getColor() const;
 
-private:
-public:
+    void setColor(Color color);
+
+    int getSocketDescriptor() const;
+    void setSocketDescriptor(int newSocketDescriptor);
+
+    const QString &getUsername() const;
+    void setUsername(const QString &newUsername);
+    Competitor() = default;
 
 
     int getScore() const;
@@ -21,18 +27,6 @@ public:
 private:
     QString username;
     int score = 0;
-public:
-    Color getColor() const;
-
-    void setColor(Color color);
-
-    int getSocketDescriptor() const;
-    void setSocketDescriptor(int newSocketDescriptor);
-
-    const QString &getUsername() const;
-    void setUsername(const QString &newUsername);
-
-private:
     Color color;
     int socketDescriptor;
 

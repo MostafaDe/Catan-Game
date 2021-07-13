@@ -3,25 +3,8 @@
 
 
 
-bool Player::getLogedIn() const
-{
-    return logedIn;
-}
 
-void Player::setLogedIn(bool newLogedIn)
-{
-    logedIn = newLogedIn;
-}
 
-bool Player::getPlaying() const
-{
-    return playing;
-}
-
-void Player::setPlaying(bool newPlaying)
-{
-    playing = newPlaying;
-}
 
 const QString &Player::getUsername() const
 {
@@ -53,17 +36,110 @@ void Player::setCompetitors(const QVector<Competitor> &newCompetitors)
     competitors = newCompetitors;
 }
 
-
-
-
-
-const QList<Card *> &Player::getCards() const {
-    return cards;
+int Player::getCountOfShowaleyeCards() const
+{
+    return countOfShowaleyeCards;
 }
 
-void Player::setCards(const QList<Card *> &cards) {
-    Player::cards = cards;
+void Player::setCountOfShowaleyeCards(int newCountOfShowaleyeCards)
+{
+    countOfShowaleyeCards = newCountOfShowaleyeCards;
 }
+
+int Player::getCountOfPointCards() const
+{
+    return countOfPointCards;
+}
+
+void Player::setCountOfPointCards(int newCountOfPointCards)
+{
+    countOfPointCards = newCountOfPointCards;
+}
+
+int Player::getCountOfWheatCards() const
+{
+    return countOfWheatCards;
+}
+
+void Player::setCountOfWheatCards(int newCountOfWheatCards)
+{
+    countOfWheatCards = newCountOfWheatCards;
+}
+
+int Player::getCountOfSheepCards() const
+{
+    return countOfSheepCards;
+}
+
+void Player::setCountOfSheepCards(int newCountOfSheepCards)
+{
+    countOfSheepCards = newCountOfSheepCards;
+}
+
+int Player::getCountOfRockCards() const
+{
+    return countOfRockCards;
+}
+
+void Player::setCountOfRockCards(int newCountOfRockCards)
+{
+    countOfRockCards = newCountOfRockCards;
+}
+
+int Player::getCountOfWoodCards() const
+{
+    return countOfWoodCards;
+}
+
+void Player::setCountOfWoodCards(int newCountOfWoodCards)
+{
+    countOfWoodCards = newCountOfWoodCards;
+}
+
+int Player::getCountOfBrickCards() const
+{
+    return countOfBrickCards;
+}
+
+void Player::setCountOfBrickCards(int newCountOfBrickCards)
+{
+    countOfBrickCards = newCountOfBrickCards;
+}
+
+int Player::getCountOfRoadBuildingCards() const
+{
+    return countOfRoadBuildingCards;
+}
+
+void Player::setCountOfRoadBuildingCards(int newCountOfRoadBuildingCards)
+{
+    countOfRoadBuildingCards = newCountOfRoadBuildingCards;
+}
+
+int Player::getCountOfYearOfPlentyCards() const
+{
+    return countOfYearOfPlentyCards;
+}
+
+void Player::setCountOfYearOfPlentyCards(int newCountOfYearOfPlentyCards)
+{
+    countOfYearOfPlentyCards = newCountOfYearOfPlentyCards;
+}
+
+int Player::getCountOfMonopolyCards() const
+{
+    return countOfMonopolyCards;
+}
+
+void Player::setCountOfMonopolyCards(int newCountOfMonopolyCards)
+{
+    countOfMonopolyCards = newCountOfMonopolyCards;
+}
+
+
+
+
+
 
 unsigned int Player::getScore() const {
     return score;
@@ -83,13 +159,7 @@ void Player::setColor(Color color) {
 
 
 
-bool Player::getIsTurn() const {
-    return isTurn;
-}
 
-void Player::setIsTurn(bool isTurn) {
-    Player::isTurn = isTurn;
-}
 
 const QString &Player::getPassword() const {
     return password;
