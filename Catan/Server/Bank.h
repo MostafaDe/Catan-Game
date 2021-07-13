@@ -18,6 +18,7 @@
 #include"bankthread.h"
 #include"Player/player.h"
 #include"game.h"
+#include"gamedata.h"
 class Bank: public QTcpServer{
     Q_OBJECT
 
@@ -53,10 +54,9 @@ private:
        PlayersFile file;
        unsigned int readyToPlayNumbers = 0;
        int multiPlayerMode = 3;
-
        QVector<QPair<int,Player>> socketToPlayerList;
-
        Game* game;
+       GameData* gameData;
 
 };
 

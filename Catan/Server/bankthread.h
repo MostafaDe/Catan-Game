@@ -26,13 +26,13 @@ signals:
     void notReadyPlay(int socketDescriptor);
     void signUp(QJsonObject message,int socketDecriptor);
     void logIn(QString username,QString Password,int socketDescriptor);
-    void cancelReadyPlay();
+//    void cancelReadyPlay();
     void logOut(QString username);
     void gaming(QJsonObject message,int socketDescriptor);
 public slots:
     void readyRead();
     void disconnected();
-    void startGame();
+//    void startGame();
     void setMessage(QJsonObject message,int _socketDescriptor);
 
 
@@ -49,7 +49,11 @@ private:
     QJsonObject message;
     QJsonObject preMessage;
     bool readyToPlaying = false;
-    bool logedin = false;
+
+//    bool logedinB = false;
+//    bool signUpB = false;
+//    bool logoutB = false;
+//    bool gamingB = false;
 
 
 };

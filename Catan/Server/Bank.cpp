@@ -137,7 +137,8 @@ if(multiPlayerMode == 3){
         emit sendMessage(jsObject1,socketToPlayerList[2].first);
         players.append(socketToPlayerList[2].second);
 }
-        game = new Game(players);
+        game = new Game();
+        gameData = new GameData(socketToPlayerList);
 
 }
 if(multiPlayerMode == 4){
@@ -147,7 +148,12 @@ if(multiPlayerMode == 4){
 
 void Bank::stopTheGame()
 {
-
+    QJsonObject response;
+    QVector<int> socketDescs;
+    response = game->stopGame( socketDescs);
+    for(int it:socketDescs){
+        emit sendMessage(response,it);
+    }
 }
 
 
@@ -170,7 +176,7 @@ try{
 }catch(int errorType){
     jsObj["success"] = false;
     if(errorType == 0){
-        jsObj["errorMessage"] = "usename exists please try another one";
+        jsObj["errorMessage"] = "username exists please try another one";
         emit sendMessage(jsObj,socketDescriptor);
         return;
     }
@@ -216,6 +222,12 @@ void Bank::logIn(QString username, QString password, int socketDescriptor)
 
 void Bank::addReadyToPlayNumber(int socketDescriptor,QString username)
 {
+    if(socketToPlayerList.size() !=0)
+        for(auto &it:socketToPlayerList)
+             if(it.first == socketDescriptor)
+                 return;
+
+
     Player player;
     player.setUsername(username);
     QPair <int,Player> pair(socketDescriptor,player);
@@ -244,7 +256,58 @@ void Bank::logOut(QString username)
 
 void Bank::gaming(QJsonObject message,int socketDescriptor)
 {
+    QJsonObject response;
+    QVector<int> socketDescs;
+    socketDescs.append(socketDescs);
 
+if(message["kindOfGame"] == "getBoardInformation"){
+      response = game->getBoardInformation(socketDescs);
+}
+else
+if(message["kindOfGame"] == "buildHouse"){
+    response = game->buildHouse(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "buildRoad"){
+   response = game->buildRoad(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "buildBridge"){
+   response = game->buildBridge(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "transaction"){
+   response = game->transaction(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "buyCard"){
+  response = game->buyCard(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "playCard"){
+  response = game->playCard(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "movingThief"){
+  response = game->movingThief(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "endOfTurn"){
+  response = game->endOfTurn(message,socketDescs);
+}
+
+
+for(int it:socketDescs){
+    emit sendMessage(response,it);
+}
+socketDescs.clear();
+bool iswinner = false;
+response = game->winner(iswinner,socketDescs);
+if(iswinner){
+    for(int it:socketDescs){
+        emit sendMessage(response,it);
+    }
+}
 }
 
 
@@ -268,7 +331,7 @@ void Bank::incomingConnection(qintptr socketDescriptor)
      connect(bankTh,&BankThread::gaming,this,&Bank::gaming);
 
 
-    bankTh->start();
+     bankTh->start();
 
 
 //static int i =0;

@@ -29,7 +29,7 @@ void BankThread::respone(QJsonObject message )
         emit logIn(message["username"].toString(),message["password"].toString(),socketDescriptor);
 
         username =message["username"].toString();
-        return ;
+        return;
     }
     if(message["kind"] == "ReadyToPlay"){
         readyToPlaying = true;
@@ -39,6 +39,12 @@ void BankThread::respone(QJsonObject message )
     if(message["kind"] == "Gaming"){
         readyToPlaying = true;
         emit gaming(message,socketDescriptor);
+        return;
+    }
+    else{
+        QJsonObject js;
+        js["kind"] = "invalid request";
+        sendJson(js);
         return;
     }
 
@@ -84,12 +90,15 @@ void BankThread::sendJson(QJsonObject message)
 void BankThread::readyRead()
 {
     QString message = tcpSocket->readAll();
+
+
     qDebug() << "data recieved" << message;
 
 
 
 
     QJsonDocument doc = QJsonDocument::fromJson(message.toUtf8());
+
     respone(doc.object());
     sleep(2);
     while(preMessage == this->message)
@@ -110,10 +119,10 @@ void BankThread::disconnected()
     exit(0);
 }
 
-void BankThread::startGame()
-{
+//void BankThread::startGame()
+//{
 
-}
+//}
 
 void BankThread::setMessage(QJsonObject _message,int _socketDescriptor)
 {
