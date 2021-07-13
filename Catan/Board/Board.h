@@ -18,16 +18,16 @@ using namespace std;
 class Board {
 
 public:
-    virtual void setRandomNumberToLands() = 0;
+//    virtual void setRandomNumberToLands() = 0;
 
-    virtual bool BuildHouse(int postion) = 0;
-    virtual bool BuildRoad(int postion ) = 0;
-    virtual bool BuilBigCity(int postion) =0;
-    virtual bool BuildTown(int postion) = 0;
-    virtual bool BuildBridge(int postion) = 0;
-    virtual vector<map<Color,int>> calculateScore(int SumOfDices) = 0;
+//    virtual bool BuildHouse(int postion) = 0;
+//    virtual bool BuildRoad(int postion ) = 0;
+//    virtual bool BuilBigCity(int postion) =0;
+//    virtual bool BuildTown(int postion) = 0;
+//    virtual bool BuildBridge(int postion) = 0;
+//    virtual vector<map<Color,int>> calculateScore(int SumOfDices) = 0;
     virtual vector<vector<int>> mede_neiberhod_and_get()=0;//vectori of array 2d 
-virtual QJsonObject get_board_information()=0;
+    virtual QJsonObject get_board_information()=0;
 
 protected:
    vector<UnitOfBoard*>  units;

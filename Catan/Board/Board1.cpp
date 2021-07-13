@@ -768,8 +768,8 @@ m=QString::number(i);
 
 
     }
-jo["data_source"]=j1;
-jo["data_dice"]=j2;
+jo["json1"]=j1;
+jo["json2"]=j2;
 
 
 return jo;
