@@ -1,9 +1,68 @@
 #include "RoulsOfBiuldRoad.h"
 
+
+RoulsOfBiuldRoad::RoulsOfBiuldRoad(vector<vector<int>> neiber) {
+
+	reltion = neiber;
+
+
+}
+
+
+
 bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 
-	if (checkFUll(z), check_sequence(z, color)) {
+	GameData d;
 
+	if (d.getBlue_bigcity().size() + d.getBlue_house().size() <= 2 && color == "blue") {
+		if (check_when_less2(z, d.getBlue_house())) {
+			addStractor(z, color);
+			return 1;
+		}
+		return 0;
+
+	}
+
+	if (d.getRed_bigcity().size() + d.getRed_house().size() <= 2 && color == "red") {
+
+		if (check_when_less2(z, d.getRed_house())) {
+			addStractor(z, color);
+			return 1;
+		}
+		return 0;
+	}
+
+	if (d.getGreen_bigcity().size() + d.getGreen_house().size() <= 2 && color == "green") {
+		if (check_when_less2(z, d.getGreen_house())) {
+			addStractor(z, color);
+			return 1;
+		}
+		return 0;
+	
+	}
+
+	if (d.getYellow_bigcity().size() + d.getYellow_house().size() <= 2 && color == "yellow") {
+
+		if (check_when_less2(z, d.getYellow_house())) {
+			addStractor(z, color);
+			return 1;
+		}
+		return 0;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	if (checkFUll(z), check_sequence(z, color)) {
+		addStractor(z, color);
 		return 1;
 	}
 
@@ -14,13 +73,38 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 
 }
 
+
+bool RoulsOfBiuldRoad::check_when_less2(vector<vector<int>> z, vector< vector<vector<int>>> home) {
+	
+
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (home[home.size() - 1][j][0] == z[i][0] && home[home.size() - 1][j][1] == z[i][1]) {
+					return 1;
+			}
+				
+			}
+		}
+
+		return 0;
+
+	
+
+
+
+
+}
+
+
+
+
 bool RoulsOfBiuldRoad::check_sequence(vector<vector<int>> z, string color) {
 
-	gamedata d;
-	red_road = d.red_road;
-	blue_road = d.blue_road;
-	green_road = d.green_road;
-	yellow_road = d.yellow_road;
+	GameData d;
+	red_road = d.getRed_road();
+	blue_road = d.getBlue_road();
+	green_road = d.getGreen_road();
+	yellow_road = d.getYellow_road();
 
 
 	int x = 0;
@@ -135,11 +219,11 @@ bool RoulsOfBiuldRoad::check_elment(vector<vector<int>>z, vector<vector<int>>z1)
 
 }
 bool RoulsOfBiuldRoad::checkFUll(vector<vector<int>>z) {
-	gamedata d;
-	red_road = d.red_road;
-	blue_road = d.blue_road;
-	green_road = d.green_road;
-	yellow_road = d.yellow_road;
+	GameData d;
+	red_road = d.getRed_road();
+	blue_road = d.getBlue_road();
+	green_road = d.getGreen_road();
+	yellow_road = d.getYellow_road();
 	for (int i = 0; i < yellow_road.size(); i++) {
 		if (yellow_road[i][0][0] == z[0][0] && yellow_road[i][3][0] == z[3][0]) {
 
@@ -178,6 +262,45 @@ bool RoulsOfBiuldRoad::checkFUll(vector<vector<int>>z) {
 	}
 
 	return 1;
+
+
+
+}
+void RoulsOfBiuldRoad::addStractor(vector<vector<int>> z, string color) {
+
+	if (color == "blue") {
+		GameData d;
+		vector< vector<vector<int>>> asim;
+		asim = d.getBlue_road();
+		asim.push_back(z);
+		d.setBlue_house(asim);
+	}
+
+	if (color == "red") {
+		GameData d;
+		vector< vector<vector<int>>> asim;
+		asim = d.getRed_road();
+		asim.push_back(z);
+		d.setRed_house(asim);
+	}
+
+	if (color == "yellow") {
+		GameData d;
+		vector< vector<vector<int>>> asim;
+		asim = d.getYellow_road();
+		asim.push_back(z);
+		d.setYellow_house(asim);
+
+	}
+
+
+	if (color == "green") {
+		GameData d;
+		vector< vector<vector<int>>> asim;
+		asim = d.getGreen_road();
+		asim.push_back(z);
+		d.setGreen_house(asim);
+	}
 
 
 
