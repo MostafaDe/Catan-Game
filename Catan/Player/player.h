@@ -57,8 +57,6 @@ public:
     const QVector<Competitor> &getCompetitors() const;
     void setCompetitors(const QVector<Competitor> &newCompetitors);
 
-    int getCountOfShowaleyeCards() const;
-    void setCountOfShowaleyeCards(int newCountOfShowaleyeCards);
 
     int getCountOfPointCards() const;
     void setCountOfPointCards(int newCountOfPointCards);
@@ -78,14 +76,10 @@ public:
     int getCountOfBrickCards() const;
     void setCountOfBrickCards(int newCountOfBrickCards);
 
-    int getCountOfRoadBuildingCards() const;
-    void setCountOfRoadBuildingCards(int newCountOfRoadBuildingCards);
 
-    int getCountOfYearOfPlentyCards() const;
-    void setCountOfYearOfPlentyCards(int newCountOfYearOfPlentyCards);
 
-    int getCountOfMonopolyCards() const;
-    void setCountOfMonopolyCards(int newCountOfMonopolyCards);
+
+
 
     bool getIsTurn() const;
     void setIsTurn(bool newIsTurn);
@@ -102,16 +96,13 @@ private:
 
     int socketDescriptor;
 
-    int countOfShowaleyeCards = 0;
     int countOfPointCards = 0 ;
     int countOfWheatCards = 0;
     int countOfSheepCards  = 0;
     int countOfRockCards  = 0 ;
     int countOfWoodCards  = 0;
     int countOfBrickCards  = 0;
-    int countOfRoadBuildingCards = 0;
-    int countOfYearOfPlentyCards = 0 ;
-    int countOfMonopolyCards  = 0;
+
 
 
 

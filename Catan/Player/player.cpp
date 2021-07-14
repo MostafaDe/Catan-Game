@@ -36,15 +36,7 @@ void Player::setCompetitors(const QVector<Competitor> &newCompetitors)
     competitors = newCompetitors;
 }
 
-int Player::getCountOfShowaleyeCards() const
-{
-    return countOfShowaleyeCards;
-}
 
-void Player::setCountOfShowaleyeCards(int newCountOfShowaleyeCards)
-{
-    countOfShowaleyeCards = newCountOfShowaleyeCards;
-}
 
 int Player::getCountOfPointCards() const
 {
@@ -106,34 +98,14 @@ void Player::setCountOfBrickCards(int newCountOfBrickCards)
     countOfBrickCards = newCountOfBrickCards;
 }
 
-int Player::getCountOfRoadBuildingCards() const
+bool Player::getIsTurn() const
 {
-    return countOfRoadBuildingCards;
+    return isTurn;
 }
 
-void Player::setCountOfRoadBuildingCards(int newCountOfRoadBuildingCards)
+void Player::setIsTurn(bool newIsTurn)
 {
-    countOfRoadBuildingCards = newCountOfRoadBuildingCards;
-}
-
-int Player::getCountOfYearOfPlentyCards() const
-{
-    return countOfYearOfPlentyCards;
-}
-
-void Player::setCountOfYearOfPlentyCards(int newCountOfYearOfPlentyCards)
-{
-    countOfYearOfPlentyCards = newCountOfYearOfPlentyCards;
-}
-
-int Player::getCountOfMonopolyCards() const
-{
-    return countOfMonopolyCards;
-}
-
-void Player::setCountOfMonopolyCards(int newCountOfMonopolyCards)
-{
-    countOfMonopolyCards = newCountOfMonopolyCards;
+    isTurn = newIsTurn;
 }
 
 

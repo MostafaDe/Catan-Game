@@ -36,6 +36,10 @@ void Bank::startTheGame()
 {
 QVector<Player> players;
 if(multiPlayerMode == 3){
+
+    /* 0->Red
+     * 1->Green
+     * 2->Blue*/
     if(true){
     Competitor comp1;
     Competitor comp2;
@@ -137,15 +141,201 @@ if(multiPlayerMode == 3){
         emit sendMessage(jsObject1,socketToPlayerList[2].first);
         players.append(socketToPlayerList[2].second);
 }
-        game = new Game();
-        gameData = new GameData(socketToPlayerList);
 
 }
 if(multiPlayerMode == 4){
+    // 0 -> red
+    // 1 -> green
+    // 2 -> blue
+    // 3 -> yellow
+        if(true){
+        Competitor comp1;
+        Competitor comp2;
+        Competitor comp3;
+        comp1.setColor(Color::Green);
+        comp2.setColor(Color::Blue);
+        comp3.setColor(Color::Yellow);
+        comp1.setSocketDescriptor(socketToPlayerList[1].first);
+        comp2.setSocketDescriptor(socketToPlayerList[2].first);
+        comp3.setSocketDescriptor(socketToPlayerList[3].first);
+        comp1.setUsername(socketToPlayerList[1].second.getUsername());
+        comp2.setUsername(socketToPlayerList[2].second.getUsername());
+        comp3.setUsername(socketToPlayerList[3].second.getUsername());
+        QVector<Competitor> comps;
+        comps.push_back(comp1);
+        comps.push_back(comp2);
+        comps.push_back(comp3);
+        socketToPlayerList[0].second.setColor(Color::Red);
+        socketToPlayerList[0].second.setCompetitors(comps);
+        QJsonObject jsObject1;
+        QJsonObject jsObject2;
+        jsObject2["size"] = 3;
+        QJsonArray js;
+        js.append("green");
+        js.append(socketToPlayerList[1].second.getUsername());
+        jsObject2["comp1"]  = js;
+        QJsonArray js1;
+        js1.append("blue");
+        js1.append(socketToPlayerList[2].second.getUsername());
+        jsObject2["comp2"]  = js1;
+        QJsonArray js2;
+        js1.append("yellow");
+        js1.append(socketToPlayerList[3].second.getUsername());
+        jsObject2["comp3"]  = js2;
+        jsObject1["kind"] = "startGame";
+        jsObject1["color"] ="red";
+        jsObject1["comps"] = jsObject2;
+        jsObject1["username"] =socketToPlayerList[0].second.getUsername();
+
+        emit sendMessage(jsObject1,socketToPlayerList[0].first);
+        players.append(socketToPlayerList[0].second);
+
+
+    }
+        if(true){
+
+        Competitor comp1;
+        Competitor comp2;
+        Competitor comp3;
+        comp1.setColor(Color::Blue);
+        comp2.setColor(Color::Yellow);
+        comp3.setColor(Color::Red);
+        comp1.setSocketDescriptor(socketToPlayerList[2].first);
+        comp2.setSocketDescriptor(socketToPlayerList[3].first);
+        comp3.setSocketDescriptor(socketToPlayerList[0].first);
+        comp1.setUsername(socketToPlayerList[1].second.getUsername());
+        comp2.setUsername(socketToPlayerList[3].second.getUsername());
+        comp3.setUsername(socketToPlayerList[0].second.getUsername());
+        QVector<Competitor> comps;
+        comps.push_back(comp1);
+        comps.push_back(comp2);
+        comps.push_back(comp3);
+        socketToPlayerList[1].second.setColor(Color::Green);
+        socketToPlayerList[1].second.setCompetitors(comps);
+        QJsonObject jsObject1;
+        QJsonObject jsObject2;
+        jsObject2["size"] = 3;
+        QJsonArray js;
+        js.append("blue");
+        js.append(socketToPlayerList[2].second.getUsername());
+        jsObject2["comp1"]  = js;
+        QJsonArray js1;
+        js1.append("yellow");
+        js1.append(socketToPlayerList[3].second.getUsername());
+        jsObject2["comp2"]  = js1;
+        QJsonArray js2;
+        js1.append("red");
+        js1.append(socketToPlayerList[0].second.getUsername());
+        jsObject2["comp3"]  = js2;
+        jsObject1["kind"] = "startGame";
+        jsObject1["color"] ="red";
+        jsObject1["comps"] = jsObject2;
+        jsObject1["username"] =socketToPlayerList[1].second.getUsername();
+
+        emit sendMessage(jsObject1,socketToPlayerList[1].first);
+        players.append(socketToPlayerList[1].second);
+
+
+    }
+        if(true){
+
+        Competitor comp1;
+        Competitor comp2;
+        Competitor comp3;
+        comp1.setColor(Color::Green);
+        comp2.setColor(Color::Yellow);
+        comp3.setColor(Color::Red);
+        comp1.setSocketDescriptor(socketToPlayerList[1].first);
+        comp2.setSocketDescriptor(socketToPlayerList[3].first);
+        comp3.setSocketDescriptor(socketToPlayerList[0].first);
+        comp1.setUsername(socketToPlayerList[1].second.getUsername());
+        comp2.setUsername(socketToPlayerList[3].second.getUsername());
+        comp3.setUsername(socketToPlayerList[0].second.getUsername());
+        QVector<Competitor> comps;
+        comps.push_back(comp1);
+        comps.push_back(comp2);
+        comps.push_back(comp3);
+        socketToPlayerList[2].second.setColor(Color::Blue);
+        socketToPlayerList[2].second.setCompetitors(comps);
+        QJsonObject jsObject1;
+        QJsonObject jsObject2;
+        jsObject2["size"] = 3;
+        QJsonArray js;
+        js.append("green");
+        js.append(socketToPlayerList[1].second.getUsername());
+        jsObject2["comp1"]  = js;
+        QJsonArray js1;
+        js1.append("yellow");
+        js1.append(socketToPlayerList[3].second.getUsername());
+        jsObject2["comp2"]  = js1;
+        QJsonArray js2;
+        js1.append("red");
+        js1.append(socketToPlayerList[0].second.getUsername());
+        jsObject2["comp3"]  = js2;
+        jsObject1["kind"] = "startGame";
+        jsObject1["color"] ="red";
+        jsObject1["comps"] = jsObject2;
+        jsObject1["username"] =socketToPlayerList[2].second.getUsername();
+
+        emit sendMessage(jsObject1,socketToPlayerList[2].first);
+        players.append(socketToPlayerList[2].second);
+
+
+    }
+        if(true){
+
+        Competitor comp1;
+        Competitor comp2;
+        Competitor comp3;
+        comp1.setColor(Color::Green);
+        comp2.setColor(Color::Blue);
+        comp3.setColor(Color::Red);
+        comp1.setSocketDescriptor(socketToPlayerList[1].first);
+        comp2.setSocketDescriptor(socketToPlayerList[2].first);
+        comp3.setSocketDescriptor(socketToPlayerList[0].first);
+        comp1.setUsername(socketToPlayerList[1].second.getUsername());
+        comp2.setUsername(socketToPlayerList[2].second.getUsername());
+        comp3.setUsername(socketToPlayerList[0].second.getUsername());
+        QVector<Competitor> comps;
+        comps.push_back(comp1);
+        comps.push_back(comp2);
+        comps.push_back(comp3);
+        socketToPlayerList[3].second.setColor(Color::Yellow);
+        socketToPlayerList[3].second.setCompetitors(comps);
+        QJsonObject jsObject1;
+        QJsonObject jsObject2;
+        jsObject2["size"] = 3;
+        QJsonArray js;
+        js.append("green");
+        js.append(socketToPlayerList[1].second.getUsername());
+        jsObject2["comp1"]  = js;
+        QJsonArray js1;
+        js1.append("blue");
+        js1.append(socketToPlayerList[2].second.getUsername());
+        jsObject2["comp2"]  = js1;
+        QJsonArray js2;
+        js1.append("red");
+        js1.append(socketToPlayerList[0].second.getUsername());
+        jsObject2["comp3"]  = js2;
+        jsObject1["kind"] = "startGame";
+        jsObject1["color"] ="red";
+        jsObject1["comps"] = jsObject2;
+        jsObject1["username"] =socketToPlayerList[3].second.getUsername();
+
+        emit sendMessage(jsObject1,socketToPlayerList[3].first);
+        players.append(socketToPlayerList[3].second);
+
+
+    }
+
+
+
 
 }
-}
+game = new Game();
+gameData = new GameData(socketToPlayerList);
 
+}
 void Bank::stopTheGame()
 {
     QJsonObject response;
@@ -277,20 +467,9 @@ if(message["kindOfGame"] == "buildBridge"){
 }
 else
 if(message["kindOfGame"] == "transaction"){
-   response = game->transaction(message,socketDescs);
+   response = game->transactionToPlayers(message,socketDescs);
 }
-else
-if(message["kindOfGame"] == "buyCard"){
-  response = game->buyCard(message,socketDescs);
-}
-else
-if(message["kindOfGame"] == "playCard"){
-  response = game->playCard(message,socketDescs);
-}
-else
-if(message["kindOfGame"] == "movingThief"){
-  response = game->movingThief(message,socketDescs);
-}
+
 else
 if(message["kindOfGame"] == "endOfTurn"){
   response = game->endOfTurn(message,socketDescs);
