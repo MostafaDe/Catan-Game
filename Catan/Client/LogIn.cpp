@@ -65,7 +65,10 @@ void LogIn::enableOkButton()
 
 void LogIn::read()
 {
+    if(startGame)
+        return;
     QString readMess=tcpSocket->readAll();
+
     QJsonObject obj;
 
     QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
@@ -77,6 +80,7 @@ void LogIn::read()
         {
             readyToStart*r=new readyToStart(tcpSocket);
             r->show();
+            startGame = true;
             this->close();
         }
 

@@ -55,7 +55,7 @@ void readyToStart::read()
     QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
 
     obj = doc.object();
-
+    qDebug() << obj;
     if(obj["kind"] == "startGame")
     {
                player=new Player();

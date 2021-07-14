@@ -35,5 +35,6 @@ private:
     QLineEdit*password,*userName;
     QPushButton*ok,*cancel;
     QLabel* error_label;
+    bool startGame = false;
 };
 #endif // LOGIN_H
