@@ -27,6 +27,7 @@ GameData::GameData(QVector<QPair<int,Player>> socketToPlayerList)
 board = new Board1;
 for(auto &it:socketToPlayerList){
     colorToPlayer[it.second.getColor()] = it.second;
+
 }
 
 
@@ -122,8 +123,7 @@ void GameData::setCountOfYearOfPlentyCards(int newCountOfYearOfPlentyCards)
     countOfYearOfPlentyCards = newCountOfYearOfPlentyCards;
 }
 
-Board *GameData::getBoard() const
-{
+Board *GameData::getBoard() {
     return board;
 }
 
