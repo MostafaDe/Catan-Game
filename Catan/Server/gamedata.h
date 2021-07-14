@@ -43,6 +43,41 @@ public:
     static const QMap<Color, Player> &getColorToPlayer();
     static void setColorToPlayer(const QMap<Color, Player> &newColorToPlayer);
 
+    static void setRed_road(const vector< vector<vector<int>>> &newValue);
+    static void setYellow_road(const vector< vector<vector<int>>> &newValue);
+    static void setBlue_road(const vector< vector<vector<int>>> &newValue);
+    static void setGreen_road(const vector< vector<vector<int>>> &newValue);
+
+    static void setRed_house(const vector< vector<vector<int>>> &newValue);
+    static void setYellow_house(const vector< vector<vector<int>>> &newValue);
+    static void setBlue_house(const vector< vector<vector<int>>> &newValue);
+    static void setGreen_house(const vector< vector<vector<int>>> &newValue);
+
+    static void setRed_bigcity(const vector< vector<vector<int>>> &newValue);
+    static void setYellow_bigcity(const vector< vector<vector<int>>> &newValue);
+    static void setBlue_bigcity(const vector< vector<vector<int>>> &newValue);
+    static void setGreen_bigcity(const vector< vector<vector<int>>> &newValue);
+
+
+    static vector< vector<vector<int>>> getRed_road();
+    static vector< vector<vector<int>>> getGreen_road();
+    static vector< vector<vector<int>>> getYellow_road();
+    static vector< vector<vector<int>>> getBlue_road();
+
+    static vector< vector<vector<int>>> getRed_house();
+    static vector< vector<vector<int>>> getGreen_house();
+    static vector< vector<vector<int>>> getYellow_house();
+    static vector< vector<vector<int>>> getBlue_house();
+
+    static vector< vector<vector<int>>> getRed_bigcity();
+    static vector< vector<vector<int>>> getGreen_bigcity();
+    static vector< vector<vector<int>>> getYellow_bigcity();
+    static vector< vector<vector<int>>> getBlue_bigcity();
+
+
+
+
+
 private:
     static int countOfShowaleyeCards;
     static int countOfPointCards ;
@@ -64,6 +99,11 @@ private:
     static vector< vector<vector<int>>> blue_house;
     static vector< vector<vector<int>>> green_house;
     static vector< vector<vector<int>>> yellow_house;
+    static vector< vector<vector<int>>> red_bigcity;
+    static vector< vector<vector<int>>> blue_bigcity;
+    static vector< vector<vector<int>>> green_bigcity;
+    static vector< vector<vector<int>>> yellow_bigcity;
+
 
 
 
