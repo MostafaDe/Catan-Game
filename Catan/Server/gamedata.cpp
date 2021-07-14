@@ -12,6 +12,14 @@ int GameData::countOfMonopolyCards = 2;
 int GameData::countOfRoadBuildingCards = 2;
 Board* GameData::board;
 QMap<Color,Player> GameData::colorToPlayer;
+vector< vector<vector<int>>> GameData::red_road;
+vector< vector<vector<int>>> GameData::blue_road;
+vector< vector<vector<int>>> GameData::green_road;
+vector< vector<vector<int>>> GameData::yellow_road;
+vector< vector<vector<int>>> GameData::red_house;
+vector< vector<vector<int>>> GameData::blue_house;
+vector< vector<vector<int>>> GameData::green_house;
+vector< vector<vector<int>>> GameData::yellow_house;
 
 
 GameData::GameData(QVector<QPair<int,Player>> socketToPlayerList)

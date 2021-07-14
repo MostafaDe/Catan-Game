@@ -56,6 +56,16 @@ private:
     static int countOfMonopolyCards;
     static Board *board;
     static QMap<Color,Player> colorToPlayer;
+    static vector< vector<vector<int>>> red_road;
+    static vector< vector<vector<int>>> blue_road;
+    static vector< vector<vector<int>>> green_road;
+    static vector< vector<vector<int>>> yellow_road;
+    static vector< vector<vector<int>>> red_house;
+    static vector< vector<vector<int>>> blue_house;
+    static vector< vector<vector<int>>> green_house;
+    static vector< vector<vector<int>>> yellow_house;
+
+
 
 //    Q_PROPERTY(int countOfMonopolyCards READ getCountOfMonopolyCards CONSTANT)
 };
