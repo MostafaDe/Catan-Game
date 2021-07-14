@@ -776,6 +776,16 @@ return jo;
 
 }
 
+map<int, int> Board1::get_numberOfLand()
+{
+    return date_dice;
+}
+
+map<int, string> Board1::get_sourceOfLand()
+{
+    return deta_resurse;
+}
+
 
 
 
