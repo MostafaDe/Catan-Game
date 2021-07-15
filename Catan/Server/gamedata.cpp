@@ -20,6 +20,10 @@ vector< vector<vector<int>>> GameData::red_house;
 vector< vector<vector<int>>> GameData::blue_house;
 vector< vector<vector<int>>> GameData::green_house;
 vector< vector<vector<int>>> GameData::yellow_house;
+vector< vector<vector<int>>> GameData::red_bigcity;
+vector< vector<vector<int>>> GameData::blue_bigcity;
+vector< vector<vector<int>>> GameData::green_bigcity;
+vector< vector<vector<int>>> GameData::yellow_bigcity;
 
 
 GameData::GameData(QVector<QPair<int,Player>> socketToPlayerList)

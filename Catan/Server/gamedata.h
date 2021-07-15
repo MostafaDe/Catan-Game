@@ -37,7 +37,7 @@ public:
     static int getCountOfYearOfPlentyCards();
     static void setCountOfYearOfPlentyCards(int newCountOfYearOfPlentyCards);
 
-    static Board *getBoard() const;
+    static Board *getBoard();
     static void setBoard(Board *newBoard);
 
     static const QMap<Color, Player> &getColorToPlayer();
