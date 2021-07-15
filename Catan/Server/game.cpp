@@ -187,6 +187,16 @@ bool Game::socketExistInListOfSockets(int socket,const QVector<int>& waitingForS
     return false;
 }
 
+void Game::removeThisSocketFromSocketList(int socket, QVector<int> &waitingForSocketsResponse)
+{
+
+}
+
+void Game::makeDealWithTwoSockets(QJsonObject transactionMessage, int socketDealer, int socketBuyer)
+{
+
+}
+
 QMap<int, Player> Game::makeColorToPlayerToSocketToPlayer()
 {
     QMap<int,Player> socketToPlayer;
