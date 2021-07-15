@@ -12,10 +12,10 @@ RoulsOfBiuldRoad::RoulsOfBiuldRoad(vector<vector<int>> neiber) {
 
 bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 
-	GameData d;
 
-	if (d.getBlue_bigcity().size() + d.getBlue_house().size() <= 2 && color == "blue") {
-		if (check_when_less2(z, d.getBlue_house())) {
+
+    if (GameData::getBlue_bigcity().size() + GameData::getBlue_house().size() <= 2 && color == "blue") {
+        if (check_when_less2(z, GameData::getBlue_house())) {
 			addStractor(z, color);
 			return 1;
 		}
@@ -23,17 +23,17 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 
 	}
 
-	if (d.getRed_bigcity().size() + d.getRed_house().size() <= 2 && color == "red") {
+    if (GameData::getRed_bigcity().size() + GameData::getRed_house().size() <= 2 && color == "red") {
 
-		if (check_when_less2(z, d.getRed_house())) {
+        if (check_when_less2(z, GameData::getRed_house())) {
 			addStractor(z, color);
 			return 1;
 		}
 		return 0;
 	}
 
-	if (d.getGreen_bigcity().size() + d.getGreen_house().size() <= 2 && color == "green") {
-		if (check_when_less2(z, d.getGreen_house())) {
+    if (GameData::getGreen_bigcity().size() + GameData::getGreen_house().size() <= 2 && color == "green") {
+        if (check_when_less2(z, GameData::GameData::getGreen_house())) {
 			addStractor(z, color);
 			return 1;
 		}
@@ -41,9 +41,9 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 	
 	}
 
-	if (d.getYellow_bigcity().size() + d.getYellow_house().size() <= 2 && color == "yellow") {
+    if (GameData::getYellow_bigcity().size() + GameData::getYellow_house().size() <= 2 && color == "yellow") {
 
-		if (check_when_less2(z, d.getYellow_house())) {
+        if (check_when_less2(z, GameData::getYellow_house())) {
 			addStractor(z, color);
 			return 1;
 		}
@@ -100,11 +100,11 @@ bool RoulsOfBiuldRoad::check_when_less2(vector<vector<int>> z, vector< vector<ve
 
 bool RoulsOfBiuldRoad::check_sequence(vector<vector<int>> z, string color) {
 
-	GameData d;
-	red_road = d.getRed_road();
-	blue_road = d.getBlue_road();
-	green_road = d.getGreen_road();
-	yellow_road = d.getYellow_road();
+
+    red_road = GameData::getRed_road();
+    blue_road = GameData::getBlue_road();
+    green_road =GameData::getGreen_road();
+    yellow_road = GameData::getYellow_road();
 
 
 	int x = 0;
@@ -219,11 +219,11 @@ bool RoulsOfBiuldRoad::check_elment(vector<vector<int>>z, vector<vector<int>>z1)
 
 }
 bool RoulsOfBiuldRoad::checkFUll(vector<vector<int>>z) {
-	GameData d;
-	red_road = d.getRed_road();
-	blue_road = d.getBlue_road();
-	green_road = d.getGreen_road();
-	yellow_road = d.getYellow_road();
+
+    red_road = GameData::getRed_road();
+    blue_road =GameData::getBlue_road();
+    green_road = GameData::getGreen_road();
+    yellow_road = GameData::getYellow_road();
 	for (int i = 0; i < yellow_road.size(); i++) {
 		if (yellow_road[i][0][0] == z[0][0] && yellow_road[i][3][0] == z[3][0]) {
 
@@ -269,37 +269,37 @@ bool RoulsOfBiuldRoad::checkFUll(vector<vector<int>>z) {
 void RoulsOfBiuldRoad::addStractor(vector<vector<int>> z, string color) {
 
 	if (color == "blue") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getBlue_road();
+        asim =GameData::getBlue_road();
 		asim.push_back(z);
-		d.setBlue_house(asim);
+        GameData::setBlue_house(asim);
 	}
 
 	if (color == "red") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getRed_road();
+        asim = GameData::getRed_road();
 		asim.push_back(z);
-		d.setRed_house(asim);
+        GameData::setRed_house(asim);
 	}
 
 	if (color == "yellow") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getYellow_road();
+        asim = GameData::getYellow_road();
 		asim.push_back(z);
-		d.setYellow_house(asim);
+        GameData::setYellow_house(asim);
 
 	}
 
 
 	if (color == "green") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getGreen_road();
+        asim = GameData::getGreen_road();
 		asim.push_back(z);
-		d.setGreen_house(asim);
+        GameData::setGreen_house(asim);
 	}
 
 

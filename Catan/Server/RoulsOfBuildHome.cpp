@@ -15,9 +15,9 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 	//cout << "mm" << check_near_home(position);
 
 
-	GameData d;
 
-	if (d.getBlue_bigcity().size()+d.getBlue_house().size() < 2 && color == "blue") {
+
+    if (GameData::getBlue_bigcity().size()+GameData::getBlue_house().size() < 2 && color == "blue") {
 
 		if (check_near_home(position)) {
 			add_structure(position, color);
@@ -26,7 +26,7 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 		return 0;
 	}
 	
-	if (d.getRed_bigcity().size() + d.getRed_house().size() < 2 && color == "red") {
+    if (GameData::getRed_bigcity().size() + GameData::getRed_house().size() < 2 && color == "red") {
 
 		if (check_near_home(position)) {
 			add_structure( position,  color);
@@ -35,7 +35,7 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 		return 0;
 	}
 	
-	if (d.getGreen_bigcity().size() + d.getGreen_house().size() < 2 && color == "green") {
+    if (GameData::getGreen_bigcity().size() + GameData::getGreen_house().size() < 2 && color == "green") {
 
 		if (check_near_home(position)) {
 			add_structure(position, color);
@@ -44,7 +44,7 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 		return 0;
 	}
 	
-	if (d.getYellow_bigcity().size() + d.getYellow_house().size() < 2 && color == "yellow") {
+    if (GameData::getYellow_bigcity().size() + GameData::getYellow_house().size() < 2 && color == "yellow") {
 
 		if (check_near_home(position)) {
 			add_structure(position, color);
@@ -122,11 +122,11 @@ bool RoulsOfBuildHome::check_near_home(vector<vector<int>> position) {
 
 bool RoulsOfBuildHome::check_home_in_road(vector<vector<int>> position, string color) {
 	
-	GameData d;
-	red_road = d.getRed_road();
-	blue_road = d.getBlue_road();
-	green_road = d.getGreen_road();
-	yellow_road = d.getYellow_road();
+
+    red_road = GameData::getRed_road();
+    blue_road = GameData::getBlue_road();
+    green_road = GameData::getGreen_road();
+    yellow_road = GameData::getYellow_road();
 	
 	
 	int x = 0;
@@ -270,37 +270,37 @@ void RoulsOfBuildHome::add_structure(vector<vector<int>> position, string color)
 	}
 	
 	if (color == "blue") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getBlue_house();
+        asim = GameData::getBlue_house();
 		asim.push_back(position);
-		d.setBlue_house(asim);
+        GameData::setBlue_house(asim);
 	}
 	
 	if (color == "red") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getRed_house();
+        asim = GameData::getRed_house();
 		asim.push_back(position);
-		d.setRed_house(asim);
+        GameData::setRed_house(asim);
 	}
 
 	if (color == "yellow") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getYellow_house();
+        asim = GameData::getYellow_house();
 		asim.push_back(position);
-		d.setYellow_house(asim);
+        GameData::setYellow_house(asim);
 	
 	}
 
 
 	if (color == "green") {
-		GameData d;
+
 		vector< vector<vector<int>>> asim;
-		asim = d.getGreen_house();
+        asim = GameData::getGreen_house();
 		asim.push_back(position);
-		d.setGreen_house(asim);
+        GameData::setGreen_house(asim);
 	}
 
 	

@@ -10,12 +10,12 @@ RoulOfBuildBigCity::RoulOfBuildBigCity(vector<vector<int>> neiber) {
 
 
 bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) {
-	GameData d;
+
 
 
 	if (color == "bule") {
 	
-		if (check_Home(position, d.getBlue_house()) ){
+        if (check_Home(position, GameData::getBlue_house()) ){
 
 			return 1;
 		}
@@ -25,7 +25,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 
 	if (color == "red") {
 
-		if (check_Home(position, d.getRed_house())) {
+        if (check_Home(position, GameData::getRed_house())) {
 
 			return 1;
 		}
@@ -36,7 +36,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 
 	if (color == "green") {
 
-		if (check_Home(position, d.getGreen_house())) {
+        if (check_Home(position, GameData::getGreen_house())) {
 
 			return 1;
 		}
@@ -45,7 +45,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 	}
 	if (color == "yellow") {
 
-		if (check_Home(position, d.getYellow_house())) {
+        if (check_Home(position, GameData::getYellow_house())) {
 
 			return 1;
 		}
@@ -90,15 +90,15 @@ bool RoulOfBuildBigCity::check_Home(vector<vector<int>>z, vector< vector<vector<
 void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 
 
-	GameData d;
+
 
 
 	if (color == "bule") {
 		
 		vector< vector<vector<int>>>home;
-		home = d.getBlue_house();
+        home = GameData::getBlue_house();
 		vector< vector<vector<int>>>bigHome;
-		bigHome = d.getBlue_bigcity();
+        bigHome = GameData::getBlue_bigcity();
 		for (int i = 0; i <home.size(); i++) {
 
 			for (int j = 0; j < 3; j++) {
@@ -106,8 +106,8 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 				if (z[0][0] == home[i][j][0] && z[0][1] == home[i][j][1]) {
 					bigHome.push_back(home[i]);
 					home.erase(home.begin() + i);
-					d.setBlue_bigcity(bigHome);
-					d.setBlue_house(home);
+                    GameData::setBlue_bigcity(bigHome);
+                    GameData::setBlue_house(home);
 					return;
 					
 				}
@@ -125,9 +125,9 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 	if (color == "red") {
 
 		vector< vector<vector<int>>>home;
-		home = d.getRed_house();
+        home = GameData::getRed_house();
 		vector< vector<vector<int>>>bigHome;
-		bigHome = d.getRed_bigcity();
+        bigHome = GameData::getRed_bigcity();
 		for (int i = 0; i < home.size(); i++) {
 
 			for (int j = 0; j < 3; j++) {
@@ -135,8 +135,8 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 				if (z[0][0] == home[i][j][0] && z[0][1] == home[i][j][1]) {
 					bigHome.push_back(home[i]);
 					home.erase(home.begin() + i);
-					d.setRed_bigcity(bigHome);
-					d.setRed_house(home);
+                    GameData::setRed_bigcity(bigHome);
+                    GameData::setRed_house(home);
 					return;
 
 				}
@@ -154,9 +154,9 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 	if (color == "green") {
 
 		vector< vector<vector<int>>>home;
-		home = d.getGreen_house();
+        home = GameData::getGreen_house();
 		vector< vector<vector<int>>>bigHome;
-		bigHome = d.getGreen_bigcity();
+        bigHome = GameData::getGreen_bigcity();
 		for (int i = 0; i < home.size(); i++) {
 
 			for (int j = 0; j < 3; j++) {
@@ -164,8 +164,8 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 				if (z[0][0] == home[i][j][0] && z[0][1] == home[i][j][1]) {
 					bigHome.push_back(home[i]);
 					home.erase(home.begin() + i);
-					d.setGreen_bigcity(bigHome);
-					d.setGreen_house(home);
+                    GameData::setGreen_bigcity(bigHome);
+                    GameData::setGreen_house(home);
 					return;
 
 				}
@@ -185,9 +185,9 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 	if (color == "yellow") {
 
 		vector< vector<vector<int>>>home;
-		home = d.getYellow_house();
+        home = GameData::getYellow_house();
 		vector< vector<vector<int>>>bigHome;
-		bigHome = d.getYellow_bigcity();
+        bigHome = GameData::getYellow_bigcity();
 		for (int i = 0; i < home.size(); i++) {
 
 			for (int j = 0; j < 3; j++) {
@@ -195,8 +195,8 @@ void RoulOfBuildBigCity::addStractor(vector<vector<int>>z, string color) {
 				if (z[0][0] == home[i][j][0] && z[0][1] == home[i][j][1]) {
 					bigHome.push_back(home[i]);
 					home.erase(home.begin() + i);
-					d.setYellow_bigcity(bigHome);
-					d.setYellow_house(home);
+                    GameData::setYellow_bigcity(bigHome);
+                    GameData::setYellow_house(home);
 					return;
 
 				}
