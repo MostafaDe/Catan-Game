@@ -37,5 +37,6 @@ private:
     QTcpSocket *tcpSocket = nullptr;
     QPushButton*ok,*cancel;
     Player* player;
+    bool inGraphics = false;
 };
 #endif // READYTOSTART_H

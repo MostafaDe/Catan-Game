@@ -50,6 +50,8 @@ void readyToStart::sendMessage()
 
 void readyToStart::read()
 {
+    if(inGraphics)
+        return;
     QString readMess=tcpSocket->readAll();
     QJsonObject obj;
 
@@ -96,5 +98,6 @@ void readyToStart::read()
 
     graphic*gr=new graphic(player,tcpSocket);
     gr->show();
-       this->close();
+    inGraphics = true;
+    this->close();
 }
