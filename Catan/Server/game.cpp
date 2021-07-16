@@ -4,7 +4,11 @@
 
 Game::Game()
 {
-
+multiPlayerMode = GameData::getColorToPlayer().size();
+intToColor[0] = Color::Red;
+intToColor[1] = Color::Green;
+intToColor[2] = Color::Blue;
+intToColor[3] = Color::Yellow;
 
 }
 
@@ -20,27 +24,163 @@ QJsonObject Game::getBoardInformation(QVector<int> &socketDescriptors)
 {
 
 
-    return GameData::getBoard()->get_board_information();
+
+    QJsonObject jsObj = GameData::getBoard()->get_board_information();
+    if(socketDescriptors.at(0) == getSocketOfPlayingPlayer())
+        jsObj["myTurn"] = true;
+    else
+        jsObj["myTurn"] = false;
+
+    return jsObj;
+
 
 }
 
 QJsonObject Game::buildHouse(QJsonObject message, QVector<int> &socketDescriptors)
 {
-    QJsonObject jsObj;
+gameFlow++;
+QJsonObject jsObj;
+
+    if(socketDescriptors.at(0) != getSocketOfPlayingPlayer())
+    {
+
+        jsObj["kind"] = "invalid request";
+        return jsObj;
+
+    }
+
+    jsObj["kind"] = "Game";
+    jsObj["kindOfGame"] = "responseTobuildHouse";
+    QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
+
+    if(playerCanEfordIt("House",socketToPlayer[socketDescriptors.at(0)].getColor(),message["fromCards"].toBool()))
+    {
+
+    Tranlate trans(GameData::getBoard()->mede_neiberhod_and_get());
+    QJsonArray jsArray = message["position"].toArray();
+    RoulsOfBuildHome rule(GameData::getBoard()->mede_neiberhod_and_get());
+    int a[3];
+    a[0] = jsArray.at(0).toInt();
+    a[1] = jsArray.at(1).toInt();
+    a[2] = jsArray.at(2).toInt();
+
+    if(rule.check_make(trans.getPositionOfLand(a),message["color"].toString().toStdString()))
+    {
+        jsObj["color"] = convertColorToString( socketToPlayer[socketDescriptors.at(0)].getColor());
+        jsObj["position"] = message["position"].toArray();
+        jsObj["kindOfBuilding"] = "house";
+        jsObj["success"] = true;
+        jsObj["message"] = "house built successfuly :)";
+        appendAllSocketsToVector(socketDescriptors);
+        return jsObj;
+        }
+    jsObj["success"] = false;
+    jsObj["errorMessage"] = "you can not build any house here :(";
     return jsObj;
+    }
+    jsObj["success"] = false;
+    jsObj["errorMessage"] = "you can not eford building a house  :(";
+    return jsObj;
+
+
+
+
 }
 
 QJsonObject Game::buildRoad(QJsonObject message, QVector<int> &socketDescriptors)
 {
+     gameFlow++;
+     QJsonObject jsObj;
 
-    QJsonObject jsObj;
+    if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() )
+    {
+
+        jsObj["kind"] = "invalid request";
+        return jsObj;
+
+    }
+    jsObj["kind"] = "Game";
+    jsObj["kindOfGame"] = "responseTobuildRoad";
+    QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
+    Tranlate trans(GameData::getBoard()->mede_neiberhod_and_get());
+    if(playerCanEfordIt("Road",socketToPlayer[socketDescriptors.at(0)].getColor(),message["fromCards"].toBool())){
+    RoulsOfBiuldRoad rule(GameData::getBoard()->mede_neiberhod_and_get());
+    QJsonArray jsArray = message["position"].toArray();
+
+    int a[2];
+    a[0] = jsArray.at(0).toInt();
+    a[1] = jsArray.at(1).toInt();
+
+    if(rule.check_make(trans.getPositionOfRoad(a),message["color"].toString().toStdString()))
+    {
+        jsObj["color"] = convertColorToString( socketToPlayer[socketDescriptors.at(0)].getColor());
+        jsObj["position"] =jsArray;
+        jsObj["kindOfBuilding"] = "road";
+        jsObj["success"] = true;
+        jsObj["message"] = "road built successfuly :)";
+        appendAllSocketsToVector(socketDescriptors);
+        return jsObj;
+
+
+        }
+    jsObj["success"] = false;
+    jsObj["errorMessage"] = "you can not build any road here :(";
     return jsObj;
+
+    }
+    jsObj["success"] = false;
+    jsObj["errorMessage"] = "you can not eford building a road  :(";
+    return jsObj;
+
 }
 
-QJsonObject Game::buildBridge(QJsonObject message, QVector<int> &socketDescriptors)
+
+
+QJsonObject Game::buildBigCity(QJsonObject message, QVector<int> &socketDescriptors)
 {
     QJsonObject jsObj;
-    return jsObj;
+
+   if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() && gameFlow < multiPlayerMode*4)
+   {
+
+       jsObj["kind"] = "invalid request";
+       return jsObj;
+
+   }
+   jsObj["kind"] = "Game";
+   jsObj["kindOfGame"] = "responseTobuildBigCity";
+   QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
+   Tranlate trans(GameData::getBoard()->mede_neiberhod_and_get());
+   if(playerCanEfordIt("BigCity",socketToPlayer[socketDescriptors.at(0)].getColor(),message["fromCards"].toBool())){
+   RoulsOfBiuldRoad rule(GameData::getBoard()->mede_neiberhod_and_get());
+   QJsonArray jsArray = message["position"].toArray();
+
+   int a[3];
+   a[0] = jsArray.at(0).toInt();
+   a[1] = jsArray.at(1).toInt();
+   a[2] = jsArray.at(2).toInt();
+
+   if(rule.check_make(trans.getPositionOfRoad(a),message["color"].toString().toStdString()))
+   {
+       jsObj["color"] = convertColorToString( socketToPlayer[socketDescriptors.at(0)].getColor());
+       jsObj["position"] =jsArray;
+       jsObj["kindOfBuilding"] = "bigCity";
+       jsObj["success"] = true;
+       jsObj["message"] = "BigCity built successfuly :)";
+       appendAllSocketsToVector(socketDescriptors);
+       return jsObj;
+
+
+       }
+   jsObj["success"] = false;
+   jsObj["errorMessage"] = "you can not build any BigCity here :(";
+   return jsObj;
+
+   }
+   jsObj["success"] = false;
+   jsObj["errorMessage"] = "you can not eford building a road  :(";
+   return jsObj;
+
 }
 
 QJsonObject Game::transactionToPlayers(QJsonObject message, QVector<int> &socketDescriptors)
@@ -57,20 +197,18 @@ QJsonObject Game::transactionToPlayers(QJsonObject message, QVector<int> &socket
     //postfix "G" : what player wants to get.
     //postfix "T" : what player wants to take.
 
-
     QJsonObject jsObj;
     QJsonObject jsDeal(message["deal"].toObject());
     try{
-
-
         if(jsDeal["brickT"].toInt() <= 0 && jsDeal["wheatT"].toInt() <= 0 && jsDeal["rockT"].toInt() <= 0 && jsDeal["treeT"].toInt() <= 0 && jsDeal["sheepT"].toInt() <= 0 &&
            jsDeal["brickG"].toInt() <= 0 && jsDeal["wheatG"].toInt() <= 0 && jsDeal["rockG"].toInt() <= 0 && jsDeal["treeG"].toInt() <= 0 && jsDeal["sheepG"].toInt() <= 0 &&
             (jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) < 0 &&
                 (jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) < 0
-                 ){
+                  && socketDescriptors.at(0) != getSocketOfPlayingPlayer()
+                && gameFlow < multiPlayerMode*4){
             // there can be a bug when wheatG = 2 and wheatT = 3 support that latter
-        jsObj["kind"] = "invalid request";
-        return jsObj;
+            jsObj["kind"] = "invalid request";
+            return jsObj;
 
 
     }
@@ -125,10 +263,10 @@ QJsonObject Game::responseToTransactionToPlayers(QJsonObject message, QVector<in
      *{"kind":"Game",
      *"kindOfGame":"responseToTransactionToPlayers",
      *"answer":Some boolean(true/fasle)
-     *}
-    */
+     *}*/
+
    if(socketOfDealer == -1 && !socketExistInListOfSockets(socketDescriptors.at(0),waitingForSocketsResponse)
-       &&  waitingForSocketsResponse.size() == 0     )
+       &&  waitingForSocketsResponse.size() == 0 && gameFlow < multiPlayerMode*4    )
    {
        QJsonObject jsObj;
        jsObj["kind"] = "invalid request";
@@ -145,7 +283,6 @@ QJsonObject Game::responseToTransactionToPlayers(QJsonObject message, QVector<in
        socketDescriptors.append(socketOfDealer);
        socketOfDealer = -1;
        waitingForSocketsResponse.clear();
-
        return jsObj;
 
    }else{
@@ -162,10 +299,30 @@ QJsonObject Game::responseToTransactionToPlayers(QJsonObject message, QVector<in
        socketOfDealer = -1;
        return jsObj;
    }else{
-
        return jsObj;
    }
    }
+
+}
+
+QJsonObject Game::transactionToBank(QJsonObject message, QVector<int> &socketDescriptors)
+{
+    QJsonObject jsObj;
+    QJsonObject jsDeal(message["deal"].toObject());
+    if((jsDeal["brickT"].toInt()%4 != 0) && (jsDeal["wheatT"].toInt()%4 != 0 )
+            && (jsDeal["rockT"].toInt()%4 != 0 ) && (jsDeal["treeT"].toInt()%4 != 0)
+            && (jsDeal["sheepT"].toInt()%4 != 0) &&
+       jsDeal["brickG"].toInt() <= 0 && jsDeal["wheatG"].toInt() <= 0 && jsDeal["rockG"].toInt() <= 0 && jsDeal["treeG"].toInt() <= 0 && jsDeal["sheepG"].toInt() <= 0 &&
+        (jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) < 0 &&
+            (jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) < 0
+              && socketDescriptors.at(0) != getSocketOfPlayingPlayer()
+            && gameFlow < multiPlayerMode*4){
+        QJsonObject jsObj;
+        jsObj["kind"] = "Game";
+        jsObj["kindOfGame"] = "responseToTransaction";
+        jsObj["dealSuccess"] = true;
+
+    }
 
 }
 
@@ -174,7 +331,45 @@ QJsonObject Game::responseToTransactionToPlayers(QJsonObject message, QVector<in
 
 QJsonObject Game::endOfTurn(QJsonObject message, QVector<int> &socketDescriptors)
 {
+
     QJsonObject jsObj;
+    static int counter = 0;
+    if(gameFlow == 0 || (gameFlow%2 == 1 && gameFlow < 12  ))
+    {
+        QJsonObject jsObj;
+        jsObj["kind"] = "invalid request";
+        return jsObj;
+    }
+
+    QMap<Color,Player> colToPlayer  = GameData::getColorToPlayer();
+
+    if(gameFlow < multiPlayerMode*4 && gameFlow >= multiPlayerMode*2){
+       colToPlayer[ intToColor[(counter + 1)%multiPlayerMode]].setIsTurn(false);
+       colToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(true);
+
+       jsObj["kind"] = "Game";
+       jsObj["kindOfGame"] = "endOfTurn";
+       jsObj["whoseTurn"] =convertColorToString(colToPlayer[ intToColor[counter%multiPlayerMode]].getColor());
+       counter--;
+
+    }
+    else{
+        colToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(false);
+        counter++;
+        colToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(true);
+        QJsonArray jsArry;
+        dice.generateRandomDices();
+        jsArry.append(dice.getDice1());
+        jsArry.append(dice.getDice2());
+        // Allocate resources
+        jsObj["kind"] = "Game";
+        jsObj["kindOfGame"] = "endOfTurn";
+        jsObj["whoseTurn"] =convertColorToString(colToPlayer[ intToColor[counter%multiPlayerMode]].getColor());
+        jsObj["dices"] = jsArry;
+    }
+
+
+    appendAllSocketsToVector(socketDescriptors);
     return jsObj;
 }
 
@@ -194,7 +389,6 @@ void Game::removeThisSocketFromSocketList(int socket, QVector<int> &waitingForSo
 
 void Game::makeDealWithTwoSockets(QJsonObject transactionMessage, int socketDealer, int socketBuyer)
 {
-
 }
 
 QMap<int, Player> Game::makeColorToPlayerToSocketToPlayer()
@@ -203,7 +397,48 @@ QMap<int, Player> Game::makeColorToPlayerToSocketToPlayer()
     for(auto &it :GameData::getColorToPlayer()){
         socketToPlayer [it.getSocketDescriptor()] = it;
     }
+
     return socketToPlayer;
+}
+
+int Game::getSocketOfPlayingPlayer()
+{
+    for(auto & it : GameData::getColorToPlayer()){
+        if(it.getIsTurn())
+            return it.getSocketDescriptor();
+    }
+}
+
+QString Game::convertColorToString(Color color)
+{
+    switch (color) {
+    case Color::Blue:
+        return "Blue";
+    case Color::Red:
+        return "Red";
+    case Color::Green:
+        return "Green";
+    case Color::Yellow:
+        return "Yellow";
+
+    }
+}
+
+bool Game::playerCanEfordIt(QString building, Color colorOfPlayer,bool fromCards)
+{
+
+}
+
+
+
+void Game::appendAllSocketsToVector(QVector<int>& sockets)
+{
+     sockets.clear();
+     QMap<Color,Player> colorToPlayer = GameData::getColorToPlayer();
+     for(auto &it:colorToPlayer)
+     {
+         sockets.append(it.getSocketDescriptor());
+     }
 }
 
 

@@ -10,6 +10,11 @@
 #include"Board/Board1.h"
 #include<QJsonArray>
 #include"gamedata.h"
+#include"RoulsOfBuildHome.h"
+#include"RoulsOfBiuldRoad.h"
+#include"RoulOfBuildBigCity.h"
+#include"Tranlate.h"
+#include"dice.h"
 using namespace std;
 class Game
 {
@@ -20,12 +25,10 @@ public:
     QJsonObject getBoardInformation(QVector<int>& socketDescriptors);
     QJsonObject buildHouse(QJsonObject message ,QVector<int>& socketDescriptors);
     QJsonObject buildRoad(QJsonObject message ,QVector<int>& socketDescriptors);
-    QJsonObject buildBridge(QJsonObject message ,QVector<int>& socketDescriptors);
+    QJsonObject buildBigCity(QJsonObject message ,QVector<int>& socketDescriptors);
     QJsonObject transactionToPlayers(QJsonObject message ,QVector<int>& socketDescriptors);
     QJsonObject responseToTransactionToPlayers(QJsonObject message ,QVector<int>& socketDescriptors);
     QJsonObject transactionToBank(QJsonObject message ,QVector<int>& socketDescriptors);
-
-
     QJsonObject endOfTurn(QJsonObject message ,QVector<int>& socketDescriptors);
 
 
@@ -40,8 +43,17 @@ private:
     bool socketExistInListOfSockets(int socket,const QVector<int>& waitingForSocketsResponse);
     void  removeThisSocketFromSocketList(int socket, QVector<int>& waitingForSocketsResponse);// implement this
     void  makeDealWithTwoSockets(QJsonObject transactionMessage,int socketDealer,int socketBuyer);// implement this
-     QMap<int,Player> makeColorToPlayerToSocketToPlayer();
-
+    QMap<int,Player> makeColorToPlayerToSocketToPlayer();
+    int getSocketOfPlayingPlayer();
+    QString convertColorToString(Color color);// implement this
+    bool playerCanEfordIt(QString building,Color colorOfPlayer,bool fromCards);// implement this
+    void appendAllSocketsToVector(QVector<int>& sockets);// implement this
+    void setWhoStartsGame();
+    int multiPlayerMode;
+    map<int,Color> intToColor;
+    int gameFlow = 0;
+    QMap<int,int> socketToSumOfdices;
+    Dice dice;
 
 };
 
