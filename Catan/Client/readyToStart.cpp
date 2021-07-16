@@ -1,4 +1,5 @@
 #include "readyToStart.h"
+#include "Client/graphic.h"
 
 readyToStart::readyToStart(QTcpSocket*sock,QWidget *parent)
     : QDialog(parent)
@@ -93,6 +94,7 @@ void readyToStart::read()
 
     }
 
-
+    graphic*gr=new graphic(player,tcpSocket);
+    gr->show();
        this->close();
 }
