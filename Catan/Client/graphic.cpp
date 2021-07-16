@@ -3,17 +3,17 @@
 #include<QGraphicsPixmapItem>
 #include<QFile>
 #include<QJsonDocument>
-#include<QJsonObject>
+
 #include"menu_window.h"
 
 
 void graphic::set_lands()
 {
-    tcpSocket->waitForReadyRead(1000);
-    QString readMess=tcpSocket->readAll();
-    QJsonObject obj;
-    QJsonDocument duc = QJsonDocument::fromJson(readMess.toUtf8());
-    obj = duc.object();
+//    tcpSocket->waitForReadyRead(1000);
+//    QString readMess=tcpSocket->readAll();
+//    QJsonObject obj;
+//    QJsonDocument duc = QJsonDocument::fromJson(readMess.toUtf8());
+//    obj = duc.object();
 
 
     for(int i=1;i<29;i++)
@@ -96,6 +96,90 @@ void graphic::clicked_menu()
     M->show();
 }
 
+void graphic::read()
+{
+    QString readMess=tcpSocket->readAll();
+    QJsonObject obj;
+
+    QJsonDocument doc = QJsonDocument::fromJson(readMess.toUtf8());
+
+    obj = doc.object();
+    qDebug() << obj;
+
+    if(obj["kindOfGame"].toString() == "getBoardInformation")
+    {
+        this->obj = obj;
+        set_lands();
+        set_score();
+        player_->setIsTurn(obj["myTurn"].toBool());
+
+
+    }
+    if(obj["kindOfGame"].toString() == "responseTobuildHouse")
+    {
+
+        if(obj["success"].toBool()){
+            // build
+//            obj["position"].toArray();
+//            obj["color"]
+//            if(colorOfPlayer != obj["color"])
+//            build
+//            else
+//            obj["message"]
+        }
+        else{
+            // show error message
+//            obj["errorMessage"]
+        }
+    }
+    if(obj["kindOfGame"].toString() == "responseTobuildRoad")
+    {
+  /*
+  */
+        if(obj["success"].toBool()){
+            // build
+//            obj["position"].toArray();
+//            obj["color"]
+//            if(colorOfPlayer != obj["color"])
+//            build
+//            else
+//            obj["message"]
+        }
+        else{
+            // show error message
+//            obj["errorMessage"]
+        }
+    }
+    if(obj["kindOfGame"].toString() == "responseTobuildBigCity")
+    {
+  /*
+  */
+        if(obj["success"].toBool()){
+            // build
+//            obj["position"].toArray();
+//            obj["color"]
+//            if(colorOfPlayer != obj["color"])
+//            build
+//            else
+//            obj["message"]
+        }
+        else{
+            // show error message
+//            obj["errorMessage"]
+        }
+    }
+
+    if(obj["kindOfGame"].toString() == "transactionToPlayers")
+    {
+  /*
+  */
+//       obj["username"]
+//       jsObj["deal"]
+
+    }
+
+}
+
 graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     :QGraphicsView(parent)
     ,player_(player_1)
@@ -103,7 +187,7 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
 {
     QJsonObject o;
     o["kind"] = "Game";
-    o["kindOfGame"]="getBordInformation";
+    o["kindOfGame"]="getBoardInformation";
     QJsonDocument d(o);
     QString jsString = QString::fromLatin1(d.toJson());
     this->tcpSocket->write(jsString.toLatin1());
@@ -121,8 +205,8 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(720,512);
 
-    set_lands();
-    set_score();
+//    set_lands();
+//    set_score();
 
     menu=new QPushButton(this);
     menu->setIcon(QIcon(":/buttons/Images/menu_button"));
@@ -132,6 +216,7 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     menu->setFocus();
 
     connect(menu,SIGNAL(clicked()),this,SLOT(clicked_menu()));
+    connect(tcpSocket,&QTcpSocket::readyRead,this,&graphic::read);
 
 }
 
