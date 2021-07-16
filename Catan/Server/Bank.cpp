@@ -35,6 +35,7 @@ void Bank::startServer()
 void Bank::startTheGame()
 {
 QVector<Player> players;
+QJsonObject jsO1;
 if(multiPlayerMode == 3){
 
     /* 0->Red
@@ -54,6 +55,7 @@ if(multiPlayerMode == 3){
     comps.push_back(comp2);
     socketToPlayerList[0].second.setColor(Color::Red);
     socketToPlayerList[0].second.setCompetitors(comps);
+    socketToPlayerList[0].second.setIsTurn(true);
     QJsonObject jsObject1;
     QJsonObject jsObject2;
     jsObject2["size"] = 2;
@@ -70,11 +72,12 @@ if(multiPlayerMode == 3){
     jsObject1["color"] ="red";
     jsObject1["comps"] = jsObject2;
     jsObject1["username"] =socketToPlayerList[0].second.getUsername();
-
-    emit sendMessage(jsObject1,socketToPlayerList[0].first);
+    jsO1 = jsObject1;
+//    emit sendMessage(jsObject1,socketToPlayerList[0].first);
     players.append(socketToPlayerList[0].second);
 
 }
+    QJsonObject jsO2;
     if(true){
         Competitor comp1;
         Competitor comp2;
@@ -106,9 +109,11 @@ if(multiPlayerMode == 3){
 
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[1].second.getUsername();
-        emit sendMessage(jsObject1,socketToPlayerList[1].first);
+         jsO2 = jsObject1;
+//        emit sendMessage(jsObject1,socketToPlayerList[1].first);
         players.append(socketToPlayerList[1].second);
 }
+    QJsonObject jsO3;
     if(true){
         Competitor comp1;
         Competitor comp2;
@@ -138,10 +143,15 @@ if(multiPlayerMode == 3){
         jsObject1["color"] ="blue";
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[2].second.getUsername();
-        emit sendMessage(jsObject1,socketToPlayerList[2].first);
+        jsO3 = jsObject1;
+//        emit sendMessage(jsObject1,socketToPlayerList[2].first);
         players.append(socketToPlayerList[2].second);
 }
-
+    game = new Game();
+    gameData = new GameData(socketToPlayerList);
+    emit sendMessage(jsO1,socketToPlayerList[0].first);
+    emit sendMessage(jsO2,socketToPlayerList[1].first);
+    emit sendMessage(jsO3,socketToPlayerList[2].first);
 }
 if(multiPlayerMode == 4){
     // 0 -> red
@@ -167,6 +177,7 @@ if(multiPlayerMode == 4){
         comps.push_back(comp3);
         socketToPlayerList[0].second.setColor(Color::Red);
         socketToPlayerList[0].second.setCompetitors(comps);
+        socketToPlayerList[0].second.setIsTurn(true);
         QJsonObject jsObject1;
         QJsonObject jsObject2;
         jsObject2["size"] = 3;
@@ -186,7 +197,6 @@ if(multiPlayerMode == 4){
         jsObject1["color"] ="red";
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[0].second.getUsername();
-
         emit sendMessage(jsObject1,socketToPlayerList[0].first);
         players.append(socketToPlayerList[0].second);
 
@@ -448,10 +458,11 @@ void Bank::gaming(QJsonObject message,int socketDescriptor)
 {
     QJsonObject response;
     QVector<int> socketDescs;
-    socketDescs.append(socketDescs);
+    socketDescs.append(socketDescriptor);
 
 if(message["kindOfGame"] == "getBoardInformation"){
       response = game->getBoardInformation(socketDescs);
+      response["kindOfGame"] = "getBoardInformation";
 }
 else
 if(message["kindOfGame"] == "buildHouse"){
@@ -461,10 +472,7 @@ else
 if(message["kindOfGame"] == "buildRoad"){
    response = game->buildRoad(message,socketDescs);
 }
-else
-if(message["kindOfGame"] == "buildBridge"){
-   response = game->buildBridge(message,socketDescs);
-}
+
 else
 if(message["kindOfGame"] == "transaction"){
    response = game->transactionToPlayers(message,socketDescs);
@@ -473,6 +481,9 @@ if(message["kindOfGame"] == "transaction"){
 else
 if(message["kindOfGame"] == "endOfTurn"){
   response = game->endOfTurn(message,socketDescs);
+}
+else{
+    response["kind"] = "invalid request";
 }
 
 
