@@ -36,7 +36,7 @@ void BankThread::respone(QJsonObject message )
         emit readyPlay(socketDescriptor,username);
         return;
     }
-    if(message["kind"] == "Gaming"){
+    if(message["kind"] == "Game"){
         readyToPlaying = true;
         emit gaming(message,socketDescriptor);
         return;
