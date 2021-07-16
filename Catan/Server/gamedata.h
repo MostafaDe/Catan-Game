@@ -41,7 +41,7 @@ public:
     static void setBoard(Board *newBoard);
 
     static const QMap<Color, Player> &getColorToPlayer();
-    static void setColorToPlayer(const QMap<Color, Player> &newColorToPlayer);
+    static void setColorToPlayer(const QMap<Color, Player> newColorToPlayer);
 
     static void setRed_road(const vector< vector<vector<int>>> &newValue);
     static void setYellow_road(const vector< vector<vector<int>>> &newValue);

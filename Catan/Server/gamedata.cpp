@@ -141,7 +141,7 @@ const QMap<Color, Player> &GameData::getColorToPlayer()
     return colorToPlayer;
 }
 
-void GameData::setColorToPlayer(const QMap<Color, Player> &newColorToPlayer)
+void GameData::setColorToPlayer(const QMap<Color, Player> newColorToPlayer)
 {
     colorToPlayer = newColorToPlayer;
 }
