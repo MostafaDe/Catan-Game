@@ -84,6 +84,15 @@ public:
     bool getIsTurn() const;
     void setIsTurn(bool newIsTurn);
 
+    int getCountOfHouseCards() const;
+    void setCountOfHouseCards(int newCountOfHouseCards);
+
+    int getCountOfBigCityCards() const;
+    void setCountOfBigCityCards(int newCountOfBigCityCards);
+
+    int getCountOfRoadCards() const;
+    void setCountOfRoadCards(int newCountOfRoadCards);
+
 private:
     QString username;
 
@@ -102,6 +111,10 @@ private:
     int countOfRockCards  = 0 ;
     int countOfWoodCards  = 0;
     int countOfBrickCards  = 0;
+    int countOfHouseCards = 5;
+    int countOfBigCityCards = 4;
+    int countOfRoadCards = 23;
+
 
 
 

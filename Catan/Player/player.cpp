@@ -108,6 +108,36 @@ void Player::setIsTurn(bool newIsTurn)
     isTurn = newIsTurn;
 }
 
+int Player::getCountOfHouseCards() const
+{
+    return countOfHouseCards;
+}
+
+void Player::setCountOfHouseCards(int newCountOfHouseCards)
+{
+    countOfHouseCards = newCountOfHouseCards;
+}
+
+int Player::getCountOfBigCityCards() const
+{
+    return countOfBigCityCards;
+}
+
+void Player::setCountOfBigCityCards(int newCountOfBigCityCards)
+{
+    countOfBigCityCards = newCountOfBigCityCards;
+}
+
+int Player::getCountOfRoadCards() const
+{
+    return countOfRoadCards;
+}
+
+void Player::setCountOfRoadCards(int newCountOfRoadCards)
+{
+    countOfRoadCards = newCountOfRoadCards;
+}
+
 
 
 
