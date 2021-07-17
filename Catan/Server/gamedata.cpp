@@ -136,15 +136,9 @@ void GameData::setBoard(Board *newBoard)
     board = newBoard;
 }
 
-const QMap<Color, Player> &GameData::getColorToPlayer()
-{
-    return colorToPlayer;
-}
 
-void GameData::setColorToPlayer(const QMap<Color, Player> newColorToPlayer)
-{
-    colorToPlayer = newColorToPlayer;
-}
+
+
 
 void GameData::setRed_road(const vector<vector<vector<int> > > &newValue)
 {
@@ -166,7 +160,7 @@ void GameData::setGreen_road(const vector<vector<vector<int> > > &newValue)
     green_road = newValue;
 }
 
-void GameData::setRed_house(const vector<vector<vector<int> > > &newValue)
+void GameData::setRed_house(vector<vector<vector<int> > > newValue)
 {
     red_house = newValue;
 }

@@ -40,15 +40,15 @@ public:
     static Board *getBoard();
     static void setBoard(Board *newBoard);
 
-    static const QMap<Color, Player> &getColorToPlayer();
-    static void setColorToPlayer(const QMap<Color, Player> newColorToPlayer);
+
+
 
     static void setRed_road(const vector< vector<vector<int>>> &newValue);
     static void setYellow_road(const vector< vector<vector<int>>> &newValue);
     static void setBlue_road(const vector< vector<vector<int>>> &newValue);
     static void setGreen_road(const vector< vector<vector<int>>> &newValue);
 
-    static void setRed_house(const vector< vector<vector<int>>> &newValue);
+    static void setRed_house(vector< vector<vector<int>>> newValue);
     static void setYellow_house(const vector< vector<vector<int>>> &newValue);
     static void setBlue_house(const vector< vector<vector<int>>> &newValue);
     static void setGreen_house(const vector< vector<vector<int>>> &newValue);
@@ -76,7 +76,7 @@ public:
 
 
 
-
+    static QMap<Color,Player> colorToPlayer;
 
 private:
     static int countOfShowaleyeCards;
@@ -90,7 +90,7 @@ private:
     static int countOfYearOfPlentyCards;
     static int countOfMonopolyCards;
     static Board *board;
-    static QMap<Color,Player> colorToPlayer;
+
     static vector< vector<vector<int>>> red_road;
     static vector< vector<vector<int>>> blue_road;
     static vector< vector<vector<int>>> green_road;
