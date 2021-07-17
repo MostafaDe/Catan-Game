@@ -25,7 +25,8 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 		}
 		return 0;
 	}
-	
+
+
     if (GameData::getRed_bigcity().size() + GameData::getRed_house().size() < 2 && color == "red") {
 
 		if (check_near_home(position)) {
@@ -34,6 +35,7 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 		}
 		return 0;
 	}
+
 	
     if (GameData::getGreen_bigcity().size() + GameData::getGreen_house().size() < 2 && color == "green") {
 
@@ -130,24 +132,24 @@ bool RoulsOfBuildHome::check_home_in_road(vector<vector<int>> position, string c
 	
 	
 	int x = 0;
-	if (color == "red") {
-		for (int i = 0; i < red_road.size(); i++) {
-			x = 0;
-			for (int l = 0; l < 4; l = l + 2) {
-				for (int j = 0; j < 3; j++) {
+    if (color == "red") {
+        for (int i = 0; i < red_road.size(); i++) {
+            x = 0;
+            for (int l = 0; l < 4;l++) {
+                for (int j = 0; j < 3; j++) {
 
-					if (red_road[i][l][0] == position[i][0]) {
-						x++;
-					}
-					if (x == 2) {
+                    if (red_road[i][l][0] == position[i][0]&& red_road[i][l][1] == position[i][1]) {
+                        x++;
+                    }
+                    if (x == 2) {
 
-						return 1;
-					}
-				}
-			}
-		}
+                        return 1;
+                    }
+                }
+            }
+        }
 
-	}
+    }
 
 
 

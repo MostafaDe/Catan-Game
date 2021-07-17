@@ -1,16 +1,19 @@
 #pragma once
 #include "gamedata.h"
+#include<vector>
+using namespace std;
 class RoulsOfBuildHome 
 {
 public:
     RoulsOfBuildHome(vector<vector<int>> neeiber);
-   
+
     bool check_make(vector<vector<int>> position, string color);
 
-    void add_structure(vector<vector<int>> position, string color) ;
+
    
 
 private:
+   void add_structure(vector<vector<int>> position, string color) ;
    static vector<vector<int>>  illegal_home;
     vector<vector<int>> reltion;
    vector< vector<vector<int>>> red_road;
