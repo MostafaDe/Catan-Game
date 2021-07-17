@@ -1,13 +1,16 @@
 #pragma once
 #include "gamedata.h"
+#include<vector>
+using namespace std;
 class RoulsOfBiuldRoad 
 {
 public:
-	RoulsOfBiuldRoad(vector<vector<int>> neeiber);
+ RoulsOfBiuldRoad(vector<vector<int>> neeiber);
  bool check_make(vector<vector<int>>z, string colore );
- void addStractor(vector<vector<int>>z, string colore);
+
 
 private:
+    void addStractor(vector<vector<int>>z, string colore);
 	bool check_sequence(vector<vector<int>>z, string colore);
 	bool checkFUll(vector<vector<int>>z);
 	bool check_elment(vector<vector<int>>z, vector<vector<int>>z1);

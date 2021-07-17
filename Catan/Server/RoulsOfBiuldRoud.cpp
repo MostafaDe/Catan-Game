@@ -14,7 +14,7 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 
 
 
-    if (GameData::getBlue_bigcity().size() + GameData::getBlue_house().size() <= 2 && color == "blue") {
+    if (GameData::getBlue_road().size() < 2 && color == "blue") {
         if (check_when_less2(z, GameData::getBlue_house())) {
 			addStractor(z, color);
 			return 1;
@@ -23,7 +23,7 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 
 	}
 
-    if (GameData::getRed_bigcity().size() + GameData::getRed_house().size() <= 2 && color == "red") {
+    if (GameData::getRed_road().size() < 2 && color == "red") {
 
         if (check_when_less2(z, GameData::getRed_house())) {
 			addStractor(z, color);
@@ -32,7 +32,7 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 		return 0;
 	}
 
-    if (GameData::getGreen_bigcity().size() + GameData::getGreen_house().size() <= 2 && color == "green") {
+    if ( GameData::getGreen_road().size() < 2 && color == "green") {
         if (check_when_less2(z, GameData::GameData::getGreen_house())) {
 			addStractor(z, color);
 			return 1;
@@ -41,7 +41,7 @@ bool RoulsOfBiuldRoad::check_make(vector<vector<int>>z, string color) {
 	
 	}
 
-    if (GameData::getYellow_bigcity().size() + GameData::getYellow_house().size() <= 2 && color == "yellow") {
+    if (GameData::getYellow_road().size() < 2 && color == "yellow") {
 
         if (check_when_less2(z, GameData::getYellow_house())) {
 			addStractor(z, color);
@@ -273,7 +273,7 @@ void RoulsOfBiuldRoad::addStractor(vector<vector<int>> z, string color) {
 		vector< vector<vector<int>>> asim;
         asim =GameData::getBlue_road();
 		asim.push_back(z);
-        GameData::setBlue_house(asim);
+        GameData::setBlue_road(asim);
 	}
 
 	if (color == "red") {
@@ -281,7 +281,7 @@ void RoulsOfBiuldRoad::addStractor(vector<vector<int>> z, string color) {
 		vector< vector<vector<int>>> asim;
         asim = GameData::getRed_road();
 		asim.push_back(z);
-        GameData::setRed_house(asim);
+        GameData::setRed_road(asim);
 	}
 
 	if (color == "yellow") {
@@ -289,7 +289,7 @@ void RoulsOfBiuldRoad::addStractor(vector<vector<int>> z, string color) {
 		vector< vector<vector<int>>> asim;
         asim = GameData::getYellow_road();
 		asim.push_back(z);
-        GameData::setYellow_house(asim);
+        GameData::setYellow_road(asim);
 
 	}
 
@@ -299,7 +299,7 @@ void RoulsOfBiuldRoad::addStractor(vector<vector<int>> z, string color) {
 		vector< vector<vector<int>>> asim;
         asim = GameData::getGreen_road();
 		asim.push_back(z);
-        GameData::setGreen_house(asim);
+        GameData::setGreen_road(asim);
 	}
 
 
