@@ -32,7 +32,7 @@ private:
 void give_whearIsLand(vector<int >collection);
 void check_homearound(int number_land);
 void add_source_instructur(string s ,struct surce& x,int dob);
-
+void set_source_player();
 struct surce sred;
 struct surce sblue;
 

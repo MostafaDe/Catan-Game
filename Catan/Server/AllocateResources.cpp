@@ -23,6 +23,7 @@ for(int i=0;i<collection.size();i++){
 
 }
 check_available_source();
+set_source_player();
 vector<pair<string, map<string, int> > > result;
 pair<string, map<string, int> > pred;
 map<string,int> mred;
@@ -89,7 +90,7 @@ void AllocateResources::check_available_source()
 {
 
 
-    if(GameData::getCountOfSheepCards()<sred.sh+sgreen.sh+sblue.sh+syellow.sh){
+    if(GameData::getCountOfSheepCards()<syellow.sh+sgreen.sh+sblue.sh+sred.sh){
 
         sred.sh=0;
 
@@ -103,6 +104,10 @@ void AllocateResources::check_available_source()
 
 
     }
+    else{
+        GameData::setCountOfSheepCards(GameData::getCountOfSheepCards()-syellow.sh+sgreen.sh+sblue.sh+sred.sh);
+
+        }
 
     if(GameData::getCountOfRockCards()<sred.r+sgreen.r+sblue.r+syellow.r){
 
@@ -119,7 +124,10 @@ void AllocateResources::check_available_source()
 
     }
 
+    else{
+        GameData::setCountOfRockCards(GameData::getCountOfRockCards()-sred.r+sgreen.r+sblue.r+syellow.r);
 
+        }
 
 
 
@@ -138,6 +146,10 @@ void AllocateResources::check_available_source()
 
     }
 
+    else{
+        GameData::setCountOfWoodCards(GameData::getCountOfWoodCards()-sred.t+sgreen.t+sblue.t+syellow.t);
+
+        }
 
 
 
@@ -156,7 +168,10 @@ void AllocateResources::check_available_source()
 
 
     }
+    else{
+        GameData::setCountOfWheatCards(GameData::getCountOfWheatCards()-sred.w+sgreen.w+sblue.w+syellow.w);
 
+        }
 
 
     if(GameData::getCountOfBrickCards()<sred.i+sgreen.i+sblue.i+syellow.i){
@@ -173,7 +188,10 @@ void AllocateResources::check_available_source()
 
 
     }
+    else{
+        GameData::setCountOfBrickCards(GameData::getCountOfBrickCards()-sred.i+sgreen.i+sblue.i+syellow.i);
 
+        }
 
 
 
@@ -442,17 +460,47 @@ void AllocateResources::add_source_instructur(string s,struct surce &x,int dob)
    // qDebug() << x.sh;
 
 }
+
+void AllocateResources::set_source_player()
+{
+
+
+GameData::colorToPlayer[Color::Red].setCountOfBrickCards(sred.i+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Red].setCountOfWoodCards(sred.t+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Red].setCountOfSheepCards(sred.sh+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Red].setCountOfWheatCards(sred.w+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Red].setCountOfRockCards(sred.r+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
+
+
+GameData::colorToPlayer[Color::Blue].setCountOfBrickCards(sblue.i+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Blue].setCountOfWoodCards(sblue.t+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Blue].setCountOfSheepCards(sblue.sh+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Blue].setCountOfWheatCards(sblue.w+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Blue].setCountOfRockCards(sblue.r+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
+
+
+GameData::colorToPlayer[Color::Green].setCountOfBrickCards(sgreen.i+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Green].setCountOfWoodCards(sgreen.t+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Green].setCountOfSheepCards(sgreen.sh+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Green].setCountOfWheatCards(sgreen.w+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Green].setCountOfRockCards(sgreen.r+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
+
+
+
+GameData::colorToPlayer[Color::Yellow].setCountOfBrickCards(syellow.i+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfWoodCards(syellow.t+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfSheepCards(syellow.sh+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfWheatCards(syellow.w+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfRockCards(syellow.r+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
+
+
+
+
+
+}
 int main()
 {
-   int a[3];
-   a[0]=1;
- qDebug() << "heko";
- struct surce s;
 
-
-   AllocateResources m;
-
-   m.set_dice(6);
 //m.add_source_instructur("sheep",s);
 
 
