@@ -480,7 +480,7 @@ if(message["kindOfGame"] == "transaction"){
 
 else
 if(message["kindOfGame"] == "endOfTurn"){
-  response = game->endOfTurn(message,socketDescs);
+  response = game->endOfTurn(socketDescs);
 }
 else{
     response["kind"] = "invalid request";
