@@ -34,7 +34,7 @@ makeRandLand::makeRandLand(int number, int ir, int sh, int ro, int wh, int tr,in
 			x[y] = 1;
 			number_palce_iron--;
 
-			result_resurce[y + 1] = "iron";
+            result_resurce[y + 1] = "brick";
 
 		}
 	}
@@ -93,7 +93,7 @@ makeRandLand::makeRandLand(int number, int ir, int sh, int ro, int wh, int tr,in
 			g = "whear";
 			string m;
 			m = g;
-			result_resurce[y + 1] = m;
+            result_resurce[y + 1] ="wheat";
 
 		}
 	}
