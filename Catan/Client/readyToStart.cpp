@@ -81,7 +81,7 @@ void readyToStart::read()
                for(int i=0;i<comp_obj["size"].toInt();i++)
                {
                    Competitor c;
-                   QJsonArray arr = comp_obj["comp"+QString::number(i)].toArray();
+                   QJsonArray arr = comp_obj["comp"+QString::number(i+1)].toArray();
                    if(arr[0].toString()=="red")
                        c.setColor(Color::Red);
                    else if(arr[0].toString()=="yellow")

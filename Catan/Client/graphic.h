@@ -7,6 +7,8 @@
 #include<QPushButton>
 #include"Player/player.h"
 #include<QJsonObject>
+#include<QTimer>
+
 class graphic : public QGraphicsView
 {
     Q_OBJECT
@@ -16,11 +18,16 @@ private:
     QGraphicsRectItem*me_box,*comp1_box,*comp2_box,*comp3_box;
     QGraphicsRectItem*resource_box;
     QPushButton* menu;
+    QTimer*timer=NULL;
+
+    QGraphicsPixmapItem*sheep,*iron,*tree,*rock,*wheat;
+    QGraphicsTextItem*sheep_,*iron_,*tree_,*rock_,*wheat_;
 
 
     void set_lands();
     void set_score();
     void set_resource();
+    void send_message(QJsonObject o);
     void show_message(QString mess);
     positions pos;
 
@@ -34,6 +41,7 @@ private:
 public slots:
     void clicked_menu();
     void read();
+    void arase_message();
 
 public:
     graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent = nullptr);

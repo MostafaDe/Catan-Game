@@ -47,7 +47,7 @@ void graphic::set_score()
     me_box->setBrush(set_color(convertColorToString(player_->getColor())));
     scene->addItem(me_box);
     me=new QGraphicsTextItem;
-    me->setPlainText("my score:"+QString::number(player_->getScore()));
+    me->setPlainText("my score: "+QString::number(player_->getScore()));
     setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
     me->setPos(16,41);
     scene->addItem(me);
@@ -73,7 +73,7 @@ void graphic::set_score()
 
     if(player_->getCompetitors().size()>2)
     {
-        comp3_box=new QGraphicsRectItem(14,164,125,30);
+        comp3_box=new QGraphicsRectItem(14,154,125,30);
         comp3_box->setBrush(set_color(convertColorToString(player_->getCompetitors()[2].getColor())));
         scene->addItem(comp3_box);
         comp3=new QGraphicsTextItem;
@@ -88,12 +88,90 @@ void graphic::set_score()
 void graphic::set_resource()
 {
     if(player_->getCompetitors().size()>2)
-            resource_box=new QGraphicsRectItem(14,205,125,225);
+            resource_box=new QGraphicsRectItem(14,192,125,215);
     else
-            resource_box=new QGraphicsRectItem(14,175,125,225);
+            resource_box=new QGraphicsRectItem(14,154,125,215);
 
     resource_box->setBrush(QColor(52,48,48));
     scene->addItem(resource_box);
+
+    //tree
+    tree=new QGraphicsPixmapItem;
+    tree->setPixmap(QPixmap(":/cards/Images/cards/tree_card.png"));
+    tree->setScale(0.5);
+    tree->setPos(resource_box->sceneBoundingRect().x()+5,resource_box->sceneBoundingRect().y()+5);
+    scene->addItem(tree);
+
+    tree_=new QGraphicsTextItem;
+    tree_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
+    tree_->setDefaultTextColor(QColor(225,225,225));
+    tree_->setPos(tree->sceneBoundingRect().x()+tree->sceneBoundingRect().width()+5,tree->sceneBoundingRect().y()+tree->sceneBoundingRect().height()/2-5);
+    scene->addItem(tree_);
+
+    //sheep
+    sheep=new QGraphicsPixmapItem;
+    sheep->setPixmap(QPixmap(":/cards/Images/cards/sheep_card.png"));
+    sheep->setScale(0.5);
+    sheep->setPos(tree->sceneBoundingRect().x(),tree->sceneBoundingRect().y()+5+tree->sceneBoundingRect().height());
+    scene->addItem(sheep);
+
+    sheep_=new QGraphicsTextItem;
+    sheep_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
+    sheep_->setDefaultTextColor(QColor(225,225,225));
+    sheep_->setPos(sheep->sceneBoundingRect().x()+sheep->sceneBoundingRect().width()+5,sheep->sceneBoundingRect().y()+sheep->sceneBoundingRect().height()/2-5);
+    scene->addItem(sheep_);
+
+    //iron
+    iron=new QGraphicsPixmapItem;
+    iron->setPixmap(QPixmap(":/cards/Images/cards/iron_card.png"));
+    iron->setScale(0.5);
+    iron->setPos(sheep->sceneBoundingRect().x(),sheep->sceneBoundingRect().y()+5+sheep->sceneBoundingRect().height());
+    scene->addItem(iron);
+
+    iron_=new QGraphicsTextItem;
+    iron_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
+    iron_->setDefaultTextColor(QColor(225,225,225));
+    iron_->setPos(iron->sceneBoundingRect().x()+iron->sceneBoundingRect().width()+5,iron->sceneBoundingRect().y()+iron->sceneBoundingRect().height()/2-5);
+    scene->addItem(iron_);
+
+    //rock
+    rock=new QGraphicsPixmapItem;
+    rock->setPixmap(QPixmap(":/cards/Images/cards/rock_card.png"));
+    rock->setScale(0.5);
+    rock->setPos(iron->sceneBoundingRect().x(),iron->sceneBoundingRect().y()+5+iron->sceneBoundingRect().height());
+    scene->addItem(rock);
+
+    rock_=new QGraphicsTextItem;
+    rock_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
+    rock_->setDefaultTextColor(QColor(225,225,225));
+    rock_->setPos(rock->sceneBoundingRect().x()+rock->sceneBoundingRect().width()+5,rock->sceneBoundingRect().y()+rock->sceneBoundingRect().height()/2-5);
+    scene->addItem(rock_);
+
+    //wheat
+    wheat=new QGraphicsPixmapItem;
+    wheat->setPixmap(QPixmap(":/cards/Images/cards/wheat_card.png"));
+    wheat->setScale(0.5);
+    wheat->setPos(rock->sceneBoundingRect().x(),rock->sceneBoundingRect().y()+5+rock->sceneBoundingRect().height());
+    scene->addItem(wheat);
+
+    wheat_=new QGraphicsTextItem;
+    wheat_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
+    wheat_->setDefaultTextColor(QColor(225,225,225));
+    wheat_->setPos(wheat->sceneBoundingRect().x()+wheat->sceneBoundingRect().width()+5,wheat->sceneBoundingRect().y()+wheat->sceneBoundingRect().height()/2-5);
+    scene->addItem(wheat_);
+
+}
+
+void graphic::send_message(QJsonObject o)
+{
+    QJsonDocument d(o);
+    QString jsString = QString::fromLatin1(d.toJson());
+    this->tcpSocket->write(jsString.toLatin1());
 }
 
 void graphic::show_message(QString mess_)
@@ -104,6 +182,9 @@ void graphic::show_message(QString mess_)
     setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
     mess->setPos(145,505);
     scene->addItem(mess);
+
+    timer = new QTimer(this);
+    timer->start(10000);
 }
 
 void graphic::clicked_menu()
@@ -213,9 +294,14 @@ void graphic::read()
     else if(obj["kindOfGame"].toString() == "transactionToPlayers")
     {
 
-
     }
 
+}
+
+void graphic::arase_message()
+{
+    delete timer;
+    mess->setPlainText(" ");
 }
 
 graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
@@ -226,17 +312,15 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     QJsonObject o;
     o["kind"] = "Game";
     o["kindOfGame"]="getBoardInformation";
-    QJsonDocument d(o);
-    QString jsString = QString::fromLatin1(d.toJson());
-    this->tcpSocket->write(jsString.toLatin1());
     tcpSocket->waitForBytesWritten(1000);
-
 
     this->setWindowTitle("catan");
 
     scene = new QGraphicsScene();
     scene->setSceneRect(0,0,720,512);
     setBackgroundBrush(QBrush(QImage(":/lands/Images/lands/back")));
+
+    send_message(o);
 
     setScene(scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -253,6 +337,7 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
 
     connect(menu,SIGNAL(clicked()),this,SLOT(clicked_menu()));
     connect(tcpSocket,&QTcpSocket::readyRead,this,&graphic::read);
+    connect(timer,SIGNAL(timeout()),this,SLOT(arase_message()));
 
 }
 
