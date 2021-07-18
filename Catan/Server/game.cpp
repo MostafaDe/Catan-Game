@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-multiPlayerMode = GameData::getColorToPlayer().size();
+multiPlayerMode = GameData::colorToPlayer.size();
 intToColor[0] = Color::Red;
 intToColor[1] = Color::Green;
 intToColor[2] = Color::Blue;
@@ -38,13 +38,14 @@ QJsonObject Game::getBoardInformation(QVector<int> &socketDescriptors)
 
 QJsonObject Game::buildHouse(QJsonObject message, QVector<int> &socketDescriptors)
 {
-gameFlow++;
-QJsonObject jsObj;
+    gameFlow++;
+    QJsonObject jsObj;
 
-    if(socketDescriptors.at(0) != getSocketOfPlayingPlayer())
+    if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() || (gameFlow < multiPlayerMode*4 && gameFlow%2 ==0 ) || checkSomeConditionForBuildingHouse(makeColorToPlayerToSocketToPlayer()[socketDescriptors.at(0)].getColor()))
     {
 
         jsObj["kind"] = "invalid request";
+        gameFlow--;
         return jsObj;
 
     }
@@ -53,7 +54,7 @@ QJsonObject jsObj;
     jsObj["kindOfGame"] = "responseTobuildHouse";
     QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
 
-    if(playerCanEfordIt("House",socketToPlayer[socketDescriptors.at(0)].getColor(),message["fromCards"].toBool()))
+    if(playerCanEfordIt("House",socketToPlayer[socketDescriptors.at(0)].getColor()))
     {
 
     Tranlate trans(GameData::getBoard()->mede_neiberhod_and_get());
@@ -80,6 +81,7 @@ QJsonObject jsObj;
     }
     jsObj["success"] = false;
     jsObj["errorMessage"] = "you can not eford building a house  :(";
+    gameFlow--;
     return jsObj;
 
 
@@ -92,10 +94,11 @@ QJsonObject Game::buildRoad(QJsonObject message, QVector<int> &socketDescriptors
      gameFlow++;
      QJsonObject jsObj;
 
-    if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() )
+    if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() || (gameFlow < multiPlayerMode*4 && gameFlow%2 ==1 ))
     {
 
         jsObj["kind"] = "invalid request";
+        gameFlow--;
         return jsObj;
 
     }
@@ -103,7 +106,7 @@ QJsonObject Game::buildRoad(QJsonObject message, QVector<int> &socketDescriptors
     jsObj["kindOfGame"] = "responseTobuildRoad";
     QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
     Tranlate trans(GameData::getBoard()->mede_neiberhod_and_get());
-    if(playerCanEfordIt("Road",socketToPlayer[socketDescriptors.at(0)].getColor(),message["fromCards"].toBool())){
+    if(playerCanEfordIt("Road",socketToPlayer[socketDescriptors.at(0)].getColor())){
     RoulsOfBiuldRoad rule(GameData::getBoard()->mede_neiberhod_and_get());
     QJsonArray jsArray = message["position"].toArray();
 
@@ -118,6 +121,8 @@ QJsonObject Game::buildRoad(QJsonObject message, QVector<int> &socketDescriptors
         jsObj["kindOfBuilding"] = "road";
         jsObj["success"] = true;
         jsObj["message"] = "road built successfuly :)";
+
+
         appendAllSocketsToVector(socketDescriptors);
         return jsObj;
 
@@ -125,6 +130,7 @@ QJsonObject Game::buildRoad(QJsonObject message, QVector<int> &socketDescriptors
         }
     jsObj["success"] = false;
     jsObj["errorMessage"] = "you can not build any road here :(";
+    gameFlow--;
     return jsObj;
 
     }
@@ -140,7 +146,7 @@ QJsonObject Game::buildBigCity(QJsonObject message, QVector<int> &socketDescript
 {
     QJsonObject jsObj;
 
-   if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() && gameFlow < multiPlayerMode*4)
+   if(socketDescriptors.at(0) != getSocketOfPlayingPlayer() || gameFlow < multiPlayerMode*4)
    {
 
        jsObj["kind"] = "invalid request";
@@ -148,10 +154,10 @@ QJsonObject Game::buildBigCity(QJsonObject message, QVector<int> &socketDescript
 
    }
    jsObj["kind"] = "Game";
-   jsObj["kindOfGame"] = "responseTobuildBigCity";
+   jsObj["kindOfGame"] = "responseTobuildHouse";
    QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
    Tranlate trans(GameData::getBoard()->mede_neiberhod_and_get());
-   if(playerCanEfordIt("BigCity",socketToPlayer[socketDescriptors.at(0)].getColor(),message["fromCards"].toBool())){
+   if(playerCanEfordIt("BigCity",socketToPlayer[socketDescriptors.at(0)].getColor())){
    RoulsOfBiuldRoad rule(GameData::getBoard()->mede_neiberhod_and_get());
    QJsonArray jsArray = message["position"].toArray();
 
@@ -169,9 +175,7 @@ QJsonObject Game::buildBigCity(QJsonObject message, QVector<int> &socketDescript
        jsObj["message"] = "BigCity built successfuly :)";
        appendAllSocketsToVector(socketDescriptors);
        return jsObj;
-
-
-       }
+     }
    jsObj["success"] = false;
    jsObj["errorMessage"] = "you can not build any BigCity here :(";
    return jsObj;
@@ -199,22 +203,31 @@ QJsonObject Game::transactionToPlayers(QJsonObject message, QVector<int> &socket
 
     QJsonObject jsObj;
     QJsonObject jsDeal(message["deal"].toObject());
-    try{
-        if(jsDeal["brickT"].toInt() <= 0 && jsDeal["wheatT"].toInt() <= 0 && jsDeal["rockT"].toInt() <= 0 && jsDeal["treeT"].toInt() <= 0 && jsDeal["sheepT"].toInt() <= 0 &&
-           jsDeal["brickG"].toInt() <= 0 && jsDeal["wheatG"].toInt() <= 0 && jsDeal["rockG"].toInt() <= 0 && jsDeal["treeG"].toInt() <= 0 && jsDeal["sheepG"].toInt() <= 0 &&
-            (jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) < 0 &&
-                (jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) < 0
-                  && socketDescriptors.at(0) != getSocketOfPlayingPlayer()
-                && gameFlow < multiPlayerMode*4){
-            // there can be a bug when wheatG = 2 and wheatT = 3 support that latter
+
+
+        if(jsDeal["brickT"].toInt() < 0 || jsDeal["wheatT"].toInt() < 0 || jsDeal["rockT"].toInt() < 0 || jsDeal["treeT"].toInt() < 0 || jsDeal["sheepT"].toInt() < 0 ||
+           jsDeal["brickG"].toInt() < 0 || jsDeal["wheatG"].toInt() < 0 || jsDeal["rockG"].toInt() < 0 || jsDeal["treeG"].toInt() < 0 || jsDeal["sheepG"].toInt() < 0 ||
+            (jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) <= 0 ||
+                (jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) <= 0
+                  || socketDescriptors.at(0) != getSocketOfPlayingPlayer()
+               || gameFlow < multiPlayerMode*4/*|| (gameFlow != multiPlayerMode*4 || makeColorToPlayerToSocketToPlayer()[socketDescriptors.at(0)].getColor() == Color::)*/ // there can be a bug here fix that latter
+                || checkExtraConditionForTransaction(jsDeal)
+                  ){
+
             jsObj["kind"] = "invalid request";
             return jsObj;
 
 
     }
+        if( !playerCanEfordTransaction(jsDeal,socketDescriptors.at(0))){
+                jsObj["kind"] = "invalid request";
+                return jsObj;
+
+    }
     QMap<int,Player> socketToPlayer = makeColorToPlayerToSocketToPlayer();
-    jsObj["kind"] = "game";
+    jsObj["kind"] = "Game";
     jsObj["kindOfGame"] = "transactionToPlayers";
+
     jsObj["username"] = socketToPlayer[socketDescriptors.at(0)].getUsername();
     jsObj["deal"] = jsDeal;
     for(auto &it:socketToPlayer){
@@ -233,21 +246,17 @@ QJsonObject Game::transactionToPlayers(QJsonObject message, QVector<int> &socket
     transactionMessage = message;
 
     return jsObj;
-}
 
 
 
- // if any error acured send an invalid request
-    catch(...){
-
-          // threre can be a bug  it depends which part of the code the error will happen
-          // there is a posibilty that invalid request gets sent to non realted users fix that bug latter
 
 
-          QJsonObject jsObj;
-          jsObj["kind"] = "invalid request";
-          return jsObj;
-        }
+
+
+
+
+
+
 
 
 
@@ -307,69 +316,88 @@ QJsonObject Game::responseToTransactionToPlayers(QJsonObject message, QVector<in
 
 QJsonObject Game::transactionToBank(QJsonObject message, QVector<int> &socketDescriptors)
 {
+
     QJsonObject jsObj;
     QJsonObject jsDeal(message["deal"].toObject());
-    if((jsDeal["brickT"].toInt()%4 != 0) && (jsDeal["wheatT"].toInt()%4 != 0 )
-            && (jsDeal["rockT"].toInt()%4 != 0 ) && (jsDeal["treeT"].toInt()%4 != 0)
-            && (jsDeal["sheepT"].toInt()%4 != 0) &&
-       jsDeal["brickG"].toInt() <= 0 && jsDeal["wheatG"].toInt() <= 0 && jsDeal["rockG"].toInt() <= 0 && jsDeal["treeG"].toInt() <= 0 && jsDeal["sheepG"].toInt() <= 0 &&
-        (jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) < 0 &&
-            (jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) < 0
-              && socketDescriptors.at(0) != getSocketOfPlayingPlayer()
-            && gameFlow < multiPlayerMode*4){
-        QJsonObject jsObj;
-        jsObj["kind"] = "Game";
-        jsObj["kindOfGame"] = "responseToTransaction";
-        jsObj["dealSuccess"] = true;
+
+    if((jsDeal["brickT"].toInt()%4 != 0) || (jsDeal["wheatT"].toInt()%4 != 0 )
+            || (jsDeal["rockT"].toInt()%4 != 0 ) || (jsDeal["treeT"].toInt()%4 != 0)
+            || (jsDeal["sheepT"].toInt()%4 != 0) ||
+       jsDeal["brickG"].toInt() < 0 || jsDeal["wheatG"].toInt() < 0 || jsDeal["rockG"].toInt() < 0 || jsDeal["treeG"].toInt() < 0 || jsDeal["sheepG"].toInt() < 0 ||
+        (jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) <= 0 ||
+            (jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) <= 0
+              || socketDescriptors.at(0) != getSocketOfPlayingPlayer()
+            || gameFlow < multiPlayerMode*4 /*|| (gameFlow != multiPlayerMode*4 || makeColorToPlayerToSocketToPlayer()[socketDescriptors.at(0)].getColor() == Color::)*/ // there can be a bug here fix that latter
+            ||(jsDeal["brickT"].toInt() + jsDeal["wheatT"].toInt() + jsDeal["rockT"].toInt() + jsDeal["treeT"].toInt() + jsDeal["sheepT"].toInt() ) /(jsDeal["brickG"].toInt() + jsDeal["wheatG"].toInt() + jsDeal["rockG"].toInt() + jsDeal["treeG"].toInt() + jsDeal["sheepG"].toInt() ) != 4
+            || checkExtraConditionForTransaction(jsDeal)
+            ){
+        jsObj["kind"] = "invalid request";
+        return jsObj;
+
 
     }
+    if( !playerCanEfordTransaction(jsDeal,socketDescriptors.at(0))){
+            jsObj["kind"] = "invalid request";
+            return jsObj;
+
+}
+    jsObj["kind"] = "Game";
+    jsObj["kindOfGame"] = "responseToTransaction";
+    jsObj["dealSuccess"] = true;
+    return jsObj;
+
 
 }
 
 
 
 
-QJsonObject Game::endOfTurn(QJsonObject message, QVector<int> &socketDescriptors)
+QJsonObject Game::endOfTurn(QVector<int> &sockets)
 {
 
     QJsonObject jsObj;
     static int counter = 0;
-    if(gameFlow == 0 || (gameFlow%2 == 1 && gameFlow < 12  ))
+    if(gameFlow == 0 || (gameFlow%2 == 1 && gameFlow < 12  ) || checkExtraConditionForEndOfTurn(makeColorToPlayerToSocketToPlayer()[sockets.at(0)].getColor()) )
     {
         QJsonObject jsObj;
         jsObj["kind"] = "invalid request";
         return jsObj;
     }
 
-    QMap<Color,Player> colToPlayer  = GameData::getColorToPlayer();
+
 
     if(gameFlow < multiPlayerMode*4 && gameFlow >= multiPlayerMode*2){
-       colToPlayer[ intToColor[(counter + 1)%multiPlayerMode]].setIsTurn(false);
-       colToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(true);
+       GameData::colorToPlayer[ intToColor[(counter)%multiPlayerMode]].setIsTurn(false);
+       GameData::colorToPlayer[ intToColor[(counter - 1)%multiPlayerMode]].setIsTurn(true);
 
        jsObj["kind"] = "Game";
        jsObj["kindOfGame"] = "endOfTurn";
-       jsObj["whoseTurn"] =convertColorToString(colToPlayer[ intToColor[counter%multiPlayerMode]].getColor());
+       jsObj["whoseTurn"] =convertColorToString(GameData::colorToPlayer[ intToColor[(counter - 1) %multiPlayerMode]].getColor());
        counter--;
 
     }
     else{
-        colToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(false);
+
+
+        GameData::colorToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(false);
         counter++;
-        colToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(true);
+        GameData::colorToPlayer[ intToColor[counter%multiPlayerMode]].setIsTurn(true);
         QJsonArray jsArry;
-        dice.generateRandomDices();
-        jsArry.append(dice.getDice1());
-        jsArry.append(dice.getDice2());
+
         // Allocate resources
         jsObj["kind"] = "Game";
         jsObj["kindOfGame"] = "endOfTurn";
-        jsObj["whoseTurn"] =convertColorToString(colToPlayer[ intToColor[counter%multiPlayerMode]].getColor());
-        jsObj["dices"] = jsArry;
+        jsObj["whoseTurn"] =convertColorToString(GameData::colorToPlayer[ intToColor[counter%multiPlayerMode]].getColor());
+        if(gameFlow >= 12){
+            dice.generateRandomDices();
+            jsArry.append(dice.getDice1());
+            jsArry.append(dice.getDice2());
+            jsObj["dices"] = jsArry;
+        }
     }
 
 
-    appendAllSocketsToVector(socketDescriptors);
+    appendAllSocketsToVector(sockets);
     return jsObj;
 }
 
@@ -394,7 +422,7 @@ void Game::makeDealWithTwoSockets(QJsonObject transactionMessage, int socketDeal
 QMap<int, Player> Game::makeColorToPlayerToSocketToPlayer()
 {
     QMap<int,Player> socketToPlayer;
-    for(auto &it :GameData::getColorToPlayer()){
+    for(auto &it :GameData::colorToPlayer){
         socketToPlayer [it.getSocketDescriptor()] = it;
     }
 
@@ -403,7 +431,7 @@ QMap<int, Player> Game::makeColorToPlayerToSocketToPlayer()
 
 int Game::getSocketOfPlayingPlayer()
 {
-    for(auto & it : GameData::getColorToPlayer()){
+    for(auto & it : GameData::colorToPlayer){
         if(it.getIsTurn())
             return it.getSocketDescriptor();
     }
@@ -413,20 +441,103 @@ QString Game::convertColorToString(Color color)
 {
     switch (color) {
     case Color::Blue:
-        return "Blue";
+        return "blue";
     case Color::Red:
-        return "Red";
+        return "red";
     case Color::Green:
-        return "Green";
+        return "green";
     case Color::Yellow:
-        return "Yellow";
+        return "yellow";
 
     }
 }
 
-bool Game::playerCanEfordIt(QString building, Color colorOfPlayer,bool fromCards)
+bool Game::playerCanEfordIt(QString building, Color colorOfPlayer)
 {
 
+    if(building == "House"){
+
+        if(gameFlow < 12 && gameFlow%2 == 1)
+            return true;
+        if(GameData::colorToPlayer[colorOfPlayer].getCountOfBrickCards() >= 1 &&
+           GameData::colorToPlayer[colorOfPlayer].getCountOfWoodCards() >= 1 &&
+           GameData::colorToPlayer[colorOfPlayer].getCountOfSheepCards() >= 1 &&
+           GameData::colorToPlayer[colorOfPlayer].getCountOfWheatCards() >= 1
+  )
+        {
+            GameData::colorToPlayer[colorOfPlayer].setCountOfBrickCards(GameData::colorToPlayer[colorOfPlayer].getCountOfBrickCards() - 1);
+
+            GameData::colorToPlayer[colorOfPlayer].setCountOfWheatCards(GameData::colorToPlayer[colorOfPlayer].getCountOfWheatCards() - 1);
+            GameData::colorToPlayer[colorOfPlayer].setCountOfSheepCards(GameData::colorToPlayer[colorOfPlayer].getCountOfSheepCards() - 1);
+            GameData::colorToPlayer[colorOfPlayer].setCountOfWoodCards(GameData::colorToPlayer[colorOfPlayer].getCountOfWoodCards() - 1);
+
+
+            return true;
+        }
+        else
+            return false;
+
+    }
+    if(building == "Road"){
+        if(colorOfPlayer == Color::Red && gameFlow == 12)
+            return true;
+        if(gameFlow < 12 && gameFlow%2 == 0)
+            return true;
+        if(GameData::colorToPlayer[colorOfPlayer].getCountOfBrickCards() >= 1 &&
+           GameData::colorToPlayer[colorOfPlayer].getCountOfWoodCards() >= 1
+
+
+               )
+        {
+            GameData::colorToPlayer[colorOfPlayer].setCountOfBrickCards(GameData::colorToPlayer[colorOfPlayer].getCountOfBrickCards() - 1);
+            GameData::colorToPlayer[colorOfPlayer].setCountOfWoodCards(GameData::colorToPlayer[colorOfPlayer].getCountOfWoodCards() - 1);
+
+
+            return true;
+        }
+        else
+            return false;
+
+    }
+    if(building == "BigCity"){
+        if(
+           GameData::colorToPlayer[colorOfPlayer].getCountOfWheatCards() >= 2 &&
+           GameData::colorToPlayer[colorOfPlayer].getCountOfRockCards() >= 3     )
+        {
+
+            GameData::colorToPlayer[colorOfPlayer].setCountOfRockCards(GameData::colorToPlayer[colorOfPlayer].getCountOfRockCards() - 3);
+            GameData::colorToPlayer[colorOfPlayer].setCountOfWheatCards(GameData::colorToPlayer[colorOfPlayer].getCountOfWheatCards() - 2);
+
+
+
+            return true;
+        }
+        else
+            return false;
+    }
+
+    return true;
+}
+
+bool Game::playerCanEfordTransaction(QJsonObject jsDeal,int socket)
+{
+
+    Color color = makeColorToPlayerToSocketToPlayer()[socket].getColor();
+    if(GameData::colorToPlayer[color].getCountOfBrickCards() < jsDeal["brickT"].toInt()
+       ||GameData::colorToPlayer[color].getCountOfWheatCards() < jsDeal["wheatT"].toInt()
+       ||GameData::colorToPlayer[color].getCountOfRockCards() < jsDeal["rockT"].toInt()
+       ||GameData::colorToPlayer[color].getCountOfWoodCards() < jsDeal["treeT"].toInt()
+       ||GameData::colorToPlayer[color].getCountOfSheepCards() < jsDeal["sheepT"].toInt()     )
+       return false;
+    else{
+
+           GameData::colorToPlayer[color].setCountOfBrickCards((GameData::colorToPlayer[color].getCountOfBrickCards()  - jsDeal["brickT"].toInt()) + jsDeal["brickG"].toInt() );
+           GameData::colorToPlayer[color].setCountOfWheatCards((GameData::colorToPlayer[color].getCountOfWheatCards()  - jsDeal["wheatT"].toInt()) + jsDeal["wheatG"].toInt() );
+           GameData::colorToPlayer[color].setCountOfWoodCards((GameData::colorToPlayer[color].getCountOfWoodCards()  - jsDeal["treeT"].toInt()) +  jsDeal["treeG"].toInt());
+           GameData::colorToPlayer[color].setCountOfSheepCards((GameData::colorToPlayer[color].getCountOfSheepCards()  - jsDeal["sheepT"].toInt()) + jsDeal["sheepG"].toInt());
+           GameData::colorToPlayer[color].setCountOfRockCards((GameData::colorToPlayer[color].getCountOfRockCards()  - jsDeal["rockT"].toInt()) + jsDeal["rockG"].toInt());
+           return true;
+       }
 }
 
 
@@ -434,11 +545,111 @@ bool Game::playerCanEfordIt(QString building, Color colorOfPlayer,bool fromCards
 void Game::appendAllSocketsToVector(QVector<int>& sockets)
 {
      sockets.clear();
-     QMap<Color,Player> colorToPlayer = GameData::getColorToPlayer();
+     QMap<Color,Player> colorToPlayer = GameData::colorToPlayer;
      for(auto &it:colorToPlayer)
      {
          sockets.append(it.getSocketDescriptor());
      }
+}
+
+void Game::setGameFlow(int newGameFlow)
+{
+    gameFlow = newGameFlow;
+}
+
+bool Game::checkExtraConditionForTransaction(QJsonObject jsDeal)
+{
+    if((jsDeal["brickT"].toInt() != 0 && jsDeal["brickG"].toInt() != 0 ) ||
+        (jsDeal["wheatT"].toInt() != 0 && jsDeal["wheatG"].toInt() != 0 )||
+         (jsDeal["rockT"].toInt() != 0 && jsDeal["rockG"].toInt() != 0 )||
+            (jsDeal["treeT"].toInt() != 0 && jsDeal["treeG"].toInt() != 0 )||
+            (jsDeal["sheepT"].toInt() != 0 && jsDeal["sheepG"].toInt() != 0 ))
+        return true;
+    else
+        return false;
+}
+
+bool Game::checkSomeConditionForBuildingHouse(Color color)
+{
+    if(color == Color::Red){
+     if((gameFlow == 3 || gameFlow == 3 + multiPlayerMode*2) && gameFlow <= multiPlayerMode*4){
+
+         return true;
+     }else{
+         return false;
+     }
+}
+    if(color == Color::Green){
+     if((gameFlow == 5 || gameFlow == 5+ multiPlayerMode*2) && gameFlow <= multiPlayerMode*4){
+
+         return true;
+     }else{
+         return false;
+     }
+    }
+     if(color == Color::Blue){
+         if(multiPlayerMode == 3 && gameFlow == 7)
+             return false;
+      if( (gameFlow == 9 || gameFlow ==9 +   multiPlayerMode*2) && gameFlow <= multiPlayerMode*4){
+
+          return true;
+      }else{
+          return false;
+      }
+     }
+      if(color == Color::Yellow){
+          if(multiPlayerMode == 3 && gameFlow == 9)
+              return false;
+       if((gameFlow == 9 || gameFlow == 9 + multiPlayerMode*2 )&& gameFlow <= multiPlayerMode*4){
+
+           return true;
+       }else{
+           return false;
+       }
+}
+
+
+}
+
+bool Game::checkExtraConditionForEndOfTurn(Color color)
+{
+    if(color == Color::Red){
+     if((gameFlow == 0 || gameFlow == (multiPlayerMode*4) - 2) && gameFlow <= multiPlayerMode*4){
+
+         return true;
+     }else{
+         return false;
+     }
+}
+    if(color == Color::Green){
+     if((gameFlow == 2 || gameFlow ==  (multiPlayerMode*4) - 4) && gameFlow <= multiPlayerMode*4){
+
+         return true;
+     }else{
+         return false;
+     }
+    }
+     if(color == Color::Blue){
+         if(multiPlayerMode == 3 && gameFlow == 6 )
+             return true;
+      if((gameFlow == 4 || gameFlow ==  (multiPlayerMode*4) - 6) && gameFlow <= multiPlayerMode*4){
+
+          return true;
+      }else{
+          return false;
+      }
+     }
+      if(color == Color::Yellow){
+       if(multiPlayerMode == 4 && gameFlow == 8 )
+              return true;
+       if((gameFlow == 6 || gameFlow == 6 + (multiPlayerMode*4 )- 8 )&& gameFlow <= multiPlayerMode*4){
+
+           return true;
+       }else{
+           return false;
+       }
+}
+
 }
 
 

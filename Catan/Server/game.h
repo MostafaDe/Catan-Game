@@ -29,10 +29,12 @@ public:
     QJsonObject transactionToPlayers(QJsonObject message ,QVector<int>& socketDescriptors);
     QJsonObject responseToTransactionToPlayers(QJsonObject message ,QVector<int>& socketDescriptors);
     QJsonObject transactionToBank(QJsonObject message ,QVector<int>& socketDescriptors);
-    QJsonObject endOfTurn(QJsonObject message ,QVector<int>& socketDescriptors);
+    QJsonObject endOfTurn(QVector<int> &sockets);
 
 
 
+
+    void setGameFlow(int newGameFlow);
 
 private:
 
@@ -46,7 +48,8 @@ private:
     QMap<int,Player> makeColorToPlayerToSocketToPlayer();
     int getSocketOfPlayingPlayer();
     QString convertColorToString(Color color);// implement this
-    bool playerCanEfordIt(QString building,Color colorOfPlayer,bool fromCards);// implement this
+    bool playerCanEfordIt(QString building,Color colorOfPlayer);// implement this
+    bool playerCanEfordTransaction(QJsonObject jsDeal,int socket);// implement this
     void appendAllSocketsToVector(QVector<int>& sockets);// implement this
     void setWhoStartsGame();
     int multiPlayerMode;
@@ -54,6 +57,9 @@ private:
     int gameFlow = 0;
     QMap<int,int> socketToSumOfdices;
     Dice dice;
+    bool checkExtraConditionForTransaction(QJsonObject deal);
+    bool checkSomeConditionForBuildingHouse(Color color);
+    bool checkExtraConditionForEndOfTurn(Color color);
 
 };
 
