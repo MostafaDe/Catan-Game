@@ -4,15 +4,13 @@
 
 #ifndef SETTINGUPGOOGLETEST_BOARD_H
 #define SETTINGUPGOOGLETEST_BOARD_H
-#include"makeRandLand.h"
+#include"Board/makeRandLand.h"
 #include <vector>
 #include <map>
 using namespace std;
-#include "UnitOfBoard.h"
-#include "Land.h"
-#include "Iron.h"
+
 #include<QJsonObject>
-#include "Color.h"
+//#include "Color.h"
 #include<QString>
 #define SIZE 150
 class Board {
@@ -28,10 +26,11 @@ public:
 //    virtual vector<map<Color,int>> calculateScore(int SumOfDices) = 0;
     virtual vector<vector<int>> mede_neiberhod_and_get()=0;//vectori of array 2d 
     virtual QJsonObject get_board_information()=0;
-
+    virtual  map<int, string > get_deta_resurse()=0;
+    virtual  map<int, int> get_date_dice()=0;
 protected:
-   vector<UnitOfBoard*>  units;
-   map<int,Land> randomNumbersToLands;
+ //  vector<UnitOfBoard*>  units;
+//   map<int,Land> randomNumbersToLands;
    //bool graphOfUnits[SIZE][SIZE];
    map<int, string >deta_resurse;
    map<int, int> date_dice;

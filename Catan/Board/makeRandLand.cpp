@@ -1,4 +1,4 @@
-#include "makeRandLand.h"
+#include "Board/makeRandLand.h"
 makeRandLand::makeRandLand(int number, int ir, int sh, int ro, int wh, int tr,int de, vector<vector<int>> mnei) {
 
 

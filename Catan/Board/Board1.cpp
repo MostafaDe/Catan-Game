@@ -2,7 +2,7 @@
 // Created by apadana on ۰۳/۰۷/۲۰۲۱.
 //
 
-#include "Board1.h"
+#include "Board/Board1.h"
 Board1::Board1() {
 
     makeRandLand B1(28, 7, 5, 5, 5, 5, 1,mede_neiberhod_and_get());
@@ -21,7 +21,7 @@ vector<vector<int>> Board1::mede_neiberhod_and_get() {
 
     vector<vector<int>> x;
 
-    vector<int> y[150];
+    vector<int> y[200];
     y[0].push_back(1);
     y[0].push_back(2);
     y[0].push_back(5);
@@ -776,15 +776,17 @@ return jo;
 
 }
 
-map<int, int> Board1::get_numberOfLand()
+map<int, string> Board1::get_deta_resurse()
+{
+    return deta_resurse;
+}
+
+map<int, int> Board1::get_date_dice()
 {
     return date_dice;
 }
 
-map<int, string> Board1::get_sourceOfLand()
-{
-    return deta_resurse;
-}
+
 
 
 
