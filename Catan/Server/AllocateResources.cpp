@@ -433,7 +433,7 @@ void AllocateResources::check_homearound(int number_land)
 void AllocateResources::add_source_instructur(string s,struct surce &x,int dob)
 {
 
-    if(s=="iron"){
+    if(s=="brick"){
         x.i=x.i+dob;
 
     }
@@ -447,7 +447,7 @@ void AllocateResources::add_source_instructur(string s,struct surce &x,int dob)
 
     }
 
-    else if(s=="whear"){
+    else if(s=="wheat"){
 
          x.w=x.w+dob;
     }
