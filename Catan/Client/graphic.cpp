@@ -358,11 +358,11 @@ position_for_graphics graphic::set_center(int num, QJsonArray arr)
 
 QColor graphic::set_color(QString str)
 {
-    if(str=="Blue")
+    if(str=="blue")
         return QColor(51,77,210);
-    else if(str=="Red")
+    else if(str=="red")
         return QColor(210,51,51);
-    else if(str=="Green")
+    else if(str=="green")
         return QColor(103,210,51);
     else
         return QColor(210,186,51);
