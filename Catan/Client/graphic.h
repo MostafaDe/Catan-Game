@@ -12,16 +12,24 @@ class graphic : public QGraphicsView
     Q_OBJECT
 private:
     QGraphicsScene *scene;
-    QGraphicsTextItem*me,*comp1,*comp2;
+    QGraphicsTextItem*me,*comp1,*comp2,*comp3,*mess;
+    QGraphicsRectItem*me_box,*comp1_box,*comp2_box,*comp3_box;
+    QGraphicsRectItem*resource_box;
     QPushButton* menu;
+
 
     void set_lands();
     void set_score();
+    void set_resource();
+    void show_message(QString mess);
     positions pos;
 
     Player*player_;
     QTcpSocket*tcpSocket;
     QJsonObject obj;
+
+    QColor set_color (QString str);
+    position_for_graphics set_center(int num,QJsonArray arr);
 
 public slots:
     void clicked_menu();
