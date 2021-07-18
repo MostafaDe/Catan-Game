@@ -39,6 +39,8 @@ void readyToStart::setPlayer(Player *newPlayer)
 
 void readyToStart::sendMessage()
 {
+    ok->setEnabled(false);
+    cancel->setEnabled(false);
     QJsonObject o;
     o["kind"] = "ReadyToPlay";
     QJsonDocument d(o);
