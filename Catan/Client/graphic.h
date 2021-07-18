@@ -19,6 +19,7 @@ private:
     QGraphicsRectItem*resource_box;
     QPushButton* menu;
     QTimer*timer=NULL;
+    int what_want_buld=0;//0=nothing  1=road   2=house   3=city
 
     QGraphicsPixmapItem*sheep,*iron,*tree,*rock,*wheat;
     QGraphicsTextItem*sheep_,*iron_,*tree_,*rock_,*wheat_;

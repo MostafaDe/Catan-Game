@@ -189,7 +189,7 @@ void graphic::show_message(QString mess_)
 
 void graphic::clicked_menu()
 {
-    menu_window *M=new menu_window(this);
+    menu_window *M=new menu_window(&what_want_buld,player_->getIsTurn(),this);
     M->show();
 }
 
@@ -338,6 +338,7 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     connect(menu,SIGNAL(clicked()),this,SLOT(clicked_menu()));
     connect(tcpSocket,&QTcpSocket::readyRead,this,&graphic::read);
     connect(timer,SIGNAL(timeout()),this,SLOT(arase_message()));
+
 
 }
 

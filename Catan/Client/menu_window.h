@@ -7,10 +7,18 @@
 class menu_window:public QDialog
 {
 public:
-    menu_window(QWidget *parent = nullptr);
+    menu_window(int *what,bool button_inable,QWidget *parent = nullptr);
 
 private:
-    QPushButton*test;
+    QPushButton*endOfTurn,*buildHous,*buildCity,*buildRoad;
+    void set_inable(bool is);
+    int *what_;
+
+public slots:
+    void clicked_endOfTurn();
+    void clicked_buildHous();
+    void clicked_buildCity();
+    void clicked_buildRoad();
 
 };
 
