@@ -15,6 +15,7 @@
 #include"RoulOfBuildBigCity.h"
 #include"Tranlate.h"
 #include"dice.h"
+#include"AllocateResources.h"
 using namespace std;
 class Game
 {
@@ -39,18 +40,19 @@ public:
 private:
 
 
-    int socketOfDealer = -1;// the player who uses transacrion to player in his turn
+    int socketOfDealer = -1;
     QVector<int> waitingForSocketsResponse;
     QJsonObject transactionMessage;
     bool socketExistInListOfSockets(int socket,const QVector<int>& waitingForSocketsResponse);
-    void  removeThisSocketFromSocketList(int socket, QVector<int>& waitingForSocketsResponse);// implement this
-    void  makeDealWithTwoSockets(QJsonObject transactionMessage,int socketDealer,int socketBuyer);// implement this
+    void  removeThisSocketFromSocketList(int socket, QVector<int>& waitingForSocketsResponse);
+    void  makeDealWithTwoSockets(QJsonObject transactionMessage,int socketDealer,int socketBuyer);
     QMap<int,Player> makeColorToPlayerToSocketToPlayer();
     int getSocketOfPlayingPlayer();
-    QString convertColorToString(Color color);// implement this
-    bool playerCanEfordIt(QString building,Color colorOfPlayer);// implement this
-    bool playerCanEfordTransaction(QJsonObject jsDeal,int socket);// implement this
-    void appendAllSocketsToVector(QVector<int>& sockets);// implement this
+    QString convertColorToString(Color color);
+    bool playerCanEfordIt(QString building,Color colorOfPlayer);
+    bool playerCanEfordTransaction(QJsonObject jsDeal,int socket);
+    bool playerCanEfordTransactionToPlayers(QJsonObject jsDeal,int socket);
+    void appendAllSocketsToVector(QVector<int>& sockets);
     void setWhoStartsGame();
     int multiPlayerMode;
     map<int,Color> intToColor;
@@ -60,6 +62,8 @@ private:
     bool checkExtraConditionForTransaction(QJsonObject deal);
     bool checkSomeConditionForBuildingHouse(Color color);
     bool checkExtraConditionForEndOfTurn(Color color);
+
+    AllocateResources alR;
 
 };
 
