@@ -105,7 +105,7 @@ void AllocateResources::check_available_source()
 
     }
     else{
-        GameData::setCountOfSheepCards(GameData::getCountOfSheepCards()-syellow.sh+sgreen.sh+sblue.sh+sred.sh);
+        GameData::setCountOfSheepCards(GameData::getCountOfSheepCards()-(syellow.sh+sgreen.sh+sblue.sh+sred.sh));
 
         }
 
@@ -125,7 +125,7 @@ void AllocateResources::check_available_source()
     }
 
     else{
-        GameData::setCountOfRockCards(GameData::getCountOfRockCards()-sred.r+sgreen.r+sblue.r+syellow.r);
+        GameData::setCountOfRockCards(GameData::getCountOfRockCards()-(sred.r+sgreen.r+sblue.r+syellow.r));
 
         }
 
@@ -147,7 +147,7 @@ void AllocateResources::check_available_source()
     }
 
     else{
-        GameData::setCountOfWoodCards(GameData::getCountOfWoodCards()-sred.t+sgreen.t+sblue.t+syellow.t);
+        GameData::setCountOfWoodCards(GameData::getCountOfWoodCards()-(sred.t+sgreen.t+sblue.t+syellow.t));
 
         }
 
@@ -169,7 +169,7 @@ void AllocateResources::check_available_source()
 
     }
     else{
-        GameData::setCountOfWheatCards(GameData::getCountOfWheatCards()-sred.w+sgreen.w+sblue.w+syellow.w);
+        GameData::setCountOfWheatCards(GameData::getCountOfWheatCards()-(sred.w+sgreen.w+sblue.w+syellow.w));
 
         }
 
@@ -189,7 +189,7 @@ void AllocateResources::check_available_source()
 
     }
     else{
-        GameData::setCountOfBrickCards(GameData::getCountOfBrickCards()-sred.i+sgreen.i+sblue.i+syellow.i);
+        GameData::setCountOfBrickCards(GameData::getCountOfBrickCards()-(sred.i+sgreen.i+sblue.i+syellow.i));
 
         }
 
@@ -204,10 +204,10 @@ void AllocateResources::check_available_source()
 void AllocateResources::give_whearIsLand( vector<int>collection)
 {
 
-Board1 d;
+
 
 map<int,int> ser;
-ser=d.get_date_dice();
+ser=GameData::getBoard()->get_date_dice();
 
 //qDebug() <<collection[0] ;
 for(int i=1;i<=ser.size();i++){
@@ -225,9 +225,9 @@ for(int i=1;i<=ser.size();i++){
 
 void AllocateResources::check_homearound(int number_land)
 {
-    Board1 d;
+
     map<int,string> kay_source;
-    kay_source=d.get_deta_resurse();
+    kay_source=GameData::getBoard()->get_deta_resurse();
 
 
 
@@ -498,11 +498,4 @@ GameData::colorToPlayer[Color::Yellow].setCountOfRockCards(syellow.r+GameData::c
 
 
 }
-int main()
-{
 
-//m.add_source_instructur("sheep",s);
-
-
-
-}
