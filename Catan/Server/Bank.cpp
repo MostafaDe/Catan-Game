@@ -430,6 +430,7 @@ void Bank::addReadyToPlayNumber(int socketDescriptor,QString username)
 
     Player player;
     player.setUsername(username);
+    player.setSocketDescriptor(socketDescriptor);
     QPair <int,Player> pair(socketDescriptor,player);
     socketToPlayerList.push_back(pair);
     readyToPlayNumbers++;
