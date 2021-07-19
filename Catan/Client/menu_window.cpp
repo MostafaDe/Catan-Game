@@ -42,17 +42,20 @@ void menu_window::clicked_endOfTurn()
 void menu_window::clicked_buildHous()
 {
     *what_=2;
+    emit value_changed();
     this->close();
 }
 
 void menu_window::clicked_buildCity()
 {
     *what_=3;
+    emit value_changed();
     this->close();
 }
 
 void menu_window::clicked_buildRoad()
 {
     *what_=1;
+    emit value_changed();
     this->close();
 }

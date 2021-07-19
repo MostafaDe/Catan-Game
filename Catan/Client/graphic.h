@@ -8,6 +8,7 @@
 #include"Player/player.h"
 #include<QJsonObject>
 #include<QTimer>
+#include"Client/menu_window.h"
 
 class graphic : public QGraphicsView
 {
@@ -20,6 +21,7 @@ private:
     QPushButton* menu;
     QTimer*timer=NULL;
     int what_want_buld=0;//0=nothing  1=road   2=house   3=city
+    menu_window*win_ptr=NULL;
 
     QGraphicsPixmapItem*sheep,*iron,*tree,*rock,*wheat;
     QGraphicsTextItem*sheep_,*iron_,*tree_,*rock_,*wheat_;
@@ -43,8 +45,10 @@ public slots:
     void clicked_menu();
     void read();
     void arase_message();
+    void changed_what_want_build();
 
 public:
     graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent = nullptr);
+
 };
 #endif // GRAPHIC_H

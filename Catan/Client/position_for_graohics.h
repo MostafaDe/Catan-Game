@@ -46,6 +46,24 @@ inline positions::positions()
     map_l.insert("21",{464,374});
     map_l.insert("22",{580,374});
 
+    map_l.insert("-1",{261,224});
+    map_l.insert("-2",{290,174});
+    map_l.insert("-3",{319,124});
+    map_l.insert("-4",{377,124});
+    map_l.insert("-5",{435,124});
+    map_l.insert("-6",{493,124});
+    map_l.insert("-7",{522,174});
+    map_l.insert("-8",{551,224});
+    map_l.insert("-9",{580,274});
+    map_l.insert("-10",{551,324});
+    map_l.insert("-11",{522,374});
+    map_l.insert("-12",{493,424});
+    map_l.insert("-13",{435,424});
+    map_l.insert("-14",{377,424});
+    map_l.insert("-15",{319,424});
+    map_l.insert("-16",{290,375});
+    map_l.insert("-17",{261,325});
+    map_l.insert("-18",{232,275});
 
 
 

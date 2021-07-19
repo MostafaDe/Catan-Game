@@ -189,8 +189,8 @@ void graphic::show_message(QString mess_)
 
 void graphic::clicked_menu()
 {
-    menu_window *M=new menu_window(&what_want_buld,player_->getIsTurn(),this);
-    M->show();
+    win_ptr=new menu_window(&what_want_buld,player_->getIsTurn(),this);
+    win_ptr->show();
 }
 
 void graphic::read()
@@ -304,6 +304,25 @@ void graphic::arase_message()
     mess->setPlainText(" ");
 }
 
+void graphic::changed_what_want_build()
+{
+    if(what_want_buld==0)
+        return;
+    else if(what_want_buld==1)
+
+    {
+        //road
+    }
+    else if(what_want_buld==2)
+    {
+        //home
+    }
+    else
+    {
+        //city
+    }
+}
+
 graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     :QGraphicsView(parent)
     ,player_(player_1)
@@ -338,7 +357,7 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     connect(menu,SIGNAL(clicked()),this,SLOT(clicked_menu()));
     connect(tcpSocket,&QTcpSocket::readyRead,this,&graphic::read);
     connect(timer,SIGNAL(timeout()),this,SLOT(arase_message()));
-
+    connect(win_ptr,SIGNAL(menu_window::value_changed()),this,SLOT(changed_what_want_build()));
 
 }
 

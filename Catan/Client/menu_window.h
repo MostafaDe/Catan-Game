@@ -6,6 +6,7 @@
 
 class menu_window:public QDialog
 {
+    Q_OBJECT
 public:
     menu_window(int *what,bool button_inable,QWidget *parent = nullptr);
 
@@ -19,6 +20,9 @@ public slots:
     void clicked_buildHous();
     void clicked_buildCity();
     void clicked_buildRoad();
+
+signals:
+    void value_changed();
 
 };
 
