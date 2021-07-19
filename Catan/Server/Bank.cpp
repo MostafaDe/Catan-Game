@@ -470,18 +470,30 @@ if(message["kindOfGame"] == "buildHouse"){
     response = game->buildHouse(message,socketDescs);
 }
 else
+if(message["kindOfGame"] == "buildBigCity"){
+    response = game->buildBigCity(message,socketDescs);
+}
+else
 if(message["kindOfGame"] == "buildRoad"){
    response = game->buildRoad(message,socketDescs);
 }
 
 else
-if(message["kindOfGame"] == "transaction"){
+if(message["kindOfGame"] == "transactionToPlayers"){
    response = game->transactionToPlayers(message,socketDescs);
+}
+else
+if(message["kindOfGame"] == "transactionToBank"){
+   response = game->transactionToBank(message,socketDescs);
 }
 
 else
 if(message["kindOfGame"] == "endOfTurn"){
   response = game->endOfTurn(socketDescs);
+}
+else
+if(message["kindOfGame"] == "responseToTransactionToPlayers"){
+  response = game->responseToTransactionToPlayers(message,socketDescs);
 }
 else{
     response["kind"] = "invalid request";
