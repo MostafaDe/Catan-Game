@@ -2,6 +2,15 @@
 #include"QDebug"
 //#include"Board/makeRandLand.h"
 #include"Board/Board1.h"
+AllocateResources::AllocateResources(Board1 d)
+{
+    B1=d;
+    map<int,int> ser;
+    ser=B1.get_date_dice();
+    ser=d.get_date_dice();
+  //  qDebug() <<"ferst" <<ser[1];
+}
+
 void AllocateResources::set_dice(int number)
 {
     number_dice=number;
@@ -13,10 +22,11 @@ vector<pair<string, map<string, int> > > AllocateResources::get_whichPlayerGetRe
 
     //int *collection;
     vector<int> collection;
+//    qDebug() << "hellow";
     give_whearIsLand(collection);
 
 for(int i=0;i<collection.size();i++){
-
+//qDebug() << "ward";
 
     check_homearound(collection[i]);
 
@@ -147,6 +157,8 @@ void AllocateResources::check_available_source()
     }
 
     else{
+//        qDebug () << "waddddddddddd";
+ //qDebug () << sred.t;
         GameData::setCountOfWoodCards(GameData::getCountOfWoodCards()-(sred.t+sgreen.t+sblue.t+syellow.t));
 
         }
@@ -201,20 +213,21 @@ void AllocateResources::check_available_source()
 
 }
 
-void AllocateResources::give_whearIsLand( vector<int>collection)
+void AllocateResources::give_whearIsLand( vector<int>&collection)
 {
 
 
 
 map<int,int> ser;
-ser=GameData::getBoard()->get_date_dice();
+ser=B1.get_date_dice();
 
-//qDebug() <<collection[0] ;
+//qDebug() <<"n" <<number_dice ;
+
 for(int i=1;i<=ser.size();i++){
-
+//qDebug() <<"ser" << i <<ser[i];
 
     if(ser[i]==number_dice){
-
+//qDebug() << "shomar"<< i;
         collection.push_back(i);
 
     }
@@ -225,21 +238,29 @@ for(int i=1;i<=ser.size();i++){
 
 void AllocateResources::check_homearound(int number_land)
 {
-
+//qDebug() << "number"<< number_land;
     map<int,string> kay_source;
-    kay_source=GameData::getBoard()->get_deta_resurse();
+    kay_source=B1.get_deta_resurse();
 
 
 
 
     vector<vector<vector<int>>> r;
     r=GameData::getRed_house();
+//    qDebug() <<"size" <<GameData::getRed_house().size();
     for(int i=0;i<GameData::getRed_house().size();i++){
+
+
         for(int j=0;j<3;j++){
+//             qDebug() <<"sadfdfasdf" <<r[i][j][0] <<r[i][j][1];
             if(r[i][j][0]==number_land){
-
+//qDebug() << "ajab"<< number_land;
    add_source_instructur(kay_source[number_land],sred,1);
-
+//   qDebug() << sred.i;
+//   qDebug() << sred.w;
+//   qDebug() << sred.sh;
+//   qDebug() << sred.r;
+//   qDebug() << sred.t;
 
 
             }
@@ -466,36 +487,51 @@ void AllocateResources::set_source_player()
 
 
 GameData::colorToPlayer[Color::Red].setCountOfBrickCards(sred.i+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Red].setCountOfWoodCards(sred.t+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Red].setCountOfSheepCards(sred.sh+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Red].setCountOfWheatCards(sred.w+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Red].setCountOfRockCards(sred.r+GameData::colorToPlayer[Color::Red].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Red].setCountOfWoodCards(sred.t+GameData::colorToPlayer[Color::Red].getCountOfWoodCards());
+GameData::colorToPlayer[Color::Red].setCountOfSheepCards(sred.sh+GameData::colorToPlayer[Color::Red].getCountOfSheepCards());
+GameData::colorToPlayer[Color::Red].setCountOfWheatCards(sred.w+GameData::colorToPlayer[Color::Red].getCountOfWheatCards());
+GameData::colorToPlayer[Color::Red].setCountOfRockCards(sred.r+GameData::colorToPlayer[Color::Red].getCountOfRockCards());
+//qDebug() << sred.t;
+//qDebug() <<"Briwwwwwwww"<<GameData::colorToPlayer[Color::Red].getCountOfBrickCards();
+//qDebug() <<GameData::colorToPlayer[Color::Red].getCountOfBrickCards();
+//qDebug() <<GameData::colorToPlayer[Color::Red].getCountOfBrickCards();
+//qDebug() <<GameData::colorToPlayer[Color::Red].getCountOfBrickCards();
+//qDebug() <<GameData::colorToPlayer[Color::Red].getCountOfBrickCards();
+
+
+
+
+
+
+
+
+
+
 
 
 GameData::colorToPlayer[Color::Blue].setCountOfBrickCards(sblue.i+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Blue].setCountOfWoodCards(sblue.t+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Blue].setCountOfSheepCards(sblue.sh+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Blue].setCountOfWheatCards(sblue.w+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Blue].setCountOfRockCards(sblue.r+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Blue].setCountOfWoodCards(sblue.t+GameData::colorToPlayer[Color::Blue].getCountOfWoodCards());
+GameData::colorToPlayer[Color::Blue].setCountOfSheepCards(sblue.sh+GameData::colorToPlayer[Color::Blue].getCountOfSheepCards());
+GameData::colorToPlayer[Color::Blue].setCountOfWheatCards(sblue.w+GameData::colorToPlayer[Color::Blue].getCountOfWheatCards());
+GameData::colorToPlayer[Color::Blue].setCountOfRockCards(sblue.r+GameData::colorToPlayer[Color::Blue].getCountOfRockCards());
 
 
 GameData::colorToPlayer[Color::Green].setCountOfBrickCards(sgreen.i+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Green].setCountOfWoodCards(sgreen.t+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Green].setCountOfSheepCards(sgreen.sh+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Green].setCountOfWheatCards(sgreen.w+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Green].setCountOfRockCards(sgreen.r+GameData::colorToPlayer[Color::Green].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Green].setCountOfWoodCards(sgreen.t+GameData::colorToPlayer[Color::Green].getCountOfWoodCards());
+GameData::colorToPlayer[Color::Green].setCountOfSheepCards(sgreen.sh+GameData::colorToPlayer[Color::Green].getCountOfSheepCards());
+GameData::colorToPlayer[Color::Green].setCountOfWheatCards(sgreen.w+GameData::colorToPlayer[Color::Green].getCountOfWheatCards());
+GameData::colorToPlayer[Color::Green].setCountOfRockCards(sgreen.r+GameData::colorToPlayer[Color::Green].getCountOfRockCards());
 
 
 
 GameData::colorToPlayer[Color::Yellow].setCountOfBrickCards(syellow.i+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Yellow].setCountOfWoodCards(syellow.t+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Yellow].setCountOfSheepCards(syellow.sh+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Yellow].setCountOfWheatCards(syellow.w+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
-GameData::colorToPlayer[Color::Yellow].setCountOfRockCards(syellow.r+GameData::colorToPlayer[Color::Yellow].getCountOfBrickCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfWoodCards(syellow.t+GameData::colorToPlayer[Color::Yellow].getCountOfWoodCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfSheepCards(syellow.sh+GameData::colorToPlayer[Color::Yellow].getCountOfSheepCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfWheatCards(syellow.w+GameData::colorToPlayer[Color::Yellow].getCountOfWheatCards());
+GameData::colorToPlayer[Color::Yellow].setCountOfRockCards(syellow.r+GameData::colorToPlayer[Color::Yellow].getCountOfRockCards());
 
 
 
 
 
 }
-

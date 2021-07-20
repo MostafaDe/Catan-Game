@@ -20,6 +20,7 @@ struct surce{
 class AllocateResources
 {
 public:
+    AllocateResources(Board1 d);
     void set_dice(int number);
 
     vector<pair<string,map<string,int>>> get_whichPlayerGetResurse();
@@ -27,9 +28,10 @@ public:
 //void give_whearIsLand(int dice,int *collection);
 
 private:
+    Board1 B1;
     int number_dice;
     void check_available_source();
-void give_whearIsLand(vector<int >collection);
+void give_whearIsLand(vector<int >&collection);
 void check_homearound(int number_land);
 void add_source_instructur(string s ,struct surce& x,int dob);
 void set_source_player();
