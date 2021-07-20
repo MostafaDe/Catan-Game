@@ -212,19 +212,13 @@ void graphic::send_message(QJsonObject o)
 
 void graphic::show_message(QString mess_)
 {
-    if(mess!=NULL)
-        delete mess;
-    mess=new QGraphicsTextItem;
     mess->setPlainText(mess_);
-    mess->setDefaultTextColor(QColor(255,255,255));
-    setFont(QFont(":/fonts/Images/OCR A Std Regular.ttf",20));
-    mess->setPos(145,505);
-    scene->addItem(mess);
 
     if(timer!=NULL)
         delete timer;
-    timer = new QTimer(this);
-    timer->start(10000);
+    timer = new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT(arase_message()));
+    timer->start(5000);
 }
 
 int graphic::find_nearest_land(int x, int y)
@@ -490,7 +484,7 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
 
     scene = new QGraphicsScene();
     scene->setSceneRect(0,0,720,512);
-    setBackgroundBrush(QBrush(QImage(":/lands/Images/lands/back")));
+    setBackgroundBrush(QBrush(QImage(":/lands/Images/lands/back.png")));
 
     send_message(o);
 
@@ -507,9 +501,15 @@ graphic::graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent)
     scene->addWidget(menu);
     menu->setFocus();
 
+    mess=new QGraphicsTextItem;
+    mess->setPlainText(" ");
+    setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
+    mess->setDefaultTextColor(QColor(0,0,0));
+    mess->setPos(300,470);
+    scene->addItem(mess);
+
     connect(menu,SIGNAL(clicked()),this,SLOT(clicked_menu()));
     connect(tcpSocket,&QTcpSocket::readyRead,this,&graphic::read);
-    connect(timer,SIGNAL(timeout()),this,SLOT(arase_message()));
 
 }
 
