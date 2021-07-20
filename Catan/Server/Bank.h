@@ -27,12 +27,14 @@ public:
     void startServer();
     void startTheGame();
     void stopTheGame();
+    void  sendMess(QJsonObject message,int socketDescriptor);
 
 
 
 
 
-public slots:
+
+public :
 
   void signUp(QJsonObject message,int socketDescriptor);
   void logIn(QString username , QString password,int socketDescriptor);
@@ -40,10 +42,13 @@ public slots:
   void lowerReadyToPlayNumber(int socketDescriptor);
   void logOut(QString username);
   void gaming(QJsonObject message,int socketDescriptor);
+  void read();
+  void disconnected();
 
 
 
-signals:
+
+ signals:
   void  sendMessage(QJsonObject message,int socketDescriptor);
 
 protected:
@@ -57,6 +62,9 @@ private:
        QVector<QPair<int,Player>> socketToPlayerList;
        Game* game;
        GameData* gameData;
+       QMap<QString,int> usernameToSocket;
+       QMap<int,QTcpSocket*> socketToObj;
+       QMap<int,QString> socketToString;
 
 };
 

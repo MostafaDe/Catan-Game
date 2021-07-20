@@ -149,9 +149,9 @@ if(multiPlayerMode == 3){
 }
     game = new Game();
     gameData = new GameData(socketToPlayerList);
-    emit sendMessage(jsO1,socketToPlayerList[0].first);
-    emit sendMessage(jsO2,socketToPlayerList[1].first);
-    emit sendMessage(jsO3,socketToPlayerList[2].first);
+    sendMess(jsO1,socketToPlayerList[0].first);
+    sendMess(jsO2,socketToPlayerList[1].first);
+    sendMess(jsO3,socketToPlayerList[2].first);
 }
 if(multiPlayerMode == 4){
     // 0 -> red
@@ -162,6 +162,7 @@ if(multiPlayerMode == 4){
         Competitor comp1;
         Competitor comp2;
         Competitor comp3;
+
         comp1.setColor(Color::Green);
         comp2.setColor(Color::Blue);
         comp3.setColor(Color::Yellow);
@@ -176,6 +177,7 @@ if(multiPlayerMode == 4){
         comps.push_back(comp2);
         comps.push_back(comp3);
         socketToPlayerList[0].second.setColor(Color::Red);
+
         socketToPlayerList[0].second.setCompetitors(comps);
         socketToPlayerList[0].second.setIsTurn(true);
         QJsonObject jsObject1;
@@ -197,7 +199,7 @@ if(multiPlayerMode == 4){
         jsObject1["color"] ="red";
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[0].second.getUsername();
-        emit sendMessage(jsObject1,socketToPlayerList[0].first);
+        sendMess(jsObject1,socketToPlayerList[0].first);
         players.append(socketToPlayerList[0].second);
 
 
@@ -242,7 +244,7 @@ if(multiPlayerMode == 4){
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[1].second.getUsername();
 
-        emit sendMessage(jsObject1,socketToPlayerList[1].first);
+        sendMess(jsObject1,socketToPlayerList[1].first);
         players.append(socketToPlayerList[1].second);
 
 
@@ -287,7 +289,7 @@ if(multiPlayerMode == 4){
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[2].second.getUsername();
 
-        emit sendMessage(jsObject1,socketToPlayerList[2].first);
+        sendMess(jsObject1,socketToPlayerList[2].first);
         players.append(socketToPlayerList[2].second);
 
 
@@ -332,7 +334,7 @@ if(multiPlayerMode == 4){
         jsObject1["comps"] = jsObject2;
         jsObject1["username"] =socketToPlayerList[3].second.getUsername();
 
-        emit sendMessage(jsObject1,socketToPlayerList[3].first);
+        sendMess(jsObject1,socketToPlayerList[3].first);
         players.append(socketToPlayerList[3].second);
 
 
@@ -345,6 +347,7 @@ if(multiPlayerMode == 4){
 game = new Game();
 gameData = new GameData(socketToPlayerList);
 
+
 }
 void Bank::stopTheGame()
 {
@@ -354,6 +357,14 @@ void Bank::stopTheGame()
     for(int it:socketDescs){
         emit sendMessage(response,it);
     }
+}
+
+void Bank::sendMess(QJsonObject message, int socketDescriptor)
+{
+    QJsonDocument doc;
+    doc.setObject(message);
+
+    socketToObj[socketDescriptor]->write(doc.toJson());
 }
 
 
@@ -368,7 +379,7 @@ try{
 
 
            jsObj["success"] = true;
-           emit sendMessage(jsObj,socketDescriptor);
+           sendMess(jsObj,socketDescriptor);
            return;
 
 
@@ -377,12 +388,12 @@ try{
     jsObj["success"] = false;
     if(errorType == 0){
         jsObj["errorMessage"] = "username exists please try another one";
-        emit sendMessage(jsObj,socketDescriptor);
+        sendMess(jsObj,socketDescriptor);
         return;
     }
     if(errorType == 1){
          jsObj["errorMessage"] = "error while signing you up please try again";
-         emit sendMessage(jsObj,socketDescriptor);
+         sendMess(jsObj,socketDescriptor);
     }
 }
 
@@ -398,7 +409,8 @@ void Bank::logIn(QString username, QString password, int socketDescriptor)
 
 
         jsObj["success"] = true;
-        emit sendMessage(jsObj,socketDescriptor);
+        socketToString[socketDescriptor] = username;
+        sendMess(jsObj,socketDescriptor);
 
 
 
@@ -407,13 +419,13 @@ void Bank::logIn(QString username, QString password, int socketDescriptor)
         if(a == 1){
         jsObj["errorMessage"] = "there cant be multiple login users";
         jsObj["success"] = false;
-        emit sendMessage(jsObj,socketDescriptor);
+        sendMess(jsObj,socketDescriptor);
         return ;
         }
         if(a == 0){
         jsObj["errorMessage"] = "Wrong Username or Password";
         jsObj["success"] = false;
-        emit sendMessage(jsObj,socketDescriptor);
+        sendMess(jsObj,socketDescriptor);
         return ;
         }
     }
@@ -501,16 +513,90 @@ else{
 
 
 for(int it:socketDescs){
-    emit sendMessage(response,it);
+    sendMess(response,it);
 }
 socketDescs.clear();
 bool iswinner = false;
 response = game->winner(iswinner,socketDescs);
 if(iswinner){
     for(int it:socketDescs){
-        emit sendMessage(response,it);
+        sendMess(response,it);
     }
 }
+}
+
+void Bank::read()
+{
+    QTcpSocket* socket = static_cast<QTcpSocket*>(sender());
+
+    QString m = socket->readAll();
+
+
+    qDebug() << "data recieved" << m;
+
+
+
+
+
+    QJsonDocument doc = QJsonDocument::fromJson(m.toUtf8());
+    QJsonObject message = doc.object();
+
+    if(message["kind"] == "SignUp"){
+        signUp(message,socket->socketDescriptor());
+
+
+        return ;
+    }
+    if(message["kind"] == "LogIn"){
+        logIn(message["username"].toString(),message["password"].toString(),socket->socketDescriptor());
+
+
+        return;
+    }
+    if(message["kind"] == "ReadyToPlay"){
+        int j;
+        for(int i = 0; i < socketToPlayerList.size();i++){
+            if(socketToPlayerList.at(i).first == socket->socketDescriptor()){
+               j = i;
+                break;
+            }
+        }
+
+        addReadyToPlayNumber(socket->socketDescriptor(),socketToString[socket->socketDescriptor()]);
+
+        return;
+    }
+    if(message["kind"] == "Game"){
+
+        gaming(message,socket->socketDescriptor());
+        return;
+    }
+    else{
+        QJsonObject js;
+        js["kind"] = "invalid request";
+        sendMess(js,socket->socketDescriptor());
+        return;
+    }
+
+}
+
+void Bank::disconnected()
+{
+    qDebug() << "disconnected";
+
+    QTcpSocket* socket = static_cast<QTcpSocket*>(sender());
+         lowerReadyToPlayNumber(socket->socketDescriptor());
+for(auto it : socketToPlayerList){
+if(it.first == socket->socketDescriptor())
+    logOut(it.second.getUsername());
+
+
+}
+
+    socket->deleteLater();
+
+
+
 }
 
 
@@ -520,21 +606,28 @@ void Bank::incomingConnection(qintptr socketDescriptor)
 
      Player player;
      qDebug() << "new connection";
-     BankThread * bankTh = new BankThread(socketDescriptor,this);
-
-     connect(bankTh,&QThread::finished,bankTh,&QThread::deleteLater);
-     connect(bankTh,&BankThread::signUp,this,&Bank::signUp);
-
-
-     connect(this,&Bank::sendMessage,bankTh,&BankThread::setMessage);
-     connect(bankTh,&BankThread::logIn,this,&Bank::logIn);
-     connect(bankTh,&BankThread::logOut,this,&Bank::logOut);
-     connect(bankTh,&BankThread::readyPlay,this,&Bank::addReadyToPlayNumber);
-     connect(bankTh,&BankThread::notReadyPlay,this,&Bank::lowerReadyToPlayNumber);
-     connect(bankTh,&BankThread::gaming,this,&Bank::gaming);
+//     BankThread * bankTh = new BankThread(socketDescriptor,this);
+     QTcpSocket* socket = new QTcpSocket;
+     socket->setSocketDescriptor(socketDescriptor);
+     socketToObj[socketDescriptor] = socket;
+     connect(socket,&QTcpSocket::readyRead,this,&Bank::read);
+     connect(socket,&QTcpSocket::disconnected,this,&Bank::disconnected);
 
 
-     bankTh->start();
+//     connect(bankTh,&QThread::finished,bankTh,&QThread::deleteLater);
+//     connect(bankTh,&BankThread::signUp,this,&Bank::signUp);
+
+
+//     connect(this,&Bank::sendMessage,bankTh,&BankThread::setMessage);
+//     connect(bankTh,&BankThread::logIn,this,&Bank::logIn);
+//     connect(bankTh,&BankThread::logOut,this,&Bank::logOut);
+//     connect(bankTh,&BankThread::readyPlay,this,&Bank::addReadyToPlayNumber);
+//     connect(bankTh,&BankThread::notReadyPlay,this,&Bank::lowerReadyToPlayNumber);
+//     connect(bankTh,&BankThread::gaming,this,&Bank::gaming);
+
+
+//     bankTh->start();
+
 
 
 //static int i =0;
