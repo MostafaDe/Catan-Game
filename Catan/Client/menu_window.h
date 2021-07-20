@@ -3,26 +3,28 @@
 
 #include<QDialog>
 #include<QPushButton>
+#include<QGraphicsPixmapItem>
 
 class menu_window:public QDialog
 {
     Q_OBJECT
 public:
-    menu_window(int *what,bool button_inable,QWidget *parent = nullptr);
+    menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVector<int>&selected_land,int *what,bool turn,QWidget *parent = nullptr);
 
 private:
     QPushButton*endOfTurn,*buildHous,*buildCity,*buildRoad;
-    void set_inable(bool is);
+    void set_inable(int* button,bool turn_);
     int *what_;
+    bool turn_;
+    QMap<int,QGraphicsPixmapItem*>*selected_land_pix_;
+    QVector<int>*selected_land_;
+    void delete_selected();
 
 public slots:
     void clicked_endOfTurn();
     void clicked_buildHous();
     void clicked_buildCity();
     void clicked_buildRoad();
-
-signals:
-    void value_changed();
 
 };
 

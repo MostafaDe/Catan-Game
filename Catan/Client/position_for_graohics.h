@@ -18,7 +18,7 @@ public:
 inline positions::positions()
 {
     map_l.insert("1",{348,73});
-    map_l.insert("2",{405.6,73});
+    map_l.insert("2",{405,73});
     map_l.insert("28",{522,73});
     map_l.insert("26",{551,124});
     map_l.insert("27",{609,124});
