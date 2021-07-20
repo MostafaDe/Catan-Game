@@ -15,13 +15,13 @@ QString convertColorToString(Color color)
 {
     switch (color) {
     case Color::Blue:
-        return "Blue";
+        return "blue";
     case Color::Red:
-        return "Red";
+        return "red";
     case Color::Green:
-        return "Green";
+        return "green";
     case Color::Yellow:
-        return "Yellow";
+        return "yellow";
 
     }
 }
@@ -208,6 +208,7 @@ void graphic::send_message(QJsonObject o)
     QJsonDocument d(o);
     QString jsString = QString::fromLatin1(d.toJson());
     this->tcpSocket->write(jsString.toLatin1());
+    tcpSocket->waitForBytesWritten(1000);
 }
 
 void graphic::show_message(QString mess_)
@@ -218,7 +219,7 @@ void graphic::show_message(QString mess_)
         delete timer;
     timer = new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(arase_message()));
-    timer->start(5000);
+    timer->start(10000);
 }
 
 int graphic::find_nearest_land(int x, int y)
@@ -261,7 +262,7 @@ void graphic::read()
     obj = doc.object();
     qDebug() << obj;
     if(obj["kind"].toString() == "invalid request"){
-         // show obj["errorMessage"]
+        show_message( obj["errorMessage"].toString());
     }
     if(obj["kindOfGame"].toString() == "getBoardInformation")
     {
@@ -445,7 +446,13 @@ void graphic::mousePressEvent(QMouseEvent *e)
     if(what_want_buld==1 && selected_land.size()==2)
     {
         //road
-        //send some thing to server
+        QJsonObject o;
+        o["kind"] = "Game";
+        o["kindOfGame"] = "buildRoad";
+        QJsonArray arr={selected_land[0],selected_land[1]};
+        o["position"] = arr;
+        o["color"] = convertColorToString(player_->getColor());
+        send_message(o);
         what_want_buld=0;
         create_selected_land(selected_land[0]);
         create_selected_land(selected_land[0]);
@@ -453,7 +460,13 @@ void graphic::mousePressEvent(QMouseEvent *e)
     else if(what_want_buld==2 && selected_land.size()==3)
     {
         //home
-        //send some thing to server
+        QJsonObject o;
+        o["kind"] = "Game";
+        o["kindOfGame"] = "buildHouse";
+        QJsonArray arr={selected_land[0],selected_land[1],selected_land[2]};
+        o["position"] = arr;
+        o["color"] = convertColorToString(player_->getColor());
+        send_message(o);
         what_want_buld=0;
         create_selected_land(selected_land[0]);
         create_selected_land(selected_land[0]);
@@ -462,7 +475,13 @@ void graphic::mousePressEvent(QMouseEvent *e)
     else if(what_want_buld==3 && selected_land.size()==3)
     {
         //city
-        //send some thing to server
+        QJsonObject o;
+        o["kind"] = "Game";
+        o["kindOfGame"] = "buildBigCity";
+        QJsonArray arr={selected_land[0],selected_land[1],selected_land[2]};
+        o["position"] = arr;
+        o["color"] = convertColorToString(player_->getColor());
+        send_message(o);
         what_want_buld=0;
         create_selected_land(selected_land[0]);
         create_selected_land(selected_land[0]);
@@ -536,6 +555,14 @@ void graphic::create_selected_land(int i)
         selected_land_pix.remove(i);
         return;
     }
+    for(int r=0;r<selected_land.size();r++)
+    {
+        if(distance_of_points(pos.map_l[QString::number(selected_land[r])],pos.map_l[QString::number(i)].x,pos.map_l[QString::number(i)].y)>60)
+        {
+            show_message("you must choos the neigber lands!");
+            return;
+        }
+    }
     selected_land.push_back(i);
     QGraphicsPixmapItem*pix=new QGraphicsPixmapItem;
     pix->setPixmap(QPixmap(":/lands/Images/lands/selected.png"));
@@ -546,11 +573,11 @@ void graphic::create_selected_land(int i)
 
 QColor graphic::set_color(QString str)
 {
-    if(str=="Blue")
+    if(str=="blue")
         return QColor(51,77,210);
-    else if(str=="Red")
+    else if(str=="red")
         return QColor(210,51,51);
-    else if(str=="Green")
+    else if(str=="green")
         return QColor(103,210,51);
     else
         return QColor(210,186,51);

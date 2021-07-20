@@ -1,5 +1,38 @@
 <RCC>
-    <qresource prefix="/">
-        <file>GameData/playersData.json</file>
+    <qresource prefix="/numbers">
+        <file>Images/numbers/2</file>
+        <file>Images/numbers/3</file>
+        <file>Images/numbers/4</file>
+        <file>Images/numbers/5</file>
+        <file>Images/numbers/6</file>
+        <file>Images/numbers/7</file>
+        <file>Images/numbers/8</file>
+        <file>Images/numbers/9</file>
+        <file>Images/numbers/10</file>
+        <file>Images/numbers/11</file>
+        <file>Images/numbers/12</file>
+    </qresource>
+    <qresource prefix="/lands">
+        <file>Images/lands/desert</file>
+        <file>Images/lands/iron</file>
+        <file>Images/lands/rock</file>
+        <file>Images/lands/sheep</file>
+        <file>Images/lands/tree</file>
+        <file>Images/lands/whear</file>
+        <file>Images/lands/selected.png</file>
+        <file>Images/lands/back.png</file>
+    </qresource>
+    <qresource prefix="/cards">
+        <file>Images/cards/iron_card.png</file>
+        <file>Images/cards/rock_card.png</file>
+        <file>Images/cards/sheep_card.png</file>
+        <file>Images/cards/tree_card.png</file>
+        <file>Images/cards/wheat_card.png</file>
+    </qresource>
+    <qresource prefix="/buttons">
+        <file>Images/menu_button.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>Images/OCR A Std Regular.ttf</file>
     </qresource>
 </RCC>
