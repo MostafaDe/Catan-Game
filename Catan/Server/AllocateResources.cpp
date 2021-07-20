@@ -14,6 +14,41 @@ AllocateResources::AllocateResources(Board1 d)
 void AllocateResources::set_dice(int number)
 {
     number_dice=number;
+    sred.i=0;
+    sred.r=0;
+    sred.sh=0;
+    sred.t=0;
+    sred.w=0;
+
+
+    sblue.i=0;
+     sblue.r=0;
+     sblue.sh=0;
+    sblue.t=0;
+    sblue.w=0;
+
+
+
+
+
+    sgreen.i=0;
+    sgreen.r=0;
+  sgreen.sh=0;
+   sgreen.t=0;
+   sgreen.w=0;
+
+
+    syellow.i=0;
+    syellow.r=0;
+    syellow.sh=0;
+    syellow.t=0;
+    syellow.w=0;
+
+
+
+
+
+
 
 }
 
