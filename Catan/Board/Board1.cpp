@@ -696,7 +696,7 @@ vector<vector<int>> Board1::mede_neiberhod_and_get() {
         n++;
         y[n].push_back(-4 - i);
         y[n].push_back(-3 - i);
-        y[n].push_back(2);
+        y[n].push_back(3);
         x.push_back(y[n]);
 
 
