@@ -13,14 +13,14 @@
         <file>Images/numbers/12</file>
     </qresource>
     <qresource prefix="/lands">
+        <file>Images/lands/back.png</file>
         <file>Images/lands/desert</file>
-        <file>Images/lands/iron</file>
         <file>Images/lands/rock</file>
+        <file>Images/lands/brick</file>
+        <file>Images/lands/selected.png</file>
         <file>Images/lands/sheep</file>
         <file>Images/lands/tree</file>
-        <file>Images/lands/whear</file>
-        <file>Images/lands/selected.png</file>
-        <file>Images/lands/back.png</file>
+        <file>Images/lands/wheat</file>
     </qresource>
     <qresource prefix="/cards">
         <file>Images/cards/iron_card.png</file>
@@ -34,5 +34,13 @@
     </qresource>
     <qresource prefix="/fonts">
         <file>Images/OCR A Std Regular.ttf</file>
+    </qresource>
+    <qresource prefix="/dice">
+        <file>Images/dice/1.png</file>
+        <file>Images/dice/2.png</file>
+        <file>Images/dice/3.png</file>
+        <file>Images/dice/4.png</file>
+        <file>Images/dice/5.png</file>
+        <file>Images/dice/6.png</file>
     </qresource>
 </RCC>

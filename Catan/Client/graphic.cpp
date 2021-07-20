@@ -248,7 +248,7 @@ double graphic::distance_of_points(position_for_graphics a, int x,int y)
 
 void graphic::clicked_menu()
 {
-    win_ptr=new menu_window(selected_land_pix,selected_land,&what_want_buld,player_->getIsTurn(),this);
+    win_ptr=new menu_window(selected_land_pix,selected_land,&what_want_buld,player_->getIsTurn(),tcpSocket,this);
     win_ptr->show();
 }
 
@@ -264,7 +264,7 @@ void graphic::read()
     if(obj["kind"].toString() == "invalid request"){
         show_message( obj["errorMessage"].toString());
     }
-    if(obj["kindOfGame"].toString() == "getBoardInformation")
+    else if(obj["kindOfGame"].toString() == "getBoardInformation")
     {
         this->obj = obj;
         set_lands();
@@ -272,8 +272,7 @@ void graphic::read()
         set_resource();
         player_->setIsTurn(obj["myTurn"].toBool());
     }
-
-    if(obj["kindOfGame"] == "responseTobuildHouse")
+    else if(obj["kindOfGame"] == "responseTobuildHouse")
     {
         if(obj["success"].toBool())
         {
@@ -302,13 +301,29 @@ void graphic::read()
                 show_message(obj["message"].toString());
             }
 
+            if(obj["color"]==convertColorToString(player_->getColor()))
+                player_->setScore(player_->getScore()+1);
+            else
+            {
+                QVector<Competitor>comps=player_->getCompetitors();
+                for(int i=0;i<player_->getCompetitors().size();i++)
+                {
+                    if(convertColorToString(player_->getCompetitors()[i].getColor())==obj["color"].toString())
+                    {
+                        comps[i].setScore(comps[i].getScore()+1);
+                        player_->setCompetitors(comps);
+                        break;
+                    }
+                }
+            }
+            set_score();
+
         }
         else if(convertColorToString(player_->getColor())==obj["color"].toString())
         {
             show_message(obj["errorMessage"].toString());
         }
     }
-
     else if(obj["kindOfGame"].toString() == "responseTobuildRoad")
     {
 
@@ -351,7 +366,6 @@ void graphic::read()
             show_message(obj["errorMessage"].toString());
         }
     }
-
     else if(obj["kindOfGame"].toString() == "transactionToPlayers")
     {
 
@@ -365,69 +379,53 @@ void graphic::read()
         }else{
             // tell the player that his request was not allowed
         }
-
-
     }
-    else if(obj["kindOfGame"].toString() == "responseToTransactionToBank"){
+    else if(obj["kindOfGame"].toString() == "responseToTransactionToBank")
+    {
         if(obj["dealSuccess"].toBool())
         {
             //update the player
 
-        }else{
-            // tell the player that his request was not allowed
         }
 
-
-
+        else
+        {
+            // tell the player that his request was not allowed
+        }
     }
-    else if(obj["kindOfGame"].toString() == "responseToTransactionToPlayersAsk"){
+    else if(obj["kindOfGame"].toString() == "responseToTransactionToPlayersAsk")
+    {
        // show obj["deal"]
        // show obj["username"] (username of asker)
        // get player response and send it back to the server
         //  format of message you should send after recieving this
         /*"kindOfGame":"responseToTransactionToPlayers"
          * "answer":boolean(true/false)*/
+    }
+    else if(obj["kindOfGame"].toString() == "endOfTurn")
+    {
+        if(obj["whoseTurn"]==convertColorToString(player_->getColor()))
+            player_->setIsTurn(true);
+        else
+            player_->setIsTurn(false);
 
+        //set cards
+        QJsonObject cards=obj[convertColorToString(player_->getColor())].toObject();
+        player_->setCountOfSheepCards(player_->getCountOfSheepCards()+cards["sheep"].toInt());
+        player_->setCountOfSheepCards(player_->getCountOfBrickCards()+cards["brick"].toInt());
+        player_->setCountOfSheepCards(player_->getCountOfWheatCards()+cards["wheat"].toInt());
+        player_->setCountOfSheepCards(player_->getCountOfWoodCards()+cards["tree"].toInt());
+        player_->setCountOfSheepCards(player_->getCountOfRockCards()+cards["rock"].toInt());
+        set_resource();
 
-
-
-}
-    else if(obj["kindOfGame"].toString() == "endOfTurn"){
-        //format of  message you get is like this
-        /*obj["kindOfGame"] = "endOfTurn";
-
-         * obj["whoseTurn"] = "red/blue/green/yellow
-         * obj["dices"] = [int dice1,int dice2] jsonArray
-         * obj["red"] :{"brick": int how much recived
-         *              "tree" :int how much recived
-         *              "sheep":int how much recived
-         *              "wheat":int how much recived
-         *              "rock":int how much recived}
-         * obj["green"] :{"brick": int how much recived
-         *              "tree" :int how much recived
-         *              "sheep":int how much recived
-         *              "wheat":int how much recived
-         *              "rock":int how much recived}
-         * obj["blue"] :{"brick": int how much recived   ->* if game was 3 players we also have red green blue *
-         *              "tree" :int how much recived
-         *              "sheep":int how much recived
-         *              "wheat":int how much recived
-         *              "rock":int how much recived}
-         * obj["yellow"] :{"brick": int how much recived   ->* if game was 4 players we also have yellow *
-         *              "tree" :int how much recived
-         *              "sheep":int how much recived
-         *              "wheat":int how much recived
-         *              "rock":int how much recived}  */
-
-
-
-
-
-
-
+        QJsonArray arr=obj["dices"].toArray();
+        set_dices(arr[0].toInt(),arr[1].toInt());
     }
 
-
+    if(!(player_->getIsTurn()))
+    {
+        tcpSocket->waitForBytesWritten(1000);
+    }
 }
 
 void graphic::arase_message()
@@ -569,6 +567,39 @@ void graphic::create_selected_land(int i)
     pix->setPos(pos.map_l[QString::number(i)].x-28.5,pos.map_l[QString::number(i)].y-33);
     scene->addItem(pix);
     selected_land_pix.insert(i,pix);
+}
+
+void graphic::set_dices(int d1, int d2)
+{
+    if(dice1!=NULL)
+        delete dice1;
+    dice1=new QGraphicsPixmapItem;
+    dice1->setPixmap(QPixmap(":/dice/Images/dice"+QString::number(d1)+".png"));
+    dice1->setPos(resource_box->sceneBoundingRect().x(),resource_box->sceneBoundingRect().y()+resource_box->sceneBoundingRect().height()+8);
+    scene->addItem(dice1);
+
+    if(dice2!=NULL)
+        delete dice2;
+    dice2=new QGraphicsPixmapItem;
+    dice2->setPixmap(QPixmap(":/dice/Images/dice"+QString::number(d2)+".png"));
+    dice2->setPos(dice1->sceneBoundingRect().x()+dice1->sceneBoundingRect().width()+8,dice1->sceneBoundingRect().y());
+    scene->addItem(dice2);
+
+    if(dice_timer!=NULL)
+        delete dice_timer;
+    dice_timer = new QTimer();
+    connect(dice_timer,SIGNAL(timeout()),this,SLOT(delete_dices()));
+    dice_timer->start(10000);
+}
+
+void graphic::delete_dices()
+{
+    delete dice_timer;
+    dice_timer=NULL;
+    delete dice1;
+    delete dice2;
+    dice1=NULL;
+    dice2=NULL;
 }
 
 QColor graphic::set_color(QString str)

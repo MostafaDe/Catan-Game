@@ -22,7 +22,8 @@ private:
     QGraphicsTextItem*sheep_=NULL,*iron_=NULL,*tree_=NULL,*rock_=NULL,*wheat_=NULL;
     QGraphicsRectItem*resource_box=NULL;
     QPushButton* menu;
-    QTimer*timer=NULL;
+    QTimer*timer=NULL,*dice_timer=NULL;
+    QGraphicsPixmapItem*dice1=NULL,*dice2=NULL;
 
     int what_want_buld=0;//0=nothing  1=road   2=house   3=city
     void set_lands();
@@ -41,6 +42,10 @@ private:
     QVector<int>selected_land;
     QMap<int,QGraphicsPixmapItem*>selected_land_pix;
     void create_selected_land(int i);
+    void set_dices(int d1,int d2);
+    void delete_dices();
+
+
 
 public slots:
     void clicked_menu();

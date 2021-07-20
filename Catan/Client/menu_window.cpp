@@ -1,5 +1,7 @@
 #include "menu_window.h"
 #include<QVBoxLayout>
+#include<QJsonObject>
+#include<QJsonDocument>
 
 void menu_window:: delete_selected()
 {
@@ -11,7 +13,7 @@ void menu_window:: delete_selected()
     selected_land_->clear();
 }
 
-menu_window::menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVector<int>&selected_land,int *what, bool turn, QWidget *parent)
+menu_window::menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVector<int>&selected_land,int *what, bool turn,QTcpSocket*socket, QWidget *parent)
     :QDialog(parent)
     ,endOfTurn(new QPushButton(tr("end of turn")))
     ,buildHous(new QPushButton(tr("build house")))
@@ -21,6 +23,7 @@ menu_window::menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVect
     ,turn_(turn)
     ,selected_land_pix_(&selected_land_pix)
     ,selected_land_(&selected_land)
+    ,tcpSocket(socket)
 {
     this->setWindowTitle("menu");
     QVBoxLayout*all=new QVBoxLayout(this);
@@ -77,7 +80,10 @@ void menu_window::set_inable(int* button, bool turn_)
 
 void menu_window::clicked_endOfTurn()
 {
-    //some thing send to server
+    QJsonObject o;
+    o["kind"]="Game";
+    o["kindOfGame"]="endOfTurn";
+    send_message(o);
     this->close();
 }
 
@@ -118,4 +124,12 @@ void menu_window::clicked_buildRoad()
     }
     *what_=1;
     this->close();
+}
+
+void menu_window::send_message(QJsonObject o)
+{
+    QJsonDocument d(o);
+    QString jsString = QString::fromLatin1(d.toJson());
+    this->tcpSocket->write(jsString.toLatin1());
+    tcpSocket->waitForBytesWritten(1000);
 }

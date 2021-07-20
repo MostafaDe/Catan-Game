@@ -4,12 +4,14 @@
 #include<QDialog>
 #include<QPushButton>
 #include<QGraphicsPixmapItem>
+#include<QJsonObject>
+#include<QTcpSocket>
 
 class menu_window:public QDialog
 {
     Q_OBJECT
 public:
-    menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVector<int>&selected_land,int *what,bool turn,QWidget *parent = nullptr);
+    menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVector<int>&selected_land,int *what,bool turn,QTcpSocket*socket,QWidget *parent = nullptr);
 
 private:
     QPushButton*endOfTurn,*buildHous,*buildCity,*buildRoad;
@@ -19,6 +21,8 @@ private:
     QMap<int,QGraphicsPixmapItem*>*selected_land_pix_;
     QVector<int>*selected_land_;
     void delete_selected();
+    void send_message(QJsonObject o);
+    QTcpSocket*tcpSocket=NULL;
 
 public slots:
     void clicked_endOfTurn();
