@@ -16,7 +16,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 	if (color == "bule") {
 	
         if (check_Home(position, GameData::getBlue_house()) ){
-
+addStractor(position,color);
 			return 1;
 		}
 		return 0;
@@ -26,7 +26,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 	if (color == "red") {
 
         if (check_Home(position, GameData::getRed_house())) {
-
+addStractor(position,color);
 			return 1;
 		}
 		return 0;
@@ -37,7 +37,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 	if (color == "green") {
 
         if (check_Home(position, GameData::getGreen_house())) {
-
+addStractor(position,color);
 			return 1;
 		}
 		return 0;
@@ -46,7 +46,7 @@ bool RoulOfBuildBigCity::check_make(vector<vector<int>> position, string color) 
 	if (color == "yellow") {
 
         if (check_Home(position, GameData::getYellow_house())) {
-
+addStractor(position,color);
 			return 1;
 		}
 		return 0;

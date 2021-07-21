@@ -14,7 +14,7 @@ private:
 	bool check_sequence(vector<vector<int>>z, string colore);
 	bool checkFUll(vector<vector<int>>z);
 	bool check_elment(vector<vector<int>>z, vector<vector<int>>z1);
-	bool check_when_less2(vector<vector<int>>z, vector< vector<vector<int>>> home);
+    bool check_when_less2(vector<vector<int>>z, vector< vector<vector<int>>> home,vector< vector<vector<int>>> bighome);
 	vector<vector<int>> reltion;
 	vector< vector<vector<int>>> red_road;
 	vector< vector<vector<int>>> blue_road;
