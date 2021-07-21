@@ -9,6 +9,7 @@
 #include<QtAlgorithms>
 #include<QMouseEvent>
 #include"menu_window.h"
+#include"transection_window.h"
 
 
 QString convertColorToString(Color color)
@@ -228,7 +229,7 @@ int graphic::find_nearest_land(int x, int y)
     double l=distance_of_points(pos.map_l["-18"],x,y);
     for(int i=-36;i<29;i++)
     {
-        if(i<-12 && i>-32)
+        if((i<-12 && i>-31)||i==0)
             continue;
         int l2=distance_of_points(pos.map_l[QString::number(i)],x,y);
         if(l2<l)
@@ -365,41 +366,46 @@ void graphic::read()
             show_message(obj["errorMessage"].toString());
         }
     }
-    else if(obj["kindOfGame"].toString() == "transactionToPlayers")
-    {
-
-    }
     else if(obj["kindOfGame"].toString() == "responseToTransactionToPlayers")
     {
         if(obj["dealSuccess"].toBool())
         {
-            //update the player and tell him who accepts the request
-
-        }else{
-            // tell the player that his request was not allowed
+            player_->setCountOfBrickCards(player_->getCountOfBrickCards()+obj["brikT"].toInt()-obj["brikG"].toInt());
+            player_->setCountOfSheepCards(player_->getCountOfSheepCards()+obj["sheepT"].toInt()-obj["sheepG"].toInt());
+            player_->setCountOfRockCards(player_->getCountOfRockCards()+obj["rockT"].toInt()-obj["rockG"].toInt());
+            player_->setCountOfWheatCards(player_->getCountOfWheatCards()+obj["wheatT"].toInt()-obj["wheatG"].toInt());
+            player_->setCountOfWoodCards(player_->getCountOfWoodCards()+obj["treeT"].toInt()-obj["treeG"].toInt());
+            set_resource();
+            show_message(obj["message"].toString());
+        }
+        else
+        {
+            show_message(obj["errorMessage"].toString());
         }
     }
     else if(obj["kindOfGame"].toString() == "responseToTransactionToBank")
     {
         if(obj["dealSuccess"].toBool())
         {
-            //update the player
-
+            player_->setCountOfBrickCards(player_->getCountOfBrickCards()+obj["brikT"].toInt()-obj["brikG"].toInt());
+            player_->setCountOfSheepCards(player_->getCountOfSheepCards()+obj["sheepT"].toInt()-obj["sheepG"].toInt());
+            player_->setCountOfRockCards(player_->getCountOfRockCards()+obj["rockT"].toInt()-obj["rockG"].toInt());
+            player_->setCountOfWheatCards(player_->getCountOfWheatCards()+obj["wheatT"].toInt()-obj["wheatG"].toInt());
+            player_->setCountOfWoodCards(player_->getCountOfWoodCards()+obj["treeT"].toInt()-obj["treeG"].toInt());
+            set_resource();
+            show_message(obj["message"].toString());
         }
 
         else
         {
-            // tell the player that his request was not allowed
+            show_message(obj["errorMessage"].toString());
         }
     }
     else if(obj["kindOfGame"].toString() == "responseToTransactionToPlayersAsk")
     {
-       // show obj["deal"]
-       // show obj["username"] (username of asker)
-       // get player response and send it back to the server
-        //  format of message you should send after recieving this
-        /*"kindOfGame":"responseToTransactionToPlayers"
-         * "answer":boolean(true/false)*/
+        QJsonObject deal=obj["deal"].toObject();
+        transection_window* w=new transection_window(tcpSocket,obj["username"].toString(),obj["sheepG"].toInt(),obj["sheepT"].toInt(),obj["wheatT"].toInt(),obj["wheatG"].toInt(),obj["treeT"].toInt(),obj["treeG"].toInt(),obj["rockG"].toInt(),obj["rockT"].toInt(),obj["brickT"].toInt(),obj["brickG"].toInt(),this);
+        w->show();
     }
     else if(obj["kindOfGame"].toString() == "endOfTurn")
     {
@@ -423,7 +429,10 @@ void graphic::read()
             set_dices(arr[0].toInt(),arr[1].toInt());
         }
     }
-
+    else if(obj["kindOfGame"].toString()=="winer")
+    {
+        show_message(obj["message"].toString());
+    }
     if(!(player_->getIsTurn()))
     {
         tcpSocket->waitForBytesWritten(1000);

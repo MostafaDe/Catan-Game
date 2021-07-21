@@ -1,6 +1,9 @@
 #include "dbank.h"
 #include<QDebug>
-DBank::DBank(QWidget *parent) : QMainWindow(parent)
+#include<QJsonDocument>
+
+DBank::DBank(QTcpSocket*sock,QWidget *parent) : QMainWindow(parent)
+  ,tcpSocket(sock)
 {
 
 
@@ -166,7 +169,7 @@ void DBank::SOk()
 
 boos["deal"]=deal;
 
-emit send_jeson(boos);
+send_message(boos);
 
 
 
@@ -182,4 +185,12 @@ emit send_jeson(boos);
 
 
 
+}
+
+void DBank::send_message(QJsonObject o)
+{
+    QJsonDocument d(o);
+    QString jsString = QString::fromLatin1(d.toJson());
+    this->tcpSocket->write(jsString.toLatin1());
+    tcpSocket->waitForBytesWritten(1000);
 }

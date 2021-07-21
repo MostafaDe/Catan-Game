@@ -11,6 +11,7 @@
 #include<QString>
 #include<QComboBox>
 #include<QJsonObject>
+#include<QTcpSocket>
 
 
 class TPlayer : public QMainWindow
@@ -84,12 +85,14 @@ class TPlayer : public QMainWindow
 
 public:
 
-    explicit TPlayer(QWidget *parent = nullptr);
+    explicit TPlayer(QTcpSocket*sock,QWidget *parent = nullptr);
 public slots:
 void SOk();
 signals:
 void send_jesonp(QJsonObject);
 private:
+    QTcpSocket*tcpSocket;
+    void send_message(QJsonObject o);
 };
 
 #endif // TPLAYER_H

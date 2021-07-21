@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 
-#include <QObject>
+//#include <QObject>
 
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -15,6 +15,7 @@
 #include<QString>
 #include<QComboBox>
 #include<QJsonObject>
+#include<QTcpSocket>
 
 
 class DBank : public QMainWindow
@@ -39,14 +40,14 @@ public:
 
 
 
-    explicit DBank(QWidget *parent = nullptr);
+    explicit DBank(QTcpSocket*sock,QWidget *parent = nullptr);
 public slots:
 void SOk();
 
 
-signals:
-void send_jeson(QJsonObject);
 private:
+    QTcpSocket*tcpSocket;
+    void send_message(QJsonObject o);
 };
 
 #endif // DBANK_H

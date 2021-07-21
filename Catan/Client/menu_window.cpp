@@ -2,6 +2,7 @@
 #include<QVBoxLayout>
 #include<QJsonObject>
 #include<QJsonDocument>
+#include"transition/transition.h"
 
 void menu_window:: delete_selected()
 {
@@ -19,6 +20,7 @@ menu_window::menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVect
     ,buildHous(new QPushButton(tr("build house")))
     ,buildCity(new QPushButton(tr("build city")))
     ,buildRoad(new QPushButton(tr("build road")))
+    ,transiton_(new QPushButton(tr("transiton")))
     ,what_(what)
     ,turn_(turn)
     ,selected_land_pix_(&selected_land_pix)
@@ -31,6 +33,7 @@ menu_window::menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVect
     all->addWidget(buildRoad);
     all->addWidget(buildHous);
     all->addWidget(buildCity);
+    all->addWidget(transiton_);
 
     set_inable(what_,turn_);
 
@@ -38,6 +41,7 @@ menu_window::menu_window(QMap<int,QGraphicsPixmapItem*> &selected_land_pix,QVect
     connect(buildHous,SIGNAL(clicked()),this,SLOT(clicked_buildHous()));
     connect(buildCity,SIGNAL(clicked()),this,SLOT(clicked_buildCity()));
     connect(buildRoad,SIGNAL(clicked()),this,SLOT(clicked_buildRoad()));
+    connect(transiton_,SIGNAL(clicked()),this,SLOT(clicked_transiton_()));
 
 }
 
@@ -123,6 +127,13 @@ void menu_window::clicked_buildRoad()
         return;
     }
     *what_=1;
+    this->close();
+}
+
+void menu_window::clicked_transiton_()
+{
+    Transition*w=new Transition(tcpSocket);
+    w->show();
     this->close();
 }
 

@@ -1,14 +1,12 @@
 #include "tplayer.h"
+#include<QJsonDocument>
 
-TPlayer::TPlayer(QWidget *parent) : QMainWindow(parent)
+TPlayer::TPlayer(QTcpSocket*sock,QWidget *parent) : QMainWindow(parent)
+  ,tcpSocket(sock)
 {
-
-
     c=new QWidget;
     v1=new QVBoxLayout;
     bOk=new QPushButton;
-
-
 
     h1=new QHBoxLayout;
     h2=new QHBoxLayout;
@@ -21,35 +19,17 @@ TPlayer::TPlayer(QWidget *parent) : QMainWindow(parent)
     h9=new QHBoxLayout;
     h10=new QHBoxLayout;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     Cbgr=new QComboBox;
     Cbgwh=new QComboBox;
     Cbgwo=new QComboBox;
     Cbgsh=new QComboBox;
     Cbgb=new QComboBox;
 
-
-
-
     Cbtr=new QComboBox;
     Cbtwh=new QComboBox;
     Cbtwo=new QComboBox;
     Cbtsh=new QComboBox;
     Cbtb=new QComboBox;
-
 
     l1=new QLabel;
     l2=new QLabel;
@@ -64,99 +44,93 @@ TPlayer::TPlayer(QWidget *parent) : QMainWindow(parent)
     l11=new QLabel;
     l12=new QLabel;
 
-
- Cbgb->addItem("0");
+    Cbgb->addItem("0");
     Cbgb->addItem("1");
-     Cbgb->addItem("2");
-     Cbgb->addItem("3");
-     Cbgb->addItem("4");
-     Cbgb->addItem("5");
-     Cbgb->addItem("6");
-     Cbgb->addItem("7");
-      Cbgb->addItem("8");
-      Cbgb->addItem("9");
-      Cbgb->addItem("10");
-     Cbgb->addItem("11");
-      Cbgb->addItem("12");
-      Cbgb->addItem("13");
-      Cbgb->addItem("14");
+    Cbgb->addItem("2");
+    Cbgb->addItem("3");
+    Cbgb->addItem("4");
+    Cbgb->addItem("5");
+    Cbgb->addItem("6");
+    Cbgb->addItem("7");
+    Cbgb->addItem("8");
+    Cbgb->addItem("9");
+    Cbgb->addItem("10");
+    Cbgb->addItem("11");
+    Cbgb->addItem("12");
+    Cbgb->addItem("13");
+    Cbgb->addItem("14");
 
+    Cbgr->addItem("0");
+    Cbgr->addItem("1");
+    Cbgr->addItem("2");
+    Cbgr->addItem("3");
+    Cbgr->addItem("4");
+    Cbgr->addItem("5");
+    Cbgr->addItem("6");
+    Cbgr->addItem("7");
+    Cbgr->addItem("8");
+    Cbgr->addItem("9");
+    Cbgr->addItem("10");
+    Cbgr->addItem("11");
+    Cbgr->addItem("12");
+    Cbgr->addItem("13");
+    Cbgr->addItem("14");
 
- Cbgr->addItem("0");
-      Cbgr->addItem("1");
-       Cbgr->addItem("2");
-       Cbgr->addItem("3");
-       Cbgr->addItem("4");
-       Cbgr->addItem("5");
-       Cbgr->addItem("6");
-       Cbgr->addItem("7");
-        Cbgr->addItem("8");
-        Cbgr->addItem("9");
-        Cbgr->addItem("10");
-       Cbgr->addItem("11");
-        Cbgr->addItem("12");
-        Cbgr->addItem("13");
-        Cbgr->addItem("14");
+    Cbgsh->addItem("0");
+    Cbgsh->addItem("1");
+    Cbgsh->addItem("2");
+    Cbgsh->addItem("3");
+    Cbgsh->addItem("4");
+    Cbgsh->addItem("5");
+    Cbgsh->addItem("6");
+    Cbgsh->addItem("7");
+    Cbgsh->addItem("8");
+    Cbgsh->addItem("9");
+    Cbgsh->addItem("10");
+    Cbgsh->addItem("11");
+    Cbgsh->addItem("12");
+    Cbgsh->addItem("13");
+    Cbgsh->addItem("14");
 
-  Cbgsh->addItem("0");
-        Cbgsh->addItem("1");
-         Cbgsh->addItem("2");
-         Cbgsh->addItem("3");
-         Cbgsh->addItem("4");
-         Cbgsh->addItem("5");
-         Cbgsh->addItem("6");
-         Cbgsh->addItem("7");
-          Cbgsh->addItem("8");
-          Cbgsh->addItem("9");
-          Cbgsh->addItem("10");
-         Cbgsh->addItem("11");
-          Cbgsh->addItem("12");
-          Cbgsh->addItem("13");
-          Cbgsh->addItem("14");
+    Cbgwo->addItem("0");
+    Cbgwo->addItem("1");
+    Cbgwo->addItem("2");
+    Cbgwo->addItem("3");
+    Cbgwo->addItem("4");
+    Cbgwo->addItem("5");
+    Cbgwo->addItem("6");
+    Cbgwo->addItem("7");
+    Cbgwo->addItem("8");
+    Cbgwo->addItem("9");
+    Cbgwo->addItem("10");
+    Cbgwo->addItem("11");
+    Cbgwo->addItem("12");
+    Cbgwo->addItem("13");
+    Cbgwo->addItem("14");
 
+    Cbgwh->addItem("0");
+    Cbgwh->addItem("1");
+    Cbgwh->addItem("2");
+    Cbgwh->addItem("3");
+    Cbgwh->addItem("4");
+    Cbgwh->addItem("5");
+    Cbgwh->addItem("6");
+    Cbgwh->addItem("7");
+    Cbgwh->addItem("8");
+    Cbgwh->addItem("9");
+    Cbgwh->addItem("10");
+    Cbgwh->addItem("11");
+    Cbgwh->addItem("12");
+    Cbgwh->addItem("13");
+    Cbgwh->addItem("14");
 
-
-     Cbgwo->addItem("0");
-          Cbgwo->addItem("1");
-           Cbgwo->addItem("2");
-           Cbgwo->addItem("3");
-           Cbgwo->addItem("4");
-           Cbgwo->addItem("5");
-           Cbgwo->addItem("6");
-           Cbgwo->addItem("7");
-            Cbgwo->addItem("8");
-            Cbgwo->addItem("9");
-            Cbgwo->addItem("10");
-           Cbgwo->addItem("11");
-            Cbgwo->addItem("12");
-            Cbgwo->addItem("13");
-            Cbgwo->addItem("14");
-
-
-Cbgwh->addItem("0");
-            Cbgwh->addItem("1");
-             Cbgwh->addItem("2");
-             Cbgwh->addItem("3");
-             Cbgwh->addItem("4");
-             Cbgwh->addItem("5");
-             Cbgwh->addItem("6");
-             Cbgwh->addItem("7");
-              Cbgwh->addItem("8");
-              Cbgwh->addItem("9");
-              Cbgwh->addItem("10");
-             Cbgwh->addItem("11");
-              Cbgwh->addItem("12");
-              Cbgwh->addItem("13");
-              Cbgwh->addItem("14");
-
-
-Cbtb->addItem("0");
-              Cbtb->addItem("1");
-               Cbtb->addItem("2");
-               Cbtb->addItem("3");
-               Cbtb->addItem("4");
-               Cbtb->addItem("5");
-               Cbtb->addItem("6");
+    Cbtb->addItem("0");
+    Cbtb->addItem("1");
+    Cbtb->addItem("2");
+    Cbtb->addItem("3");
+    Cbtb->addItem("4");
+    Cbtb->addItem("5");
+    Cbtb->addItem("6");
                Cbtb->addItem("7");
                 Cbtb->addItem("8");
                 Cbtb->addItem("9");
@@ -357,11 +331,8 @@ void TPlayer::SOk()
 
     }
 
-
-
-
-
-    else{
+    else
+    {
 
     QJsonObject boos,deal;
 
@@ -381,10 +352,17 @@ void TPlayer::SOk()
     deal["rockG"]=Cbgr->currentText().toInt();
     boos["deal"]=deal;
 
-emit send_jesonp(boos);
-     connect(bOk,SIGNAL(clicked()),bOk,SLOT(close()));
+    connect(bOk,SIGNAL(clicked()),bOk,SLOT(close()));
+    send_message(boos);
 
+    }
 
 }
 
+void TPlayer::send_message(QJsonObject o)
+{
+    QJsonDocument d(o);
+    QString jsString = QString::fromLatin1(d.toJson());
+    this->tcpSocket->write(jsString.toLatin1());
+    tcpSocket->waitForBytesWritten(1000);
 }

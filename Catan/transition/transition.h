@@ -12,6 +12,7 @@
 #include <QHBoxLayout>
 #include<QString>
 #include<QComboBox>
+#include<QTcpSocket>
 
 class Transition : public QMainWindow
 {
@@ -25,14 +26,14 @@ QComboBox *Cb;
 
 
 public:
-    explicit Transition(QWidget *parent = nullptr);
+    explicit Transition(QTcpSocket*sock,QWidget *parent = nullptr);
 public slots:
 void SBank();
 void Splayer();
 
+private:
+QTcpSocket*tcpSocket;
 
-
-signals:
 
 };
 
