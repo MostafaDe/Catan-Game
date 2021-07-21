@@ -414,6 +414,8 @@ void graphic::read()
         else
             player_->setIsTurn(false);
 
+        show_message("it is "+obj["whoseTurn"].toString()+" turn");
+
         //set cards
         if(obj["dices"].toArray().size())
         {
