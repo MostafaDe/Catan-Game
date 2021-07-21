@@ -421,10 +421,17 @@ void graphic::read()
         {
             QJsonObject cards=obj[convertColorToString(player_->getColor())].toObject();
             player_->setCountOfSheepCards((player_->getCountOfSheepCards())+(cards["sheep"].toInt()));
-            player_->setCountOfSheepCards((player_->getCountOfBrickCards())+(cards["brick"].toInt()));
-            player_->setCountOfSheepCards((player_->getCountOfWheatCards())+(cards["wheat"].toInt()));
-            player_->setCountOfSheepCards((player_->getCountOfWoodCards())+(cards["tree"].toInt()));
-            player_->setCountOfSheepCards((player_->getCountOfRockCards())+(cards["rock"].toInt()));
+            player_->setCountOfBrickCards((player_->getCountOfBrickCards())+(cards["brick"].toInt()));
+            player_->setCountOfWheatCards((player_->getCountOfWheatCards())+(cards["wheat"].toInt()));
+            player_->setCountOfWoodCards((player_->getCountOfWoodCards())+(cards["tree"].toInt()));
+            player_->setCountOfRockCards((player_->getCountOfRockCards())+(cards["rock"].toInt()));
+
+            qDebug()<<player_->getCountOfSheepCards();
+            qDebug()<<player_->getCountOfBrickCards();
+            qDebug()<<player_->getCountOfWheatCards();
+            qDebug()<<player_->getCountOfWoodCards();
+            qDebug()<<player_->getCountOfRockCards();
+
             set_resource();
 
             QJsonArray arr=obj["dices"].toArray();
