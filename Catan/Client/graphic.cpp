@@ -145,7 +145,7 @@ void graphic::set_resource()
     if(sheep_)
         delete sheep_;
     sheep_=new QGraphicsTextItem;
-    sheep_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    sheep_->setPlainText(" : "+QString::number(player_->getCountOfSheepCards()));
     setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
     sheep_->setDefaultTextColor(QColor(225,225,225));
     sheep_->setPos(sheep->sceneBoundingRect().x()+sheep->sceneBoundingRect().width()+5,sheep->sceneBoundingRect().y()+sheep->sceneBoundingRect().height()/2-5);
@@ -162,7 +162,7 @@ void graphic::set_resource()
     if(iron_)
         delete iron_;
     iron_=new QGraphicsTextItem;
-    iron_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    iron_->setPlainText(" : "+QString::number(player_->getCountOfRockCards()));
     setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
     iron_->setDefaultTextColor(QColor(225,225,225));
     iron_->setPos(iron->sceneBoundingRect().x()+iron->sceneBoundingRect().width()+5,iron->sceneBoundingRect().y()+iron->sceneBoundingRect().height()/2-5);
@@ -179,7 +179,7 @@ void graphic::set_resource()
     if(rock_)
         delete rock_;
     rock_=new QGraphicsTextItem;
-    rock_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    rock_->setPlainText(" : "+QString::number(player_->getCountOfBrickCards()));
     setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
     rock_->setDefaultTextColor(QColor(225,225,225));
     rock_->setPos(rock->sceneBoundingRect().x()+rock->sceneBoundingRect().width()+5,rock->sceneBoundingRect().y()+rock->sceneBoundingRect().height()/2-5);
@@ -196,7 +196,7 @@ void graphic::set_resource()
     if(wheat_)
         delete wheat_;
     wheat_=new QGraphicsTextItem;
-    wheat_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
+    wheat_->setPlainText(" : "+QString::number(player_->getCountOfWheatCards()));
     setFont(QFont(":/fonts/OCR A Std Regular.ttf",20));
     wheat_->setDefaultTextColor(QColor(225,225,225));
     wheat_->setPos(wheat->sceneBoundingRect().x()+wheat->sceneBoundingRect().width()+5,wheat->sceneBoundingRect().y()+wheat->sceneBoundingRect().height()/2-5);
