@@ -46,12 +46,12 @@ void graphic::set_lands()
 
 void graphic::set_score()
 {
-    if(!me_box)
+    if(me_box)
         delete me_box;
     me_box=new QGraphicsRectItem(14,40,125,30);
     me_box->setBrush(set_color(convertColorToString(player_->getColor())));
     scene->addItem(me_box);
-    if(!me)
+    if(me)
         delete me;
     me=new QGraphicsTextItem;
     me->setPlainText("my score: "+QString::number(player_->getScore()));
@@ -59,12 +59,12 @@ void graphic::set_score()
     me->setPos(16,41);
     scene->addItem(me);
 
-    if(!comp1_box)
+    if(comp1_box)
         delete comp1_box;
     comp1_box=new QGraphicsRectItem(14,78,125,30);
     comp1_box->setBrush(set_color(convertColorToString(player_->getCompetitors()[0].getColor())));
     scene->addItem(comp1_box);
-    if(!comp1)
+    if(comp1)
         delete comp1;
     comp1=new QGraphicsTextItem;
     comp1->setPlainText(player_->getCompetitors()[0].getUsername()+": "+QString::number(player_->getCompetitors()[0].getScore()));
@@ -72,12 +72,12 @@ void graphic::set_score()
     comp1->setPos(16,79);
     scene->addItem(comp1);
 
-    if(!comp2_box)
+    if(comp2_box)
         delete comp2_box;
     comp2_box=new QGraphicsRectItem(14,116,125,30);
     comp2_box->setBrush(set_color(convertColorToString(player_->getCompetitors()[1].getColor())));
     scene->addItem(comp2_box);
-    if(!comp2)
+    if(comp2)
         delete comp2;
     comp2=new QGraphicsTextItem;
     comp2->setPlainText(player_->getCompetitors()[1].getUsername()+": "+QString::number(player_->getCompetitors()[1].getScore()));
@@ -88,12 +88,12 @@ void graphic::set_score()
 
     if(player_->getCompetitors().size()>2)
     {
-        if(!comp3_box)
+        if(comp3_box)
             delete comp3_box;
         comp3_box=new QGraphicsRectItem(14,154,125,30);
         comp3_box->setBrush(set_color(convertColorToString(player_->getCompetitors()[2].getColor())));
         scene->addItem(comp3_box);
-        if(!comp3)
+        if(comp3)
             delete comp3;
         comp3=new QGraphicsTextItem;
         comp3->setPlainText(player_->getCompetitors()[2].getUsername()+": "+QString::number(player_->getCompetitors()[2].getScore()));
@@ -106,7 +106,7 @@ void graphic::set_score()
 
 void graphic::set_resource()
 {
-    if(!resource_box)
+    if(resource_box)
         delete resource_box;
     if(player_->getCompetitors().size()>2)
             resource_box=new QGraphicsRectItem(14,192,125,215);
@@ -117,14 +117,14 @@ void graphic::set_resource()
     scene->addItem(resource_box);
 
     //tree
-    if(!tree)
+    if(tree)
         delete tree;
     tree=new QGraphicsPixmapItem;
     tree->setPixmap(QPixmap(":/cards/Images/cards/tree_card.png"));
     tree->setScale(0.5);
     tree->setPos(resource_box->sceneBoundingRect().x()+5,resource_box->sceneBoundingRect().y()+5);
     scene->addItem(tree);
-    if(!tree_)
+    if(tree_)
         delete tree_;
     tree_=new QGraphicsTextItem;
     tree_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
@@ -134,14 +134,14 @@ void graphic::set_resource()
     scene->addItem(tree_);
 
     //sheep
-    if(!sheep)
+    if(sheep)
         delete sheep;
     sheep=new QGraphicsPixmapItem;
     sheep->setPixmap(QPixmap(":/cards/Images/cards/sheep_card.png"));
     sheep->setScale(0.5);
     sheep->setPos(tree->sceneBoundingRect().x(),tree->sceneBoundingRect().y()+5+tree->sceneBoundingRect().height());
     scene->addItem(sheep);
-    if(!sheep_)
+    if(sheep_)
         delete sheep_;
     sheep_=new QGraphicsTextItem;
     sheep_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
@@ -151,14 +151,14 @@ void graphic::set_resource()
     scene->addItem(sheep_);
 
     //iron
-    if(!iron)
+    if(iron)
         delete iron;
     iron=new QGraphicsPixmapItem;
     iron->setPixmap(QPixmap(":/cards/Images/cards/iron_card.png"));
     iron->setScale(0.5);
     iron->setPos(sheep->sceneBoundingRect().x(),sheep->sceneBoundingRect().y()+5+sheep->sceneBoundingRect().height());
     scene->addItem(iron);
-    if(!iron_)
+    if(iron_)
         delete iron_;
     iron_=new QGraphicsTextItem;
     iron_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
@@ -168,14 +168,14 @@ void graphic::set_resource()
     scene->addItem(iron_);
 
     //rock
-    if(!rock)
+    if(rock)
         delete rock;
     rock=new QGraphicsPixmapItem;
     rock->setPixmap(QPixmap(":/cards/Images/cards/rock_card.png"));
     rock->setScale(0.5);
     rock->setPos(iron->sceneBoundingRect().x(),iron->sceneBoundingRect().y()+5+iron->sceneBoundingRect().height());
     scene->addItem(rock);
-    if(!rock_)
+    if(rock_)
         delete rock_;
     rock_=new QGraphicsTextItem;
     rock_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
@@ -185,14 +185,14 @@ void graphic::set_resource()
     scene->addItem(rock_);
 
     //wheat
-    if(!wheat)
+    if(wheat)
         delete wheat;
     wheat=new QGraphicsPixmapItem;
     wheat->setPixmap(QPixmap(":/cards/Images/cards/wheat_card.png"));
     wheat->setScale(0.5);
     wheat->setPos(rock->sceneBoundingRect().x(),rock->sceneBoundingRect().y()+5+rock->sceneBoundingRect().height());
     scene->addItem(wheat);
-    if(!wheat_)
+    if(wheat_)
         delete wheat_;
     wheat_=new QGraphicsTextItem;
     wheat_->setPlainText(" : "+QString::number(player_->getCountOfWoodCards()));
@@ -226,9 +226,9 @@ int graphic::find_nearest_land(int x, int y)
 {
     int land=-18;
     double l=distance_of_points(pos.map_l["-18"],x,y);
-    for(int i=-18;i<29;i++)
+    for(int i=-36;i<29;i++)
     {
-        if(!i)
+        if(i<-12 && i>-32)
             continue;
         int l2=distance_of_points(pos.map_l[QString::number(i)],x,y);
         if(l2<l)
@@ -319,14 +319,13 @@ void graphic::read()
             set_score();
 
         }
-        else if(convertColorToString(player_->getColor())==obj["color"].toString())
+        else
         {
             show_message(obj["errorMessage"].toString());
         }
     }
     else if(obj["kindOfGame"].toString() == "responseTobuildRoad")
     {
-
         if(obj["success"].toBool())
         {
             QJsonArray arr=obj["position"].toArray();
@@ -361,7 +360,7 @@ void graphic::read()
             }
 
         }
-        else if(convertColorToString(player_->getColor())==obj["color"].toString())
+        else
         {
             show_message(obj["errorMessage"].toString());
         }
@@ -410,16 +409,19 @@ void graphic::read()
             player_->setIsTurn(false);
 
         //set cards
-        QJsonObject cards=obj[convertColorToString(player_->getColor())].toObject();
-        player_->setCountOfSheepCards(player_->getCountOfSheepCards()+cards["sheep"].toInt());
-        player_->setCountOfSheepCards(player_->getCountOfBrickCards()+cards["brick"].toInt());
-        player_->setCountOfSheepCards(player_->getCountOfWheatCards()+cards["wheat"].toInt());
-        player_->setCountOfSheepCards(player_->getCountOfWoodCards()+cards["tree"].toInt());
-        player_->setCountOfSheepCards(player_->getCountOfRockCards()+cards["rock"].toInt());
-        set_resource();
+        if(obj["dices"].toArray().size())
+        {
+            QJsonObject cards=obj[convertColorToString(player_->getColor())].toObject();
+            player_->setCountOfSheepCards((player_->getCountOfSheepCards())+(cards["sheep"].toInt()));
+            player_->setCountOfSheepCards((player_->getCountOfBrickCards())+(cards["brick"].toInt()));
+            player_->setCountOfSheepCards((player_->getCountOfWheatCards())+(cards["wheat"].toInt()));
+            player_->setCountOfSheepCards((player_->getCountOfWoodCards())+(cards["tree"].toInt()));
+            player_->setCountOfSheepCards((player_->getCountOfRockCards())+(cards["rock"].toInt()));
+            set_resource();
 
-        QJsonArray arr=obj["dices"].toArray();
-        set_dices(arr[0].toInt(),arr[1].toInt());
+            QJsonArray arr=obj["dices"].toArray();
+            set_dices(arr[0].toInt(),arr[1].toInt());
+        }
     }
 
     if(!(player_->getIsTurn()))
@@ -430,7 +432,8 @@ void graphic::read()
 
 void graphic::arase_message()
 {
-    delete timer;
+    if(timer)
+        delete timer;
     timer=NULL;
     mess->setPlainText(" ");
 }
@@ -571,21 +574,23 @@ void graphic::create_selected_land(int i)
 
 void graphic::set_dices(int d1, int d2)
 {
-    if(dice1!=NULL)
+    if(dice1)
         delete dice1;
     dice1=new QGraphicsPixmapItem;
-    dice1->setPixmap(QPixmap(":/dice/Images/dice"+QString::number(d1)+".png"));
+    dice1->setPixmap(QPixmap(":/dice/Images/dice/"+QString::number(d1)+".png"));
     dice1->setPos(resource_box->sceneBoundingRect().x(),resource_box->sceneBoundingRect().y()+resource_box->sceneBoundingRect().height()+8);
+    dice1->setScale(0.3);
     scene->addItem(dice1);
 
-    if(dice2!=NULL)
+    if(dice2)
         delete dice2;
     dice2=new QGraphicsPixmapItem;
-    dice2->setPixmap(QPixmap(":/dice/Images/dice"+QString::number(d2)+".png"));
+    dice2->setPixmap(QPixmap(":/dice/Images/dice/"+QString::number(d2)+".png"));
     dice2->setPos(dice1->sceneBoundingRect().x()+dice1->sceneBoundingRect().width()+8,dice1->sceneBoundingRect().y());
+    dice2->setScale(0.3);
     scene->addItem(dice2);
 
-    if(dice_timer!=NULL)
+    if(dice_timer)
         delete dice_timer;
     dice_timer = new QTimer();
     connect(dice_timer,SIGNAL(timeout()),this,SLOT(delete_dices()));
@@ -594,10 +599,13 @@ void graphic::set_dices(int d1, int d2)
 
 void graphic::delete_dices()
 {
-    delete dice_timer;
+    if(dice_timer)
+        delete dice_timer;
     dice_timer=NULL;
-    delete dice1;
-    delete dice2;
+    if(dice1)
+        delete dice1;
+    if(dice2)
+        delete dice2;
     dice1=NULL;
     dice2=NULL;
 }

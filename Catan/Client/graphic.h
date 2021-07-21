@@ -15,7 +15,7 @@ class graphic : public QGraphicsView
     Q_OBJECT
 private:
     QGraphicsScene *scene;
-    QGraphicsTextItem*me,*comp1=NULL,*comp2=NULL,*comp3=NULL,*mess=NULL;
+    QGraphicsTextItem*me=NULL,*comp1=NULL,*comp2=NULL,*comp3=NULL,*mess=NULL;
     QGraphicsRectItem*me_box=NULL,*comp1_box=NULL,*comp2_box=NULL,*comp3_box=NULL;
     menu_window*win_ptr=NULL;
     QGraphicsPixmapItem*sheep=NULL,*iron=NULL,*tree=NULL,*rock=NULL,*wheat=NULL;
@@ -43,14 +43,13 @@ private:
     QMap<int,QGraphicsPixmapItem*>selected_land_pix;
     void create_selected_land(int i);
     void set_dices(int d1,int d2);
-    void delete_dices();
-
-
 
 public slots:
     void clicked_menu();
     void read();
     void arase_message();
+    void delete_dices();
+
 
 public:
     graphic(Player*player_1,QTcpSocket*Socket1,QWidget *parent = nullptr);
