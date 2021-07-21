@@ -69,6 +69,7 @@ for(int i=0;i<collection.size();i++){
 }
 check_available_source();
 set_source_player();
+
 vector<pair<string, map<string, int> > > result;
 pair<string, map<string, int> > pred;
 map<string,int> mred;
@@ -313,10 +314,16 @@ void AllocateResources::check_homearound(int number_land)
     b=GameData::getBlue_house();
     for(int i=0;i<GameData::getBlue_house().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
 
+
+            if(b[i][j][0]==number_land){
+                qDebug() << "nnnn"<<number_land;
    add_source_instructur(kay_source[number_land],sblue,1);
-
+    qDebug() << "iron"<<sblue.i;
+     qDebug() << sblue.w;
+      qDebug() << sblue.sh;
+     qDebug() << sblue.r;
+    qDebug() << sblue.t;
 
 
             }
@@ -335,7 +342,7 @@ void AllocateResources::check_homearound(int number_land)
     g=GameData::getGreen_house();
     for(int i=0;i<GameData::getGreen_house().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
+            if(g[i][j][0]==number_land){
 
    add_source_instructur(kay_source[number_land],sgreen,1);
 
@@ -360,7 +367,7 @@ void AllocateResources::check_homearound(int number_land)
     y=GameData::getYellow_house();
     for(int i=0;i<GameData::getYellow_house().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
+            if(y[i][j][0]==number_land){
 
    add_source_instructur(kay_source[number_land],syellow,1);
 
@@ -377,14 +384,11 @@ void AllocateResources::check_homearound(int number_land)
     }
 
 
-
-
-
     vector<vector<vector<int>>> rb;
     rb=GameData::getRed_bigcity();
     for(int i=0;i<GameData::getRed_bigcity().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
+            if(rb[i][j][0]==number_land){
 
    add_source_instructur(kay_source[number_land],sred,2);
 
@@ -405,7 +409,7 @@ void AllocateResources::check_homearound(int number_land)
     bb=GameData::getBlue_bigcity();
     for(int i=0;i<GameData::getBlue_bigcity().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
+            if(bb[i][j][0]==number_land){
 
    add_source_instructur(kay_source[number_land],sblue,2);
 
@@ -427,7 +431,7 @@ void AllocateResources::check_homearound(int number_land)
     gb=GameData::getGreen_bigcity();
     for(int i=0;i<GameData::getGreen_bigcity().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
+            if(gb[i][j][0]==number_land){
 
    add_source_instructur(kay_source[number_land],sgreen,2);
 
@@ -452,7 +456,7 @@ void AllocateResources::check_homearound(int number_land)
     yb=GameData::getYellow_bigcity();
     for(int i=0;i<GameData::getYellow_bigcity().size();i++){
         for(int j=0;j<3;j++){
-            if(r[i][j][0]==number_land){
+            if(yb[i][j][0]==number_land){
 
    add_source_instructur(kay_source[number_land],syellow,2);
 
@@ -543,7 +547,7 @@ GameData::colorToPlayer[Color::Red].setCountOfRockCards(sred.r+GameData::colorTo
 
 
 
-
+qDebug() << "harr"<< sblue .t ;
 GameData::colorToPlayer[Color::Blue].setCountOfBrickCards(sblue.i+GameData::colorToPlayer[Color::Blue].getCountOfBrickCards());
 GameData::colorToPlayer[Color::Blue].setCountOfWoodCards(sblue.t+GameData::colorToPlayer[Color::Blue].getCountOfWoodCards());
 GameData::colorToPlayer[Color::Blue].setCountOfSheepCards(sblue.sh+GameData::colorToPlayer[Color::Blue].getCountOfSheepCards());

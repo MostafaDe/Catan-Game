@@ -58,10 +58,11 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 	
 	
 	
-	
+
 	
 	if (check_near_home(position) && check_home_in_road(position, color)) {
-		add_structure(position, color);
+
+        add_structure(position, color);
 		return 1;
 	}
 	return 0;
@@ -71,27 +72,11 @@ bool RoulsOfBuildHome::check_make(vector<vector<int>> position, string color) {
 
 bool RoulsOfBuildHome::check_near_home(vector<vector<int>> position) {
 	//cout << "ss" << illegal_home.size()<< "\n";
-	for (int i = 0; i < illegal_home.size(); i++) {
-
-		/*if (illegal_home[i][0][0] == position[0][0]) {
-			if (illegal_home[i][0][1] == position[0][1]) {
-				if (illegal_home[i][1][0] == position[1][0]) {
-					if (illegal_home[i][1][1] == position[1][1]) {
 
 
-					}
+    for (int i = 0; i < illegal_home.size(); i++) {
 
 
-				}
-
-
-			}
-			
-
-
-
-
-			*/
 
 
 	
@@ -133,18 +118,17 @@ bool RoulsOfBuildHome::check_home_in_road(vector<vector<int>> position, string c
 	
 	int x = 0;
     if (color == "red") {
+ for (int j = 0; j < 3; j++) {
         for (int i = 0; i < red_road.size(); i++) {
+
             x = 0;
             for (int l = 0; l < 4;l++) {
-                for (int j = 0; j < 3; j++) {
 
-                    if (red_road[i][l][0] == position[i][0]&& red_road[i][l][1] == position[i][1]) {
-                        x++;
-                    }
-                    if (x == 2) {
-
+//qDebug()<< "hastan"<< position[j][0] <<position[j][1] << red_road[i][l][0]<<red_road[i][l][1]  ;
+                    if (red_road[i][l][0] == position[j][0]&& red_road[i][l][1] == position[j][1]) {
                         return 1;
                     }
+
                 }
             }
         }
@@ -161,21 +145,21 @@ bool RoulsOfBuildHome::check_home_in_road(vector<vector<int>> position, string c
 
 
 if (color == "blue") {
-	for (int i = 0; i < blue_road.size(); i++) {
-		x = 0;
-		for (int l = 0; l < 4; l = l + 2) {
-			for (int j = 0; j < 3; j++) {
 
-				if (blue_road[i][l][0] == position[i][0]) {
-					x++;
-				}
-				if (x == 2) {
+    for (int j = 0; j < 3; j++) {
+    for (int i = 0; i < blue_road.size(); i++) {
 
-					return 1;
-				}
-			}
-		}
-	}
+        x = 0;
+        for (int l = 0; l < 4;l++) {
+
+
+                if (blue_road[i][l][0] == position[j][0]&& blue_road[i][l][1] == position[j][1]) {
+                    return 1;
+                }
+
+            }
+        }
+    }
 
 }
 
@@ -188,21 +172,19 @@ if (color == "blue") {
 
 
 if (color == "green") {
-	for (int i = 0; i < green_road.size(); i++) {
-		x = 0;
-		for (int l = 0; l < 4; l=l+2) {
-			for (int j = 0; j < 3; j++) {
+    x = 0;
+    for (int j = 0; j < 3; j++) {
+      for (int i = 0; i < green_road.size(); i++) {
+    for (int l = 0; l < 4;l++) {
 
-				if (green_road[i][l][0] == position[i][0]) {
-					x++;
-				}
-				if (x == 2) {
 
-					return 1;
-				}
-			}
-		}
-	}
+            if (green_road[i][l][0] == position[j][0]&& green_road[i][l][1] == position[j][1]) {
+                return 1;
+            }
+
+        }
+    }
+}
 
 }
 
@@ -215,21 +197,21 @@ if (color == "green") {
 
 
 if (color == "yellow") {
-	for (int i = 0; i < yellow_road.size(); i++) {
-		x = 0;
-		for (int l = 0; l < 4; l = l + 2) {
-			for (int j = 0; j < 3; j++) {
 
-				if (yellow_road[i][l][0] == position[i][0]) {
-					x++;
-				}
-				if (x == 2) {
+     for (int j = 0; j < 3; j++) {
+    for (int i = 0; i < yellow_road.size(); i++) {
 
-					return 1;
-				}
-			}
-		}
-	}
+        x = 0;
+        for (int l = 0; l < 4;l++) {
+
+
+                if (yellow_road[i][l][0] == position[j][0]&& yellow_road[i][l][1] == position[j][1]) {
+                    return 1;
+                }
+
+            }
+        }
+    }
 
 }
 
