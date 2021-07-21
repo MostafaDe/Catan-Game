@@ -56,6 +56,7 @@ void menu_window::set_inable(int* button, bool turn_)
         buildCity->setEnabled(0);
         buildRoad->setEnabled(0);
         buildHous->setEnabled(0);
+        transiton_->setEnabled(0);
     }
 
     else if(*button==1)
@@ -64,6 +65,7 @@ void menu_window::set_inable(int* button, bool turn_)
         buildCity->setEnabled(0);
         buildRoad->setEnabled(1);
         buildHous->setEnabled(0);
+        transiton_->setEnabled(0);
     }
     else if(*button==2)
     {
@@ -71,6 +73,7 @@ void menu_window::set_inable(int* button, bool turn_)
         buildCity->setEnabled(0);
         buildRoad->setEnabled(0);
         buildHous->setEnabled(1);
+        transiton_->setEnabled(0);
     }
     else if(*button==3)
     {
@@ -78,6 +81,7 @@ void menu_window::set_inable(int* button, bool turn_)
         buildCity->setEnabled(1);
         buildRoad->setEnabled(0);
         buildHous->setEnabled(0);
+        transiton_->setEnabled(0);
     }
 }
 

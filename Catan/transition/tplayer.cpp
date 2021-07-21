@@ -352,8 +352,8 @@ void TPlayer::SOk()
     deal["rockG"]=Cbgr->currentText().toInt();
     boos["deal"]=deal;
 
-    connect(bOk,SIGNAL(clicked()),bOk,SLOT(close()));
     send_message(boos);
+    connect(bOk,SIGNAL(clicked()),this,SLOT(close()));
 
     }
 
