@@ -122,7 +122,7 @@ void DBank::SOk()
     if("brick"== Cbg->currentText()){
 
 
-     deal["brickG"]=4;
+     deal["brickG"]=1;
      deal["woodG"]=0;
      deal["sheepG"]=0;
      deal["wheatG"]=0;
@@ -136,14 +136,14 @@ void DBank::SOk()
     else if("sheep"== Cbg->currentText()){
         deal["brickG"]=0;
         deal["woodG"]=0;
-        deal["sheepG"]=4;
+        deal["sheepG"]=1;
         deal["wheatG"]=0;
         deal["rockG"]=0;
 
     }
     else if("Wood"==Cbg->currentText()){
         deal["brickG"]=0;
-        deal["woodG"]=4;
+        deal["woodG"]=1;
         deal["sheepG"]=0;
         deal["wheatG"]=0;
         deal["rockG"]=0;
@@ -155,7 +155,7 @@ void DBank::SOk()
         deal["brickG"]=0;
         deal["woodG"]=0;
         deal["sheepG"]=0;
-        deal["wheatG"]=4;
+        deal["wheatG"]=1;
         deal["rockG"]=0;
     }
     else if("rock"==Cbg->currentText()){
@@ -163,7 +163,7 @@ void DBank::SOk()
         deal["woodG"]=0;
         deal["sheepG"]=0;
         deal["wheatG"]=0;
-        deal["rockG"]=4;
+        deal["rockG"]=1;
 
     }
 
